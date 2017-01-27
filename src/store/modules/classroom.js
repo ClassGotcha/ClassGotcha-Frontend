@@ -35,6 +35,7 @@ const actions = {
                 commit(types.SEARCH_CLASSROOMS, response)
             })
             .catch((error) => {
+                console.log('classroomSearch')
                 commit(types.LOG_ERROR, error)
             })
     },
@@ -44,6 +45,8 @@ const actions = {
                 commit(types.GET_CLASSROOM, response)
             })
             .catch((error) => {
+                console.log('getClassroom')
+
                 commit(types.LOG_ERROR, error)
             })
     },
@@ -53,6 +56,8 @@ const actions = {
                 commit(types.USER_IN_CLASSROOM, response)
             })
             .catch((error) => {
+                console.log('validateClassroom')
+
                 commit(types.USER_NOT_IN_CLASSROOM, error)
             })
     },

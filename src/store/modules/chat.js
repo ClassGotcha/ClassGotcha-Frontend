@@ -40,32 +40,32 @@ const getters = {
 
 // actions
 const actions = {
-    getChatroom({ commit, dispatch }, pk) {
+    getChatroom({ state, commit, dispatch }, pk) {
+        console.log(pk, state.chatrooms, state.chatrooms[pk])
         if (!state.chatrooms[pk]) {
             chatApi.getChatroom(pk)
                 .then((response) => {
-                    console.log(response, pk)
-                    commit(types.GET_CHATROOM, { response: response, pk: pk })
+                    commit(types.GET_CHATROOM, response)
+                    dispatch('getChatroomUsers')
                 })
                 .catch((error) => {
-                    console.log(error)
                     commit(types.LOG_ERROR, error)
                 })
         }
     },
     getChatroomUsers({ state, commit, dispatch }, pk) {
-        console.log(state.chatrooms[pk])
-        if (state.chatrooms[pk] && !state.chatrooms[pk].users) {
+        if (state.chatrooms[pk]) {
             chatApi.getChatroomUsers(pk)
                 .then((response) => {
                     commit(types.LOAD_CHATROOM_USERS, { response: response, pk: pk })
                 })
                 .catch((error) => {
+                    console.log('getChatroomUsers')
                     commit(types.LOG_ERROR, error)
                 })
         }
     },
-    validateChatroom({ state, commit }, pk) {
+    validateChatroom({ state, commit, dispatch }, pk) {
         chatApi.validateChatroom(pk)
             .then(() => {
                 commit(types.USER_IN_CHATROOM, pk)
@@ -75,7 +75,7 @@ const actions = {
                 commit(types.LOG_ERROR, error)
             })
     },
-    connectSocket({ state, commit }, pk) {
+    connectSocket({ state, commit, dispatch }, pk) {
         if (state.chatrooms[pk]) {
             const socket = chatApi.connectSocket(pk)
             commit(types.CONNECT_SOCKET, { socket: socket, pk: pk })
@@ -86,7 +86,7 @@ const actions = {
             }
         }
     },
-    sendMessage({ commit }, data) {
+    sendMessage({ state, commit, dispatch }, data) {
         console.log('send message commit with', data)
         commit(types.SEND_MESSAGE, data)
     },
@@ -94,15 +94,22 @@ const actions = {
 
 // mutations
 const mutations = {
-    [types.GET_CHATROOM](state, data) {
-        Vue.set(state.chatrooms[data.pk], 'chatroom', data.response)
+    [types.GET_CHATROOM](state, response) {
+        state.chatrooms[response.id] = {
+            chatroom: {},
+            chat_socket: {},
+            message_list: [],
+            users: [],
+        }
+        Vue.set(state.chatrooms[response.id], 'chatroom', response)
     },
     [types.LOAD_CHATROOM_USERS](state, data) {
         Vue.set(state.chatrooms[data.pk], 'users', data.response)
     },
     [types.CONNECT_SOCKET](state, data) {
+        console.log('CONNECT_SOCKET to', state.chatrooms[data.pk], data.socket)
         Vue.set(state.chatrooms[data.pk], 'chat_socket', data.socket)
-        Vue.set(state.chatrooms[data.pk], 'message_list', [])
+        state.chatrooms[data.pk]['chat_socket'] = data.socket
     },
     [types.SEND_MESSAGE](state, data) {
         state.chatrooms[data.pk].chat_socket.send(JSON.stringify(data.message))

@@ -6,17 +6,6 @@ import { getCookie } from '../utils/cookie'
 
 Vue.use(Resource)
 
-// Vue.http.interceptors.push((request, next) => {
-//     // Pre process to the requests
-//     request.headers = request.headers || {}
-//     if (getCookie('token')) {
-//         request.headers.Authorization = 'JWT ' + getCookie('token')
-//     }
-//     next()
-// })
-
-// Vue.http.headers.common['X-CSRFToken'] = getCookie('csrftoken')
-
 export const userApi = {
     // Authorization
     login(formData) {
