@@ -46,7 +46,6 @@ const actions = {
             chatApi.getChatroom(pk)
                 .then((response) => {
                     commit(types.GET_CHATROOM, response)
-                    dispatch('getChatroomUsers')
                 })
                 .catch((error) => {
                     commit(types.LOG_ERROR, error)

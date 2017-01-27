@@ -9,16 +9,16 @@ if (COOKIE_DOMAIN !== '' && COOKIE_EXPIRE !== '') {
     cookieConfig = { domain: COOKIE_DOMAIN, expires: COOKIE_EXPIRE }
 }
 
-export function setCookie(name, value) {
+export const setCookie = (name, value) => {
     Vue.cookie.set(name, value, cookieConfig)
 }
 
-export function getCookie(name) {
+export const getCookie = (name) => {
     if (Vue.cookie.get(name))
         return Vue.cookie.get(name)
     else return 'None'
 }
 
-export function delCookie(name) {
+export const delCookie = (name) => {
     Vue.cookie.delete(name)
 }

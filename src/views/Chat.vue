@@ -83,6 +83,8 @@
             connectSocket: function() {
                 this.$store.dispatch('connectSocket', this.$route.params.chatroom_id)
                 this.$store.dispatch('getChatroom', this.$route.params.chatroom_id)
+                this.$store.dispatch('getChatroomUsers', this.$route.params.chatroom_id)
+
             },
             sendMessage: function(e) {
                 e.preventDefault()
