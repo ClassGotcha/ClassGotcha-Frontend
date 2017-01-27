@@ -1,0 +1,21 @@
+<template>
+    <div class="middle-box text-center animated fadeInDown">
+        <h1>403</h1>
+        <h3 class="font-bold">Forbidden</h3>
+
+        <div class="error-desc">
+            Sorry, but you are not allowed to visit this page, try to login to continue.
+            <form class="form-inline m-t" role="form">
+                <div class="form-group">
+                    <a href="/#/login" placeholder="login" class="btn btn-primary">Login</a>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</template>
+<script>
+  export default {
+    name: 'Page403'
+  }
+</script>
