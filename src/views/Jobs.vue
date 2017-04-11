@@ -10,23 +10,15 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                   </button>-->
-               <a class="navbar-brand"> ClassGotcha <span class="label label-primary">Beta</span></a>
+               <router-link class="navbar-brand" :to="{name:'landing'}"> ClassGotcha Career </router-link>
             </div>
-            <ul class="m-l nav navbar-nav navbar-right">
-               <li>
-                  <router-link class="btn-primary" style=" color: #ffffff;" :to="{name:'register'}" >SIGN UP</router-link>
-               </li>
-               <li>
-                  <router-link  :to="{name:'login'}">LOG IN</router-link>
-               </li>
-            </ul>
             <div id="navbar" class="navbar-collapse collapse">
                <ul class="nav navbar-nav navbar-right">
-                  <li><a class="page-scroll" href="#page-top">Home</a></li>
-                  <li><a class="page-scroll" href="#features">Features</a></li>
+                  <li><a class="page-scroll" href="#aboutus">About Us</a></li>
+                  <li><a class="page-scroll" href="#positions">Positions</a></li>
                   <!--<li><a class="page-scroll" href="#timeline">Timeline</a></li>-->
-                  <li><a class="page-scroll" href="#team">Team</a></li>                  
-                  <li><a class="page-scroll" href="#contact">Contact</a></li>
+                  <li><a class="page-scroll" href="#benefits">Benefits</a></li>                  
+                  <li><a class="page-scroll" href="#contactus">Contact</a></li>
                </ul>
             </div>
          </div>
@@ -38,12 +30,14 @@
             <div class="container">
                <div class="carousel-caption">
                   <h1>
-                     Save you from <br>
-                     college
+                     WE are hiring ! <br>
                   </h1>
-                  <p>Your personal assistant for courses organizing.</p>
+                  <h2>
+                     <b>Help us make college life easier.</b>
+                  </h2>
+                  <br>
                   <p>
-                     <router-link  class="btn btn-lg btn-primary" :to="{name:'register'}">Join Now</router-link>
+                     <a href="mailto:team@classgotcha.com"  class="btn btn-lg btn-primary">APPLY NOW</a>
                   </p>
                </div>
             </div>
@@ -51,200 +45,156 @@
          </div>
       </div>
    </div>
-   <section id="features" class="features">
+   <section id="aboutus" class="features">
       <div class="container">
-         <div class="row">
-            <div class="col-lg-12 text-center">
-               <div class="navy-line"></div>
-               <h1>Our Great Feautres</h1>
-               <p>YOUR PERSONAL ASSISTANT FOR COURSES ORGANIZING.</p>
-            </div>
-         </div>
-         <br>
-         <div class="row">
-            <div class="col-sm-3">
-               <h2>INTERACTIVE CALENDAR</h2>
-               <p>Courses deadlines and shared activities are automatically pushed onto your tasks list. With simple drag and drop, you can arrange them on your calendar without conflicts with personal events.</p>
-               <p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
-            </div>
-            <div class="col-sm-3">
-               <h2>COMMUNICATION</h2>
-               <p>To create an environment closed to your daily online social experience, the Q&A system use the form of facebook activities feeds. The instant messaging chatroom can help you find and chat with your classmates at one click.</p>
-               <p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
-            </div>
-            <div class="col-sm-3">
-               <h2>NOTES SHARING</h2>
-               <p>To create an environment closed to your daily online social experience, the Q&A system use the form of facebook activities feeds. The instant messaging chatroom can help you find and chat with your classmates at one click.</p>
-               <p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
-            </div>
-            <div class="col-sm-3">
-               <h2>LEARNING ANALYTIC</h2>
-               <p>A powerful learning analytic backend can provide a personalized learning profile. It analyzes all your online footprints and provide you a thorough report to inform you where you are in the semester. </p>
-               <p><a class="navy-link" href="#" role="button">Details &raquo;</a></p>
-            </div>
+      <div class="row">
+         <div class="col-lg-12 text-center">
+            <div class="navy-line"></div>
+            <h1>About Us</h1>
          </div>
       </div>
+      <br>
    </section>
-   <div class="gray-line"></div>
    <section  class="container features">
+
+
       <div class="row features-block">
+
+
          <div class="col-lg-5  features-text">
             <small>CLASSGOTCHA</small>
-            <h1>Interactive Calendar</h1>
-            <i class="fa fa fa-calendar-check-o big-icon pull-left"></i>
-            <p>Courses deadlines and shared activities are automatically pushed onto your tasks list. With simple drag and drop, you can arrange them on your calendar without conflicts with personal events.</p>
+            <h1>What is ClassGotcha</h1>
+            <p>ClassGotcha is a growing educational tech start-up that provides a 
+               progressive solution to help college students to organize, 
+               communicate and share learning materials at one place. <br>
          </div>
-         <div class="col-lg-7 text-right wow fadeInRight animated">
-            <img  src="~img/landing/homepage.png" alt="dashboard" class="img-responsive shadow pull-right">
+
+
+         <div class="col-lg-7  text-right wow fadeInRight animated">
+            <img  src="~img/landing/logo_jobs.png" alt="dashboard" class="img-responsive shadow pull-right">
          </div>
+
+
       </div>
-      <div class="gray-line"></div>
+
+
       <div class="row features-block">
+
+
+         <div class="col-lg-5  features-text">
+            <small>CLASSGOTCHA</small>
+            <h1>Awards</h1>
+            <p>  We won the
+               <a href="http://news.psu.edu/story/408165/2016/05/05/academics/penn-state-students-win-co-sponsored-edtech-challenge-hackpsu">
+               EdTech Challenge</a> in HackPSU 2016, sponsored by <a href="https://coil.psu.edu/"> COIL and newly </a>
+               enrolled in <a href="http://launchbox.psu.edu/launchbox-startups/">LanchBox 2017 Spring cohort</a>.
+            </p>
+         </div>
+
+
          <div class="col-lg-7 text-right wow fadeInLeft animated">
-            <img  src="~img/landing/classroom.png" alt="dashboard" class="img-responsive shadow">
-         </div>
-         <div class="col-lg-5  features-text">
-            <small>CLASSGOTCHA</small>
-            <h1>Communication</h1>
-            <i class="fa fa fa-users big-icon pull-right"></i>
-            <p>To create an environment closed to your daily online social experience, the Q&A system use the form of facebook activities feeds. The instant messaging chatroom can help you find and chat with your classmates at one click.</p>
-         </div>
-      </div>
-      <div class="gray-line"></div>
-      <div class="row features-block">
-         <div class="col-lg-5  features-text">
-            <small>CLASSGOTCHA</small>
-            <h1>Notes Sharing</h1>
-            <i class="fa fa fa-file-text big-icon pull-left"></i>
-            <p>To create an environment closed to your daily online social experience, the Q&A system use the form of facebook activities feeds. The instant messaging chatroom can help you find and chat with your classmates at one click.</p>
-         </div>
-         <div class="col-lg-7 text-right wow fadeInRight animated">
-            <img  src="~img/landing/notes.png" alt="dashboard" class="img-responsive shadow pull-right">
+                  <img  src="~img/jobs/logos.png" alt="dashboard" class="img-responsive shadow pull-right">
          </div>
       </div>
    </section>
-   <!--
-   <section id="timeline" class="timeline gray-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="navy-line"></div>
-                <h1>Our Timeline</h1>
-              <p>YOUR PERSONAL ASSISTANT FOR COURSES ORGANIZING.</p>
+<section id="positions" class="gray-section team">
+   <div class="container">
+      <div class="row m-b-lg">
+         <div class="col-lg-12 text-center">
+            <div class="navy-line"></div>
+            <h1>Positions Opening</h1>
+         </div>
+      </div>
+      <div class="row m-b">
+        <div class=" col-lg-4">
+            <div class="widget navy-bg p-lg text-center">
+            <a style="color:#ffffff" href="static/others/frontend.pdf">
+               <div class="m-b-md">
+                  <i class="fa fa-code fa-4x"></i>
+                  <h1 class="m-xs">Web Developer - Frontend</h1>
+                  <br>
+                  <h3 class="font-bold no-margins">
+                     > Click to see detail
+                  </h3>
+               </div>
+               </a>
             </div>
-        </div>
-        <div class="row features-block">
+         </div>
+         <div class=" col-lg-4">
+            <div class="widget navy-bg p-lg text-center">
+            <a style="color:#ffffff" href="static/others/backend.pdf">
+            
+               <div class="m-b-md">
+                  <i class="fa fa-terminal fa-4x"></i>
 
-            <div class="col-lg-12">
-                <div id="vertical-timeline" class="vertical-container light-timeline center-orientation">
-                    <div class="vertical-timeline-block">
-                        <div class="vertical-timeline-icon navy-bg">
-                            <i class="fa fa-briefcase"></i>
-                        </div>
-
-                        <div class="vertical-timeline-content">
-                            <h2>Expand Our Team</h2>
-                            <p>We are now hiring people that...</p>
-                            <a href="#" class="btn btn-xs btn-primary">Apply</a>
-                            <span class="vertical-date"> Now <br> <small> Until April 28
-                            </small> </span>
-                        </div>
-                    </div>
-
-                    <div class="vertical-timeline-block">
-                        <div class="vertical-timeline-icon navy-bg">
-                            <i class="fa fa-file-text"></i>
-                        </div>
-
-                        <div class="vertical-timeline-content">
-                            <h2>Beta Test</h2>
-                            <p>we are going to</p>
-                            <a href="#" class="btn btn-xs btn-primary"> More info</a>
-                            <span class="vertical-date"> Summer <br> <small>June 25 - August 11</small> </span>
-                        </div>
-                    </div>
-
-                    <div class="vertical-timeline-block">
-                        <div class="vertical-timeline-icon navy-bg">
-                            <i class="fa fa-cogs"></i>
-                        </div>
-
-                        <div class="vertical-timeline-content">
-                            <h2>V1.0 Release</h2>
-                            <p>Go to shop and find some products. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's. 
-                            </p>
-                            <a href="#" class="btn btn-xs btn-primary"> More info</a>
-                            <span class="vertical-date"> Fall 2017 <br> <small>August 21</small> </span>
-                        </div>
-                    </div>
-
-                </div>
+                  <h1 class="m-xs">Web Developer - Backend</h1>
+                  <br>
+                  <h3 class="font-bold no-margins">
+                     > Click to see detail
+                  </h3>
+               </div>
+               </a>
             </div>
-
-        </div>
-    </div>
-
+         </div>
+         <div class="col-lg-4">
+            <div class="widget navy-bg p-lg text-center">
+            <a style="color:#ffffff" href="static/others/marketing.pdf">
+            
+               <div class="m-b-md">
+                  <i class="fa fa-laptop fa-4x"></i>
+                  <h1 class="m-xs">Marketing / Advertising</h1>
+                  <br>
+                  <h3 class="font-bold no-margins">
+                     > Click to see detail
+                  </h3>
+               </div>
+               </a>
+            </div>
+         </div>
+      </div>
+   </div>
 </section>
--->
-   <section id="team" class="team gray-section">
-      <div class="container">
-         <div class="row m-b-lg">
-            <div class="col-lg-12 text-center">
-               <div class="navy-line"></div>
-               <h1>Our Team</h1>
-               <p>YOUR PERSONAL ASSISTANT FOR COURSES ORGANIZING.</p>
-            </div>
+<section id="benefits" class="team">
+   <div class="container">
+      <div class="row m-b-lg">
+         <div class="col-lg-12 text-center">
+            <div class="navy-line"></div>
+            <h1>Benefits</h1>
          </div>
-         <div class="row">
-            <div class="col-sm-4">
-               <div class="team-member">
-                  <img src="~img/landing/simowu.png" class="img-responsive img-circle" alt="">
-                  <h4><span class="navy">Simo</span> Wu</h4>
-                  <p>Expert in data mining. <br>  Help you understand your learning activities better. </p>
-                  <ul class="list-inline social-icon">
-                     <li><a href="http://sites.psu.edu/szw184"><i class="fa fa-rss"></i></a>
-                     </li>
-                     <li><a href="#"><i class="fa fa-facebook"></i></a>
-                     </li>
-                     <li><a href="https://www.linkedin.com/in/simo-wu-b85b668b/"><i class="fa fa-linkedin"></i></a>
-                     </li>
-                  </ul>
-               </div>
+      </div>
+      <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 features-text">
+                <p>You will be working with a group of experts varied from technology 
+                to business and law, who you can learn from and build long-term 
+                connection with. By working for an innovative start-up company 
+                like us, your role is important and irreplaceable.
+                 Meanwhile, you will be working closely with every core 
+                  member in team ClassGotcha where you will feel a strong 
+                  sense of belonging.</p>
+            
+            </div></div>
+<div class="row">
+            <div class="col-lg-10 col-lg-offset-1 features-text">
+                <h2>For Programmers</h2>
+                <i class="fa fa-code big-icon pull-left"></i>
+<p>Your work and your contribution will be fully reflected on the progress of 
+the company, what you code and create will significantly benefit college 
+students around you.</p>
+        
+</p>
             </div>
-            <div class="col-sm-4">
-               <div class="team-member">
-                  <img src="~img/landing/xiangli.png" class="img-responsive img-circle" alt="">
-                  <h4><span class="navy">Xiang</span> Li</h4>
-                  <p>Developing expert. <br> Provide perfect experience in organizing your learning activities.</p>
-                  <ul class="list-inline social-icon">
-                     <li><a href="http://www.codezlee.com"><i class="fa fa-rss"></i></a>
-                     </li>
-                     <li><a href="https://www.facebook.com/steve.xiangli"><i class="fa fa-facebook"></i></a>
-                     </li>
-                     <li><a href="https://www.linkedin.com/in/c0dez/"><i class="fa fa-linkedin"></i></a>
-                     </li>
-                  </ul>
-               </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 features-text">
+                <h2>For Marketing / Advertising </h2>
+                <i class="fa fa-laptop big-icon pull-left"></i>
+                <p>Your decision in marketing strategies might influence the progress of the whole company. The Challenging role will offer you a precious opportunity in researching for marketing models and put your ideas into practice. </p>
             </div>
-            <div class="col-sm-4">
-               <div class="team-member">
-                  <img src="~img/landing/qiyuanli.png" class="img-responsive img-circle" alt="">
-                  <h4><span class="navy">Qiyuan</span> Li</h4>
-                  <p>Educational Designer. <br> Create sustained learning community for you.</p>
-                  <ul class="list-inline social-icon">
-                     <li><a href="#"><i class="fa fa-twitter"></i></a>
-                     </li>
-                     <li><a href="#"><i class="fa fa-facebook"></i></a>
-                     </li>
-                     <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                     </li>
-                  </ul>
-               </div>
-            </div>
-         </div>
-   </section>
-
-<section id="contact" class=" contact">
+        </div>
+   </div>
+</section>
+ 
+<section id="contact" class="gray-section contact">
    <div class="container">
                   <div class="row m-b-lg">
                     <div class="col-lg-12 text-center">
@@ -378,8 +328,8 @@
     }
     
     section p {
-        color: #aeaeae;
-        font-size: 13px;
+        color: #333;
+        font-size: 14px;
     }
     
     address {
@@ -552,7 +502,7 @@
     }
     
     .header-back.one {
-        background: url('../../static/img/landing/header_one.jpg') 50% 0 no-repeat;
+        background: url('../../static/img/landing/header_two.jpg') 50% 0 no-repeat;
     }
     
     .header-back.two {
