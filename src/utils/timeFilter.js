@@ -1,7 +1,49 @@
 /** 
- *  格式化文章發布時間
+ *  Format time
  */
-exports.customTime = item => {
+export const formatDate = (time, type = 1) => {
+    let tmpDate = new Date(time)
+    let year = tmpDate.getFullYear()
+    let month = tmpDate.getMonth() + 1
+    let day = tmpDate.getDate()
+    let hours = tmpDate.getHours()
+    let minutes = tmpDate.getMinutes()
+
+    if (month === 1) {
+        month = 'Jan.'
+    } else if (month === 2) {
+        month = 'Feb.'
+    } else if (month === 3) {
+        month = 'Mar.'
+    } else if (month === 4) {
+        month = 'Apr.'
+    } else if (month === 5) {
+        month = 'May.'
+    } else if (month === 6) {
+        month = 'Jun.'
+    } else if (month === 7) {
+        month = 'Jul.'
+    } else if (month === 8) {
+        month = 'Aug.'
+    } else if (month === 9) {
+        month = 'Sep.'
+    } else if (month === 10) {
+        month = 'Oct.'
+    } else if (month === 11) {
+        month = 'Nov.'
+    } else if (month === 12) {
+        month = 'Dec.'
+    }
+    if (type === 1)
+        return year + '.' + month + '.' + day + ' ' + hours + ':' + minutes
+    else if (type === 2)
+        return month + ' ' + day + ', ' + year
+    else if (type === 3)
+        return month + ' ' + day
+}
+
+
+export const customTime = item => {
     let nowTime = new Date().getTime()
     let minuteTime = 60 * 1000
     let hourTime = 60 * minuteTime
@@ -13,32 +55,78 @@ exports.customTime = item => {
     let historyTime = parseInt(nowTime) - parseInt(publishTime)
     let descTime
     if (historyTime >= yearTime) {
-        //按年算
-        descTime = parseInt(historyTime / yearTime) + '年前'
+        // Count in year
+        descTime = formatDate(publishTime, 2)
+
+        // const year = parseInt(historyTime / yearTime)
+        // if (year > 1)
+        //     descTime = year + ' years ago'
+        // else
+        //     descTime = year + ' year ago'
     } else if (historyTime < yearTime && historyTime >= monthTime) {
-        //按月算
-        descTime = parseInt(historyTime / monthTime) + '月前'
+        // Count in month
+        descTime = formatDate(publishTime, 2)
+
+        // const mouth = parseInt(historyTime / monthTime)
+        // if (mouth > 1)
+        //     descTime = mouth + ' mouths ago'
+        // else
+        //     descTime = mouth + ' mouth ago'
     } else if (historyTime < monthTime && historyTime >= dayTime) {
-        //按天算
-        descTime = parseInt(historyTime / dayTime) + '天前'
+        // Count in day
+        const day = parseInt(historyTime / dayTime)
+        if (day > 1)
+            // descTime = day + ' days ago'
+            descTime = formatDate(publishTime, 2)
+        else
+            descTime = day + ' day ago'
     } else if (historyTime < dayTime && historyTime >= hourTime) {
-        //按小时算
-        descTime = parseInt(historyTime / hourTime) + '小时前'
+        // Count in hour
+        const hour = parseInt(historyTime / hourTime)
+        if (hour > 1)
+            descTime = hour + ' hours ago'
+        else
+            descTime = hour + ' hour ago'
     } else if (historyTime < hourTime && historyTime >= minuteTime) {
-        //按分钟算
-        descTime = parseInt(historyTime / minuteTime) + '分钟前'
+        // Count in minute
+        const min = parseInt(historyTime / minuteTime)
+        if (min > 1)
+            descTime = min + ' minutes ago'
+        else
+            descTime = min + ' minute ago'
     } else {
-        descTime = '刚刚'
+        descTime = 'Just now'
     }
     return descTime
 }
 
-exports.formatDate = time => {
-    let tmpDate = new Date(time)
-    let year = tmpDate.getFullYear()
-    let mathon = tmpDate.getMonth() + 1
-    let day = tmpDate.getDate()
-    let hours = tmpDate.getHours()
-    let minutes = tmpDate.getMinutes()
-    return year + '.' + mathon + '.' + day + ' ' + hours + ':' + minutes
+export const toTimezoneOffsetString = time => {
+    const now = new Date()
+    const tzo = -now.getTimezoneOffset()
+    const dif = tzo >= 0 ? '+' : '-'
+    const pad = num => {
+        var norm = Math.abs(Math.floor(num))
+        return (norm < 10 ? '0' : '') + norm
+    }
+    return time.getFullYear() +
+        '-' + pad(time.getMonth() + 1) +
+        '-' + pad(time.getDate()) +
+        'T' + pad(time.getHours()) +
+        ':' + pad(time.getMinutes()) +
+        ':' + pad(time.getSeconds()) +
+        dif + pad(tzo / 60) +
+        ':' + pad(tzo % 60)
+}
+
+export const toUtcString = time => {
+    const pad = num => {
+        var norm = Math.abs(Math.floor(num))
+        return (norm < 10 ? '0' : '') + norm
+    }
+    return time.getFullYear() +
+        '-' + pad(time.getMonth() + 1) +
+        '-' + pad(time.getDate()) +
+        'T' + pad(time.getHours()) +
+        ':' + pad(time.getMinutes()) +
+        ':' + pad(time.getSeconds())
 }

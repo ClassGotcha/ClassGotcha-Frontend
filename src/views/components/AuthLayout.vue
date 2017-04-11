@@ -1,19 +1,20 @@
 <template>
-  <div class="middle-box text-center loginscreen animated fadeInDown">
-      <div>
-          <div>
-              <h1 class="logo-name">IN+</h1>
-          </div>
-          <router-view></router-view>
-          <p class="m-t"> <small>Chineserooms Studio</small> </p>
-      </div>
+  <div class="loginColumns animated fadeInDown">
+        <router-view></router-view>
+        <div class="text-right text-white">
+            <small>Classgotcha © 2015-2017</small>
+        </div>
   </div>
+
 </template>
 
 <script>
     export default {
         name: 'AuthLayout',
+        mounted() {
+            document.getElementsByTagName("Body")[0].style['background-color'] = "#2f4050"
 
+        }
     }
 
 </script>

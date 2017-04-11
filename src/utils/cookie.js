@@ -1,24 +1,22 @@
-import Vue from 'vue'
-import Cookie from 'vue-cookie'
-import { COOKIE_DOMAIN, COOKIE_EXPIRE } from '../config.js'
+import Cookie from 'js-cookie'
+import { COOKIE_EXPIRE } from '../config.js'
 
-Vue.use(Cookie)
 
 let cookieConfig = {}
-if (COOKIE_DOMAIN !== '' && COOKIE_EXPIRE !== '') {
-    cookieConfig = { domain: COOKIE_DOMAIN, expires: COOKIE_EXPIRE }
+if (COOKIE_EXPIRE !== '') {
+    cookieConfig = { expires: COOKIE_EXPIRE }
 }
 
 export const setCookie = (name, value) => {
-    Vue.cookie.set(name, value, cookieConfig)
+    Cookie.set(name, value, cookieConfig)
 }
 
 export const getCookie = (name) => {
-    if (Vue.cookie.get(name))
-        return Vue.cookie.get(name)
+    if (Cookie.get(name))
+        return Cookie.get(name)
     else return 'None'
 }
 
 export const delCookie = (name) => {
-    Vue.cookie.delete(name)
+    Cookie.remove(name)
 }

@@ -1,13 +1,17 @@
+// vue
 import Vue from 'vue'
 import Vuex from 'vuex'
 import PersistedState from 'vuex-persistedstate'
-
+// utils
+import * as types from './mutation-types'
+import * as cookie from '../utils/cookie'
+import router from '../router'
+// import modules
 import user from './modules/user'
 import classroom from './modules/classroom'
 import chat from './modules/chat'
-import router from '../router'
-import * as types from './mutation-types'
-import * as cookie from '../utils/cookie'
+import post from './modules/post'
+import task from './modules/task'
 
 Vue.use(Vuex)
 const mutations = {
@@ -23,13 +27,14 @@ const mutations = {
         state.chat.valid = false
         state.chat.current_chatroom_pk = null
         state.chat.error_msg = null
+        state.chat.sockets = {}
         state.classroom.search_results = []
         state.classroom.classroom = {}
         state.classroom.is_in_class = false
         state.classroom.notes = []
         state.classroom.students = []
         state.classroom.error_msg = ''
-        router.push('/')
+        router.push('/login')
     }
 }
 const store = new Vuex.Store({
@@ -42,7 +47,9 @@ const store = new Vuex.Store({
     modules: {
         user,
         classroom,
-        chat
+        chat,
+        post,
+        task
     }
 })
 export default store

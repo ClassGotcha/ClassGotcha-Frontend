@@ -1,12 +1,10 @@
 <template>
-  <div id="app">
     <router-view></router-view>
-  </div>
 </template>
 
 <style>
-    @import '../../css/style.css';
-    @import '../../css/animate.css';
+    @import '../../../static/css/style.css';
+    @import '../../../static/css/animate.css';
 
 </style>
 

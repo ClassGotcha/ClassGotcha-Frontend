@@ -1,6 +1,4 @@
+node_modules
+*.log
 .DS_Store
-node_modules/
-dist/
-npm-debug.log
-test/e2e/reports
-selenium-debug.log
+/dist

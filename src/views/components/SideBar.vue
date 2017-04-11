@@ -4,51 +4,63 @@
             <ul side-navigation class="nav metismenu" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                             <img alt="image" class="img-circle" :src="avatar" />
+                    <img v-if="avatar" alt="image" class="img-circle" :src="avatar" />
+                    <avatar v-else class="img-circle" :size="42" :username="fullName"></avatar>
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{fullName}}</strong>
-                             </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
+                             </span> <span class="text-muted text-xs block">@{{username}} <b class="caret"></b></span> </span> </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a href="profile.html">Profile</a></li>
-                            <li><a href="contacts.html">Contacts</a></li>
-                            <li><a href="mailbox.html">Mailbox</a></li>
+                            <li><a href="/#/profile/me">Profile</a></li>
+                        
                             <li class="divider"></li>
-                            <li><a href="login.html">Logout</a></li>
+                               <li> <a v-on:click="$store.dispatch('logout')"><i class="fa fa-sign-out"></i> Log out</a></li>
                         </ul>
                     </div>
                     <div class="logo-element">
-                        CG
+                    <img v-if="avatar" class="img-circle" :src="avatar"/>
+                    <avatar v-else class="m-l" :size="42" :username="fullName"></avatar>
                     </div>
                 </li>
-                <li class="active">
-                    <a href="/#/">
+                <li>
+                    <router-link :to="{name: 'home'}">
                         <i class="fa fa-th-large"></i>
-                        <span class="nav-label">Index</span>
-                    </a>
+                        <span class="nav-label">Home</span>
+                    </router-link>
                 </li>
 
                 <li>
-                    <a href="/#/classroom"><i class="fa fa-laptop"></i> <span class="nav-label">Classroom</span><span class="fa arrow"></span></a>
+                    <a><i class="fa fa-book"></i> <span class="nav-label">Classroom</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="/#/classroom/add">+ Add New</a></li>
-                        <li><a href="/#/classroom/id/2344">CS 311 </a></li>
+                        <li><router-link :to="{name:'addClassroom'}">+ Add New</router-link></li>
                         <li v-for="classroom in classrooms">
-                            <a :href="classroomUrl(classroom.id)">{{classroom.class_short}}</a>
+                            <router-link :to="{name: 'classroom', params:{classroom_id:classroom.id}}">{{classroom.class_short}}</router-link>
                         </li>
                     </ul>
                 </li>
+                <!--<li>
+                    <router-link :to="{name: 'myNotes'}">
+                        <i class="fa fa-file-text"></i>
+                        <span class="nav-label">My Notes</span>
+                    </router-link>
+                </li>-->
+                   <li>
+                    <router-link :to="{name:'myGroups'}">
+                        <i class="fa fa-users"></i>
+                        <span class="nav-label">My Groups</span>
+                    </router-link>
+                </li>   
                 <li>
-                    <a href="/#/chatroom/id/1">
-                        <i class="fa fa-laptop"></i>
-                        <span class="nav-label">Chat</span>
-                    </a>
+                    <router-link :to="{name:'profile'}">
+                        <i class="fa fa-user"></i>
+                        <span class="nav-label">Profile</span>
+                    </router-link>
                 </li>
                 <li>
-                    <a href="/#/upload/">
-                        <i class="fa fa-laptop"></i>
-                        <span class="nav-label">Upload</span>
-                    </a>
+                    <router-link :to="{name:'forum'}">
+                        <i class="fa fa-question-circle"></i>
+                        <span class="nav-label">User Forum</span>
+                    </router-link>
                 </li>
             </ul>   
         </div>
@@ -56,24 +68,25 @@
 </template>
 
 <script>
+    import Avatar from 'vue-avatar'
+    import { mapGetters } from 'vuex'
+
     export default {
         name: 'sidebar',
+        components: {
+            'avatar': Avatar.Avatar
+        },
         methods: {
             classroomUrl(id) {
                 return '/#/classroom/id/' + id
             }
         },
-        computed: {
-            fullName() {
-                return this.$store.getters.userFullName
-            },
-            avatar() {
-                return this.$store.getters.userAvatar1x
-            },
-            classrooms() {
-                return this.$store.getters.userClassrooms
-            }
-        }
+        computed: mapGetters({
+            fullName: "userFullName",
+            avatar: "userAvatar1x",
+            username: "username",
+            classrooms: "userClassrooms"
+        })
     }
 
 </script>

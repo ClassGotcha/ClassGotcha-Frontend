@@ -28,6 +28,9 @@ module.exports = {
         'curly': 0,
         'padded-blocks': 0,
         'quotes': 0,
-        'no-trailing-spaces': 0
+        'no-trailing-spaces': 0,
+        'camelcase': 0,
+        'no-extend-native': 0,
+        'brace-style': 0
     }
 }

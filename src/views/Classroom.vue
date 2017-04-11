@@ -1,508 +1,369 @@
 <template>
-    <div class="page">
-        <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-10">
-                <h2>{{currentClassroom.class_short}} 
-                <button title="Create new cluster" v-on:click="addClassroom()" class="btn btn-primary btn-xm">
-                    <i class="fa fa-plus"></i> 
-                    <span class="bold">Add To My Classroom</span>
-                </button>
-                </h2>
-
-
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-                    <li>
-                        <a>Classrooms</a>
-                    </li>
-                    <li class="active">
-                        <strong>{{currentClassroom.class_short}}</strong>
-                    </li>
-
-                </ol>
-
-            </div>
+  <div class="page animated fadeInRight">
+  <div>
+    <div class="row m-b-lg m-t-lg">
+      <div class="col-md-6">
+       <div class="profile-image">
+          <img src="~img/major/math.jpg" class="img-circle circle-border m-b-md" alt="profile">
         </div>
-        <div class="wrapper wrapper-content animated fadeInRight">
-
-            <div class="row m-b-lg m-t-lg">
-                <div class="col-md-6">
-
-                    <div class="profile-image">
-                        <img src="modules/classrooms/img/CS.png" class="img-circle circle-border m-b-md" alt="profile">
-                    </div>
-                    <div class="profile-info">
-                        <div class="">
-                            <div>
-                                <h2 class="no-margins">
-                                    CS 311
-                                </h2>
-                                <h4>abcd1234@psu.edu</h4>
-                                <small>
-                                    There are many variations of passages of Lorem Ipsum available, but the majority
-                                    have suffered alteration in some form Ipsum available.
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <table class="table small m-b-xs">
-                        <thead>
-                            &nbsp&nbspSummary
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <strong>6-9</strong> Projects
-                                </td>
-                                <td>
-                                    <strong>10</strong> Weekly Quizs
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>1</strong> Midterm
-                                </td>
-                                <td>
-                                    <strong>1</strong> Final
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>154</strong> Classmates
-                                </td>
-                                <td>
-                                    <strong>2</strong> Papers
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <p>
-                Semester Process
-            </p>
-            <div class="progress">
-                <div style="width: 25%" class="progress-bar progress-bar-primary">
-</div>
-<div style="width: 1%" class="progress-bar progress-bar-danger">
-</div>
-<div style="width: 25%" class="progress-bar progress-bar-primary">
-</div>
-<div style="width: 1%" class="progress-bar progress-bar-warning">
-</div>
-<div style="width: 25%" class="progress-bar progress-bar-primary">
-</div>
-</div>
-
-<div class="row">
+        <div class="profile-info">
+          <div>
+            <h2 class="no-margins">
+              {{current_classroom.class_short}}  
+              <button @click="addClassroom()" class="btn btn-primary" v-if="!user_in_classroom">
+              <i class="fa fa-plus"></i> 
+              Add To My Classroom
+              </button>
+              <a v-else class="text-primary" title="Quit this classroom" @click="remClassroom()"><i class="fa fa-sign-out"></i> </a>
+            </h2>
+            <h4>
+              Section {{current_classroom.class_section}}
+            </h4>
+            <small>
+            {{current_classroom.description}}
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2" v-for="professor in professors">
+        <table class="table small m-b-xs">
+          <tbody>
+            <tr>
+              <td>
+               professor: 
+             </td>
+             <td>
+               <strong>{{professor.full_name}} <router-link :to="{name:'professor', params:{professor_id:professor.id}}" class="m-l" >Detail</router-link></strong> 
+             </td>
+            </tr>
+            <tr>
+              <td>
+                email:
+              </td>
+              <td>  <strong>{{professor.email}}</strong></td>
+            </tr>
+            <tr>
+              <td>
+                office:
+              </td>
+              <td>
+                 <strong class="pull-right">{{professor.office}}</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p>
+      Semester Process
+    </p>
+    <div class="progress  m-b">
+      <div style="width: 25%" class="progress-bar progress-bar-primary">
+      </div>
+      <div style="width: 1%" class="progress-bar progress-bar-danger">
+      </div>
+      <div style="width: 25%" class="progress-bar progress-bar-primary">
+      </div>
+      <div style="width: 1%" class="progress-bar progress-bar-warning">
+      </div>
+      <div style="width: 25%" class="progress-bar progress-bar-primary">
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-lg-3">
-        <div class="ibox">
-            <div class="ibox-content">
-                <div class="pull-right dropdown">
-                    <button data-toggle="dropdown" class="dropdown-toggle btn-white" aria-haspopup="true" aria-expanded="false">
-                                  <i class="fa fa-angle-down"></i>
-                              </button>
-                    <ul class="dropdown-menu m-t-xs">
-                        <li><a href="#">Contact Professor</a></li>
-                        <li><a href="#">Make an Appointment</a></li>
-                    </ul>
-                </div>
-                <div class="profile-image">
-                    <img src="http://www.cse.psu.edu/~buu1/bhuvan-mots.jpg" class="img-circle circle-border m-b-md" alt="profile">
-                </div>
-                <a>
-                    <h3>Professor Name</h3>
-                </a>
-
-                <p class="small">
-                    Office Hour: 11:00AM - 13:00AM Mon/Thu <br> Office: 220 IST<br> Email: buu1@psu.edu<br>
-                    <br>
-                    <span class="font-bold">Rating: <i class="fa fa-star text-navy"></i><i class="fa fa-star text-navy"></i><i class="fa fa-star text-navy"></i><i class="fa fa-star text-navy"></i><i class="fa fa-star text-navy"></i> </span>
-
-                    <ul class="tag-list" style="padding: 0">
-                    <li><a href=""><i class="fa fa-tag"></i> Harsh</a></li>
-                    <li><a href=""><i class="fa fa-tag"></i> Huge Work Load</a></li>
-                    </ul>
-                    </p>
-                    <p>
-                        .
-                    </p>
-                    </div>
-                    </div>
-
-<div class="ibox">
-    <div class="ibox-content">
-        <h3>Class Notes</h3>
-
-        <div class="btn-group">
-            <a href="/#/classroom/id/demo/notes/" type="button" class="btn btn-success dropdown-toggle btn-lg">
-                <span class="fa fa-file"></span>
-            </a>
+      <div class="ibox">
+        <div class="ibox-content">
+          <h3>Class Files</h3>
+          <ul class="folder-list m-b-md" style="padding: 0">
+             <li>
+                <router-link :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}}"> 
+                  <i class="fa fa-align-justify"></i> All Files
+                </router-link>
+              </li>
+                <li v-show="showFolder('Note')">
+                <router-link :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}, query:{folder:'Note'}}"> 
+                  <i class="fa fa-certificate"></i> Notes <span class="label label-warning pull-right">16</span> 
+                </router-link>
+              </li>
+              <li v-show="showFolder('Lecture')">
+                <router-link :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}, query:{folder:'Lecture'}}"> 
+                  <i class="fa fa-inbox"></i> Lectures
+                </router-link>
+              </li>
+              <li v-show="showFolder('Lab')">
+                <router-link :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}, query:{folder:'Lab'}}"> 
+                  <i class="fa fa-flask"></i> Labs
+                </router-link>
+              </li>
+              <li v-show="showFolder('Homework')">
+                <router-link :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}, query:{folder:'Homework'}}"> 
+                  <i class="fa fa-file-text-o"></i> Homeworks <span class="label label-plain pull-right">2</span>
+                </router-link>
+              </li>
+              <li v-show="showFolder('Exam')">
+                <router-link :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}, query:{folder:'Exam'}}"> 
+                  <i class="fa fa-bolt"></i> Exams
+                </router-link>
+              </li>
+          </ul>
         </div>
-        <div class="btn-group">
-            <a type="button" class="btn btn-info dropdown-toggle btn-lg">
-                <span class="fa fa-stack-exchange"></span>
-            </a>
+      </div>
+      <div class="ibox">
+        <div class="ibox-content">
+          <h3>Your Classmates</h3>
+          <div class="user-friends row">
+            <a v-if="index!=18" class="col-sm-2" v-for="(student, index) in current_classroom.students">
+              <img alt="image" class="img-circle" v-if="student.avatar" :src="student.avatar.avatar1x">
+            <avatar v-else :size="42" :username="student.full_name"></avatar>
+              </a>
+          </div>
+          <p>
+            <router-link :to="{name:'classroomStudents', params:{classroom_id:$route.params.classroom_id}}" class="m-t">More..</router-link>
+          </p>
         </div>
-
-        <div class="btn-group">
-            <button type="button" class="btn btn-primary dropdown-toggle btn-lg " data-toggle="dropdown">
-                                   <span class="fa fa-file-picture-o"></span>
-                               </button>
+      </div>
+      <div class="ibox">
+        <div class="ibox-content">
+          <h3>Create a Group</h3>
+          <h5>Location</h5>
+          <input type="text" placeholder="IST 231" class="form-control">
+          <h5>Time</h5>
+          <input type="text" placeholder="4/12 5:00pm-6:00pm" class="form-control">
+          <h5>People invited</h5>
+          <div class="user-friends">
+            <a href=""><img alt="image" class="img-circle" src="~img/avatar/a1.jpg"></a>
+            <a href=""><img alt="image" class="img-circle" src="~img/avatar/a2.jpg"></a>
+            <a href=""><img alt="image" class="img-circle" src="~img/avatar/a4.jpg"></a>
+          </div>
+          <br>    
+          <a href="#" class="btn btn-sm btn-primary"> Invite!</a>
         </div>
-
-        <div class="btn-group">
-            <button type="button" class="btn btn-danger dropdown-toggle btn-lg" data-toggle="dropdown">
-                                   <span class="fa fa-file-powerpoint-o"></span>
-                               </button>
-        </div>
+      </div>
     </div>
-</div>
-<div class="ibox">
-    <div class="ibox-content">
-        <h3>Create a Group</h3>
-        <h5>People invited</h5>
-        <div class="user-friends">
-            <a href=""><img alt="image" class="img-circle" src="modules/classrooms/img/a4.jpg"></a>
-            <a href=""><img alt="image" class="img-circle" src="modules/classrooms/img/a5.jpg"></a>
-            <a href=""><img alt="image" class="img-circle" src="modules/classrooms/img/a6.jpg"></a>
-            <a href=""><img alt="add people" class="img-circle" src="modules/classrooms/img/a6.jpg"></a>
+    <div class="col-lg-5">
+      <div class="ibox float-e-margins" v-show="user_in_classroom" id="new-moment">
+        <div class="ibox-title">
+          <div class="input-group">
+            <textarea class="form-control" v-model.lazy="content" placeholder="Wanna say something?"></textarea>
+            <span class="input-group-addon btn btn-primary" @click="showDropzone"> <i class="fa fa-camera"></i> </span>
+          </div>
+          <upload v-if="dropzone" ref="dropzone"></upload>
         </div>
-        <h5>Location</h5>
-        <input type="text" placeholder="IST 231" class="form-control">
-        <h5>Time</h5>
-
-        <input type="text" placeholder="4/12 5:00pm-6:00pm" class="form-control">
-        <br>    
-        <a href="#" class="btn btn-sm btn-primary"> Invite!</a>
-    </div>
-</div>
-
-<div class="ibox">
-    <div class="ibox-content">
-        <h3>Your Classmates</h3>
-        <div class="user-friends">
-            <a href=""><img alt="image" class="img-circle" src="modules/classrooms/img/a3.jpg"></a>
-            <a href=""><img alt="image" class="img-circle" src="modules/classrooms/img/a1.jpg"></a>
-            <a href=""><img alt="image" class="img-circle" src="modules/classrooms/img/a2.jpg"></a>
-            <a href=""><img alt="image" class="img-circle" src="modules/classrooms/img/a4.jpg"></a>
-            <a href=""><img alt="image" class="img-circle" src="modules/classrooms/img/a5.jpg"></a>
-            <a href=""><img alt="image" class="img-circle" src="modules/classrooms/img/a6.jpg"></a>
-            <a href=""><img alt="image" class="img-circle" src="modules/classrooms/img/a7.jpg"></a>
-            <a href=""><img alt="image" class="img-circle" src="modules/classrooms/img/a8.jpg"></a>
-            <a href=""><img alt="image" class="img-circle" src="modules/classrooms/img/a2.jpg"></a>
-            <a href=""><img alt="image" class="img-circle" src="modules/classrooms/img/a1.jpg"></a>
-
+        <div class="ibox-content" style="padding:10px 10px 15px">
+          <div class="m-b-10">
+            <input type="checkbox" v-model="question" id="check" name="check" required>
+            <label for="check"></label> 
+            Post as a question
+            <button @click="postMoment"  data-dismiss="modal" class=" btn btn-sm btn-primary pull-right">Post</button>
+          </div>
         </div>
-        <p>
-            <a>More..</a></p>
-    </div>
-</div>
-
-</div>
-
-<div class="col-lg-5">
-    <div class="social-feed-box">
-        <div class="social-action">
-            <textarea class="form-control" placeholder="Wanna say something?"></textarea>
-            <input type="radio" name="gender" value="Problem">This is a problem
-            <button ng-click="addPost()" class="pull-right btn btn-sm btn-primary">Submit</button>
-            <br>
-        </div>
-
-    </div>
-    <div class="social-feed-box" ng-if="showPost">
-
+      </div>
+      <div class="social-feed-box" v-for="moment in moments">
         <div class="pull-right social-action dropdown">
-            <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-                                <i class="fa fa-angle-down"></i>
-                            </button>
-            <ul class="dropdown-menu m-t-xs">
-                <li><a href="#">Report</a></li>
-            </ul>
-        </div>
-
-        <div class="social-avatar">
-            <a href="" class="pull-left">
-                <img alt="image" src="modules/classrooms/img/a4.jpg">
-            </a>
-            <div class="media-body">
-                <a href="#">
-                                    Steve Lee
-                                </a>
-                <span class="label label-warning ">Question</span>
-                <small class="text-muted">Today - 04.10.2016</small>
-            </div>
-        </div>
-        <div class="social-body">
-            <p>
-                I'm stuck on Problem 4!
-            </p>
-
-            <div class="btn-group">
-                <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like this!</button>
-                <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> Comment</button>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="social-feed-box">
-
-        <div class="pull-right social-action dropdown">
-            <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-                                <i class="fa fa-angle-down"></i>
-                            </button>
-            <ul class="dropdown-menu m-t-xs">
-                <li><a href="#">Report</a></li>
-            </ul>
+          <button data-toggle="dropdown" class="dropdown-toggle btn-white"> <i class="fa fa-angle-down"></i></button>
+          <ul class="dropdown-menu m-t-xs">
+            <li><a @click="addReport(moment.id)">Report</a></li>
+            <li v-if="moment.creator.id === user_id"><a @click="delMoment(moment.id)">Delete</a></li>
+            <li v-if="moment.creator.id === user_id && moment.solved === false"><a @click="addSolve(moment.id)">Mark as solved</a></li>
+          </ul>
         </div>
         <div class="social-avatar">
-            <a href="" class="pull-left">
-                <img alt="image" src="modules/classrooms/img/a1.jpg">
-            </a>
-            <div class="media-body">
-                <a href="#">
-                                    Andrew Williams
-                                </a>
-                <span class=" label label-primary">Solved</span>
-                <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
-            </div>
+          <router-link :to="{name:'userDetail', params:{user_id:moment.creator.id}}" class="pull-left">
+          <img v-if="moment.creator.avatar" :src="moment.creator.avatar.avatar1x" alt="image" class="img-circle" >
+            <avatar v-else class="m-r" :size="40" :username="moment.creator.full_name"></avatar>
+          </router-link>
+          <div class="media-body">
+            <router-link :to="{name:'userDetail', params:{user_id:moment.creator.id}}">
+               {{moment.creator.full_name}}
+            </router-link>
+            <span v-show="moment.solved" class="label label-primary">Solved</span>
+            <span v-show="moment.solved!==null&&!moment.solved" class="label label-warning">Question</span>
+            <small class="text-muted">{{momentTime(moment.created)}}</small>
+          </div>
         </div>
         <div class="social-body">
-            <p>
-                So when is our first meeting?
-            </p>
-
-            <div class="btn-group">
-                <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like this!</button>
-                <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> Comment</button>
+          <p>
+            {{moment.content}}
+          </p>
+          <img v-if="moment.images" :src="moment.images" class="img-responsive">
+          <div class="btn-group">
+            <button @click="addLike(moment)" class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> {{moment.likes}} Like this! </button>
+            <button @click="showCommentBox(moment)" class="btn btn-white btn-xs"><i class="fa fa-comments"></i> Comment</button>
+          </div>
+        </div>
+        <div class="social-footer" v-show="moment.comments.length > 0 || moment.id === comment_id">
+          <div class="social-comment" v-for="comment in moment.comments">
+            <router-link :to="{name:'userDetail', params:{user_id:comment.creator.id}}" class="pull-left">
+            <img v-if="comment.creator.avatar" class="img-circle" alt="image" :src="comment.creator.avatar.avatar1x">
+              
+            <avatar v-else :size="32" class="m-r" :username="comment.creator.full_name"></avatar>
+            </router-link>
+            <div class="media-body">
+              <a href="">{{comment.creator.full_name}}</a> 
+              <small class="text-muted">{{momentTime(comment.created)}}</small>
+              <br/>
+              {{comment.content}}
             </div>
-        </div>
-
-    </div>
-
-    <div class="social-feed-box">
-
-        <div class="pull-right social-action dropdown">
-            <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-                                <i class="fa fa-angle-down"></i>
-                            </button>
-            <ul class="dropdown-menu m-t-xs">
-                <li><a href="#">Report</a></li>
-            </ul>
-        </div>
-        <div class="social-avatar">
+          </div>
+          <div class="social-comment" v-show="moment.id === comment_id">
             <a href="" class="pull-left">
-                <img alt="image" src="modules/classrooms/img/a6.jpg">
+
+            <img v-if="user_avatar" alt="image" :src="user_avatar.avatar1x">
+            <avatar v-else :size="42" :username="user_full_name"></avatar>
+            
             </a>
             <div class="media-body">
-                <a href="#">
-                                    Judy Hopps
-                                </a>
-                <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
+              <textarea class="form-control" v-model="comment_content" @keyup.enter="postComment($event)"  placeholder="Write comment..."></textarea>
             </div>
+          </div>
         </div>
-        <div class="social-body">
-            <p>
-                Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
-                Packages and web page editors now use Lorem Ipsum as their default model text.
-            </p>
-            <img src="modules/classrooms/img/gallery/3.jpg" class="img-responsive">
-            <div class="btn-group">
-                <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like this!</button>
-                <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> Comment</button>
-            </div>
-        </div>
-        <div class="social-footer">
-            <div class="social-comment">
-                <a href="" class="pull-left">
-                    <img alt="image" src="modules/classrooms/img/a1.jpg">
-                </a>
-                <div class="media-body">
-                    <a href="#">
-                                        Andrew Williams
-                                    </a> Internet tend to repeat predefined chunks as necessary, making
-                    this the first true generator on the Internet. It uses a dictionary of over 200 Latin words.
-                    <br/>
-                    <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 26 Like this!</a> -
-                    <small class="text-muted">12.06.2014</small>
-                </div>
-            </div>
-
-            <div class="social-comment">
-                <a href="" class="pull-left">
-                    <img alt="image" src="modules/classrooms/img/a2.jpg">
-                </a>
-                <div class="media-body">
-                    <a href="#">
-                                        Andrew Williams
-                                    </a> Making this the first true generator on the Internet. It uses
-                    a dictionary of.
-                    <br/>
-                    <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11 Like this!</a> -
-                    <small class="text-muted">10.07.2014</small>
-                </div>
-            </div>
-
-            <div class="social-comment">
-                <a href="" class="pull-left">
-                    <img alt="image" src="modules/classrooms/img/a8.jpg">
-                </a>
-                <div class="media-body">
-                    <a href="#">
-                                        Judy Hopps
-                                    </a> Making this the first true generator on the Internet. It uses
-                    a dictionary of.
-                    <br/>
-                    <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11 Like this!</a> -
-                    <small class="text-muted">10.07.2014</small>
-                </div>
-            </div>
-
-            <div class="social-comment">
-                <a href="" class="pull-left">
-                    <img alt="image" src="modules/classrooms/img/a3.jpg">
-                </a>
-                <div class="media-body">
-                    <textarea class="form-control" placeholder="Write comment..."></textarea>
-                </div>
-            </div>
-
-        </div>
-
+      </div>
     </div>
-</div>
-
-<div class="col-lg-4 m-b-lg">
-    <div id="vertical-timeline" class="vertical-container light-timeline no-margins">
-        <div class="vertical-timeline-block">
-            <div class="vertical-timeline-icon navy-bg">
-                <i class="fa fa-question"></i>
-            </div>
-
-            <div class="vertical-timeline-content">
-                <h2>Add a new due?</h2>
-                <textarea class="form-control" placeholder="Homwwork due tomorrow?"></textarea>
-
-                <a href="#" class="btn btn-sm btn-primary"> More info</a>
-                <span class="vertical-date">
-                                  <select>
-                                    <option value ="volvo">Homework</option>
-                                    <option value ="saab">Quiz</option>
-                                    <option value="opel">Exam</option>
-                                    <option value="audi">Meeting</option>
-                                  </select>
-                                </span>
-            </div>
-        </div>
-
-        <div class="vertical-timeline-block">
-            <div class="vertical-timeline-icon navy-bg">
-                <i class="fa fa-briefcase"></i>
-            </div>
-
-            <div class="vertical-timeline-content">
-                <h2>Group Meeting</h2>
-                <p>We have set up a group meeting on 135 Pattee Library.
-                </p>
-                <a href="#" class="btn btn-sm btn-primary"> More info</a>
-                <span class="vertical-date">
-                                            Today <br>
-                                            <small>Apr 1</small>
-                                        </span>
-            </div>
-        </div>
-
-        <div class="vertical-timeline-block">
-            <div class="vertical-timeline-icon yellow-bg">
-                <i class="fa fa-file-text"></i>
-            </div>
-
-            <div class="vertical-timeline-content">
-                <h2>Homework</h2>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since.</p>
-                <a href="#" class="btn btn-sm btn-success"> Download document </a>
-                <span class="vertical-date">
-                                            Tomorrow <br>
-                                            <small>Apr 11</small>
-                                        </span>
-            </div>
-        </div>
-
-        <div class="vertical-timeline-block">
-            <div class="vertical-timeline-icon red-bg">
-                <i class="fa fa-pencil"></i>
-            </div>
-
-            <div class="vertical-timeline-content">
-                <h2>In-class Quiz</h2>
-                <p>Go to shop and find some products. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's. </p>
-                <a href="#" class="btn btn-sm btn-danger">More Info</a>
-                <span class="vertical-date"> Tomorrow <br><small>Apr 11</small></span>
-            </div>
-        </div>
-
-        <div class="vertical-timeline-block">
-            <div class="vertical-timeline-icon yellow-bg">
-                <i class="fa fa-file-text"></i>
-            </div>
-
-            <div class="vertical-timeline-content">
-                <h2>Homework</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi
-                    placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
-                <a href="#" class="btn btn-sm btn-success"> Download document </a>
-                <span class="vertical-date"> In 2 days <br><small>Apr 12</small></span>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-</div>
+    <div class="col-lg-4">
+        <task></task>
+  </div>
 </template>
-
 <script>
+    import ClassroomTask from 'components/ClassroomTask'
+    import Upload from 'components/UploadImg'
+    import Avatar from 'vue-avatar'
     // VUe doesn't provide a method that can run after component load
     export default {
         name: 'Classroom',
+        components: {
+            'upload': Upload,
+            'task': ClassroomTask,
+            'avatar': Avatar.Avatar
+        },
+        data() {
+            return {
+                // moment
+                content: '',
+                question: false,
+                dropzone: false,
+                // comment
+                comment_content: '',
+                comment_id: -1,
+            }
+        },
         methods: {
+            // Data Loading
+            getClassroomData() {
+                this.$store.dispatch('getClassroom', this.$route.params.classroom_id)
+            },
+            // Classroom Add/Drop
             addClassroom() {
                 this.$store.dispatch('addClassroom', this.$route.params.classroom_id)
             },
-            getClassroomData() {
-                this.$store.dispatch('getClassrooms', this.$route.params.classroom_id)
+            remClassroom() {
+                this.$store.dispatch('remClassroom', this.$route.params.classroom_id)
             },
-            vaildUser() {
-                this.$store.dispatch('validateClassroom', this.$route.params.classroom_id)
+            // Moments 
+            addLike(moment) {
+                this.$store.dispatch('addMomentLike', moment.id)
+                moment.likes += 1
+            },
+            addReport(pk) {
+                this.$store.dispatch('reportMoment', pk)
+            },
+            addSolve(pk) {
+                this.$store.dispatch('solveMoment', pk)
+            },
+            postMoment() {
+                const formData = {
+                    content: this.content,
+                    classroom_id: this.$route.params.classroom_id,
+                    question: this.question
+                }
+                this.$store.dispatch('postMoment', formData).then(() => {
+                    this.content = ''
+                    this.dropzone = false
+                })
+
+            },
+            delMoment(pk) {
+                this.$store.dispatch('delMoment', pk)
+            },
+            postComment(e) {
+                e.preventDefault()
+                const data = {
+                    formData: { content: this.comment_content },
+                    id: this.comment_id,
+                }
+                this.$store.dispatch('postMomentComment', data)
+                this.comment_content = ''
+                this.comment_id = -1
+            },
+            // Tasks
+
+            // Utils
+            showFolder(name) {
+                for (let i in this.current_classroom.folders) {
+                    if (this.current_classroom.folders[i].name === name)
+                        return true
+                }
+                return false
+            },
+            momentTime(time) {
+                /* global moment:true */
+                return moment(time).fromNow()
+            },
+            // UI Switches
+            showAddTask() {
+                /* global $:true */
+                this.add_task = !this.add_task
+                if (this.add_task) this.add_task_button_class = 'fa fa-minus'
+                else this.add_task_button_class = 'fa fa-plus'
+                $('#add-task').modal('show')
+
+            },
+            showCommentBox(moment) {
+                this.comment_content = ''
+                this.comment_id = moment.id
+            },
+            showDropzone() {
+                this.dropzone = !this.dropzone
             }
         },
         computed: {
-            currentClassroom() {
+            current_classroom() {
                 return this.$store.getters.currentClassroom
             },
-            userInClassroom() {
+            user_in_classroom() {
                 return this.$store.getters.userInClassroom
+            },
+            moments() {
+                return this.$store.getters.classroomMoments
+            },
+            user_avatar() {
+                return this.$store.getters.userAvatar
+            },
+            user_full_name() {
+                return this.$store.getters.userFullName
+            },
+            professors() {
+                return this.$store.getters.classroomProfessors
+            },
+            user_id() {
+                return this.$store.getters.userID
             }
+
         },
-        data: function() {
-            return {}
-        },
-        created: function() {
-            // after component is created, load data
+        created() {
+            // Once the vue instance is created, load data
             this.getClassroomData()
         },
         watch: {
             // execute getClassroomData if route changes
-            '$route': 'getClassroomData'
+            '$route': 'getClassroomData',
+            // clear date info if user choosed different task type
+            // 'task_category': 'clearTask',
+            // 'task_subcategory': 'clearTask'
         },
     }
 
