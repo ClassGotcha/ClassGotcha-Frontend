@@ -4,12 +4,12 @@
       <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
          <div class="container">
             <div class="navbar-header">
-               <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                   <span class="sr-only">Toggle navigation</span>
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
-                  </button>-->
+                  </button>
                <router-link class="navbar-brand" :to="{name:'landing'}"> ClassGotcha Career </router-link>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
@@ -313,49 +313,49 @@ students around you.</p>
     span.navy {
         color: #1ab394;
     }
-    
+
     p.text-color {
         color: #676a6c;
     }
-    
+
     a.navy-link {
         color: #1ab394;
         text-decoration: none;
     }
-    
+
     a.navy-link:hover {
         color: #179d82;
     }
-    
+
     section p {
         color: #333;
         font-size: 14px;
     }
-    
+
     address {
         font-size: 13px;
     }
-    
+
     h1 {
         margin-top: 10px;
         font-size: 30px;
         font-weight: 200;
     }
-    
+
     .navy-line {
         width: 60px;
         height: 1px;
         margin: 60px auto 0;
         border-bottom: 2px solid #1ab394;
     }
-    
+
     .gray-line {
         width: 60px;
         height: 1px;
         margin: 60px auto 0;
         border-bottom: 2px solid #aeaeae;
     }
-    
+
     .navbar-wrapper {
         position: fixed;
         top: 0;
@@ -363,29 +363,29 @@ students around you.</p>
         left: 0;
         z-index: 200;
     }
-    
+
     .navbar-wrapper>.container {
         padding-right: 0;
         padding-left: 0;
     }
-    
+
     .navbar-wrapper .navbar {
         padding-right: 15px;
         padding-left: 15px;
     }
-    
+
     .navbar-default.navbar-scroll {
         background-color: #fff;
         border-color: #fff;
         padding: 15px 0;
     }
-    
+
     .navbar-default {
         background-color: transparent;
         border-color: transparent;
         transition: all 0.3s ease-in-out 0s;
     }
-    
+
     .navbar-default .nav li a {
         color: #fff;
         font-family: 'Open Sans', helvetica, arial, sans-serif;
@@ -394,134 +394,136 @@ students around you.</p>
         text-transform: uppercase;
         font-size: 14px;
     }
-    
+
     .nav>li.active {
         border: none;
         background: inherit;
     }
-    
+
     .navbar-nav>li>a {
         padding-top: 25px;
         border-top: 6px solid transparent;
     }
-    
+
     .navbar-default .navbar-nav>.active>a,
     .navbar-default .navbar-nav>.active>a:hover {
         background: transparent;
         color: #fff;
         border-top: 6px solid #1ab394;
     }
-    
+
     .navbar-default .navbar-nav>li>a:hover,
     .navbar-default .navbar-nav>li>a:focus {
         color: #1ab394;
         background: inherit;
     }
-    
+
     .navbar-default .navbar-nav>.active>a:focus {
         background: transparent;
         color: #fff;
     }
-    
+
     .navbar-default .navbar-nav>.active>a:focus {
         background: transparent;
         color: #ffffff;
     }
-    
+
     .navbar-default.navbar-scroll .navbar-nav>.active>a:focus {
         background: transparent;
         color: inherit;
     }
-    
+
     .navbar-scroll.navbar-default .nav li a {
         color: #676a6c;
     }
-    
+
     .navbar-scroll.navbar-default .nav li a:hover {
         color: #1ab394;
     }
-    
+
     .navbar-wrapper .navbar.navbar-scroll {
         padding-top: 0;
         padding-bottom: 0;
         border-bottom: 1px solid #e7eaec;
         border-radius: 0;
     }
-    
+
     .nav>li.active {
         border: none;
         background: inherit;
     }
-    
+
     .nav>li>a {
         padding: 25px 10px 15px 10px;
     }
-    
+
     .navbar-scroll .navbar-nav>li>a {
         padding: 20px 10px;
     }
-    
+
     .navbar-default .navbar-nav>.active>a,
     .navbar-default .navbar-nav>.active>a:hover {
         border-top: 6px solid #1ab394;
     }
-    
+
     .navbar-fixed-top {
         border: none !important;
     }
-    
+
     .navbar-fixed-top.navbar-scroll {
         border-bottom: 1px solid #e7eaec !important;
     }
-    
+
     .navbar-default .navbar-brand {
+        margin-top: 20px;
+        border-radius: 5px;
         font-size: 20px;
+        padding: 10px;
+        height: auto;
         color: #e7eaec;
         display: block;
-        border-radius: 0 0 5px 5px;
         font-weight: 700;
         transition: all 0.3s ease-in-out 0s;
     }
-    
+
     .navbar.navbar-scroll .navbar-brand {
-        margin-top: 15px;
+        margin-top: 16px;
         border-radius: 5px;
         font-size: 20px;
         padding: 10px;
         height: auto;
         color: #1ab394;
         display: block;
-        border-radius: 0 0 5px 5px;
         font-weight: 700;
         transition: all 0.3s ease-in-out 0s;
     }
-    
+
     .header-back {
         height: 470px;
         width: 100%;
     }
-    
+
     .header-back.one {
         background: url('../../static/img/landing/header_two.jpg') 50% 0 no-repeat;
     }
-    
+
     .header-back.two {
         background: url('../../static/img/landing/header_two.jpg') 50% 0 no-repeat;
     }
-    
+
     .carousel {
         height: 470px;
     }
-    
+
     .carousel-caption {
         z-index: 10;
     }
-    
+
     .carousel .item {
         height: 470px;
         background-color: #777;
     }
-    
+
     .carousel-inner>.item>img {
         position: absolute;
         top: 0;
@@ -529,50 +531,50 @@ students around you.</p>
         min-width: 100%;
         height: 470px;
     }
-    
+
     .carousel-fade .carousel-inner .item {
         opacity: 0;
         -webkit-transition-property: opacity;
         transition-property: opacity;
     }
-    
+
     .carousel-fade .carousel-inner .active {
         opacity: 1;
     }
-    
+
     .carousel-fade .carousel-inner .active.left,
     .carousel-fade .carousel-inner .active.right {
         left: 0;
         opacity: 0;
         z-index: 1;
     }
-    
+
     .carousel-fade .carousel-inner .next.left,
     .carousel-fade .carousel-inner .prev.right {
         opacity: 1;
     }
-    
+
     .carousel-fade .carousel-control {
         z-index: 2;
     }
-    
+
     .carousel-control.left,
     .carousel-control.right {
         background: none;
     }
-    
+
     .carousel-control {
         width: 6%;
     }
-    
+
     .carousel-inner .container {
         position: relative;
     }
-    
+
     .carousel-inner {
         overflow: visible;
     }
-    
+
     .carousel-caption {
         position: absolute;
         top: 100px;
@@ -581,7 +583,7 @@ students around you.</p>
         right: auto;
         text-align: left;
     }
-    
+
     .carousel-caption {
         position: absolute;
         top: 100px;
@@ -590,21 +592,21 @@ students around you.</p>
         right: auto;
         text-align: left;
     }
-    
+
     .carousel-caption.blank {
         top: 140px;
     }
-    
+
     .carousel-image {
         position: absolute;
         right: 10px;
         top: 150px;
     }
-    
+
     .carousel-indicators {
         padding-right: 60px;
     }
-    
+
     .carousel-caption h1 {
         font-weight: 700;
         font-size: 38px;
@@ -612,86 +614,86 @@ students around you.</p>
         text-shadow: none;
         letter-spacing: -1.5px;
     }
-    
+
     .carousel-caption p {
         font-weight: 700;
         text-transform: uppercase;
         text-shadow: none;
     }
-    
+
     .caption-link {
         color: #fff;
         margin-left: 10px;
         text-transform: capitalize;
         font-weight: 400;
     }
-    
+
     .caption-link:hover {
         text-decoration: none;
         color: inherit;
     }
-    
+
     .services {
         padding-top: 60px;
     }
-    
+
     .services h2 {
         font-size: 20px;
         letter-spacing: -1px;
         font-weight: 600;
         text-transform: uppercase;
     }
-    
+
     .features-block {
         margin-top: 40px;
     }
-    
+
     .features-text {
         margin-top: 40px;
     }
-    
+
     .features small {
         color: #1ab394;
     }
-    
+
     .features h2 {
         font-size: 18px;
         margin-top: 5px;
     }
-    
+
     .features-text-alone {
         margin: 40px 0;
     }
-    
+
     .features-text-alone h1 {
         font-weight: 200;
     }
-    
+
     .features-icon {
         color: #1ab394;
         font-size: 40px;
     }
-    
+
     .navy-section {
         margin-top: 60px;
         background: #1ab394;
         color: #fff;
         padding: 20px 0;
     }
-    
+
     .gray-section {
         background: #f4f4f4;
         margin-top: 60px;
     }
-    
+
     .team-member {
         text-align: center;
     }
-    
+
     .team-member img {
         margin: auto;
     }
-    
+
     .social-icon a {
         background: #1ab394;
         color: #fff;
@@ -701,44 +703,44 @@ students around you.</p>
         display: block;
         border-radius: 50px;
     }
-    
+
     .social-icon a:hover {
         background: #179d82;
     }
-    
+
     .img-small {
         height: 88px;
         width: 88px;
     }
-    
+
     .pricing-plan {
         margin: 20px 30px 0 30px;
         border-radius: 4px;
     }
-    
+
     .pricing-plan.selected {
         transform: scale(1.1);
         background: #f4f4f4;
     }
-    
+
     .pricing-plan li {
         padding: 10px 16px;
         border-top: 1px solid #e7eaec;
         text-align: center;
         color: #aeaeae;
     }
-    
+
     .pricing-plan .pricing-price span {
         font-weight: 700;
         color: #1ab394;
     }
-    
+
     li.pricing-desc {
         font-size: 13px;
         border-top: none;
         padding: 20px 16px;
     }
-    
+
     li.pricing-title {
         background: #1ab394;
         color: #fff;
@@ -747,55 +749,55 @@ students around you.</p>
         font-size: 22px;
         font-weight: 600;
     }
-    
+
     .testimonials {
         padding-top: 80px;
         padding-bottom: 90px;
         background-color: #1ab394;
         background-image: url('../../static/img/landing/avatar_all.png');
     }
-    
+
     .big-icon {
         font-size: 56px !important;
     }
-    
+
     .features .big-icon {
         color: #1ab394 !important;
     }
-    
+
     .contact {
         background-image: url('../../static/img/landing/word_map.png');
         background-position: 50% 50%;
         background-repeat: no-repeat;
         margin-top: 60px;
     }
-    
+
     section.timeline {
         padding-bottom: 30px;
     }
-    
+
     section.comments {
         padding-bottom: 80px;
     }
-    
+
     .comments-avatar {
         margin-top: 25px;
         margin-left: 22px;
         margin-bottom: 25px;
     }
-    
+
     .comments-avatar .commens-name {
         font-weight: 600;
         font-size: 14px;
     }
-    
+
     .comments-avatar img {
         width: 42px;
         height: 42px;
         border-radius: 50%;
         margin-right: 10px;
     }
-    
+
     .bubble {
         position: relative;
         height: 120px;
@@ -807,7 +809,7 @@ students around you.</p>
         font-style: italic;
         font-size: 14px;
     }
-    
+
     .bubble:after {
         content: '';
         position: absolute;
@@ -820,7 +822,7 @@ students around you.</p>
         bottom: -15px;
         left: 30px;
     }
-    
+
     .btn-primary.btn-outline:hover,
     .btn-success.btn-outline:hover,
     .btn-info.btn-outline:hover,
@@ -828,7 +830,7 @@ students around you.</p>
     .btn-danger.btn-outline:hover {
         color: #fff;
     }
-    
+
     .btn-primary {
         background-color: #1ab394;
         border-color: #1ab394;
@@ -837,7 +839,7 @@ students around you.</p>
         padding: 10px 20px;
         font-weight: 600;
     }
-    
+
     .btn-primary:hover,
     .btn-primary:focus,
     .btn-primary:active,
@@ -847,13 +849,13 @@ students around you.</p>
         border-color: #179d82;
         color: #FFFFFF;
     }
-    
+
     .btn-primary:active,
     .btn-primary.active,
     .open .dropdown-toggle.btn-primary {
         background-image: none;
     }
-    
+
     .btn-primary.disabled,
     .btn-primary.disabled:hover,
     .btn-primary.disabled:focus,
@@ -872,13 +874,13 @@ students around you.</p>
         background-color: #1dc5a3;
         border-color: #1dc5a3;
     }
-    
+
     .shadow {
         -webkit-box-shadow: 10px 10px 55px -1px rgba(0, 0, 0, 0.69);
         -moz-box-shadow: 10px 10px 55px -1px rgba(0, 0, 0, 0.69);
         box-shadow: 10px 10px 55px -1px rgba(0, 0, 0, 0.69);
     }
-    
+
     @media (min-width: 768px) {
         {
             /* Navbar positioning foo */
@@ -908,13 +910,13 @@ students around you.</p>
             font-size: 50px;
         }
     }
-    
+
     @media (max-width: 992px) {
         .carousel-image {
             display: none;
         }
     }
-    
+
     @media (max-width: 768px) {
         .carousel-caption,
         .carousel-caption.blank {
@@ -955,11 +957,8 @@ students around you.</p>
             padding: 20px 10px;
         }
         .navbar .navbar-brand {
+            color: #1ab394;
             margin-top: 6px;
-            border-radius: 5px;
-            font-size: 12px;
-            padding: 10px;
-            height: auto;
         }
         .navbar-wrapper .navbar {
             padding-left: 15px;
@@ -973,13 +972,13 @@ students around you.</p>
             display: none;
         }
     }
-    
+
     @media (min-width: 992px) {
         .featurette-heading {
             margin-top: 120px;
         }
     }
-    
+
     @media (max-width: 768px) {
         .navbar .navbar-header {
             display: block;
