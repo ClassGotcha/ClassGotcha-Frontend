@@ -194,7 +194,7 @@ students around you.</p>
    </div>
 </section>
  
-<section id="contact" class="gray-section contact">
+<section id="contactus" class="gray-section contact">
    <div class="container">
                   <div class="row m-b-lg">
                     <div class="col-lg-12 text-center">

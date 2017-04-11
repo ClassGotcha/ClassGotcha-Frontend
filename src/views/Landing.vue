@@ -159,6 +159,7 @@
                      </li>
                   </ul>
                </div>
+    
             </div>
             <div class="col-sm-4">
                <div class="team-member">
@@ -176,6 +177,13 @@
                </div>
             </div>
          </div>
+         <br>
+         <div class="row m-d">
+            <div class="text-center">
+            <router-link  class="btn btn-lg btn-primary" :to="{name:'jobs'}">Join our team</router-link>
+            </div>
+         </div>
+         <br>
    </section>
 
 <section id="contact" class=" contact">
