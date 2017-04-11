@@ -23,7 +23,7 @@ import Forum from 'views/Forum'
 import Groups from 'views/Groups'
 import Post from 'views/Post'
 import Landing from 'views/Landing'
-import Career from 'views/Career'
+import Jobs from 'views/Jobs'
 
 Vue.use(Router)
 Vue.use(Resource)
@@ -40,7 +40,7 @@ export default new Router({
                 },
                 {
                     path: '/jobs',
-                    component: Career,
+                    component: Jobs,
                     name: 'jobs'
                 }
             ]
