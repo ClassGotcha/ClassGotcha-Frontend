@@ -35,8 +35,7 @@
             <div class="container">
                <div class="carousel-caption">
                   <h1>
-                     Save you from <br>
-                     college
+                     make college life <br>easier
                   </h1>
                   <p>Your personal assistant for courses organizing.</p>
                   <p>
