@@ -144,7 +144,6 @@ const actions = {
         return userApi.register(formData)
             .then((response) => {
                 console.log('register res', response)
-
                 commit(types.REGSITER_SUCCESS, response)
                 dispatch('getSelf')
             })
@@ -161,7 +160,6 @@ const actions = {
                 dispatch('getSelf')
                 dispatch('getTasks')
                 dispatch('getFriends')
-                dispatch('setSockets')
                 router.push({ path: 'home' })
 
             })
@@ -179,9 +177,7 @@ const actions = {
                 }
                 dispatch('getSelf')
                 dispatch('getTasks')
-
                 dispatch('getFriends')
-                dispatch('setSockets')
             })
             .catch((error) => {
                 if (rootState.route.name !== 'register') {
@@ -196,9 +192,7 @@ const actions = {
                 commit(types.REFRESH_SUCCESS, response)
                 dispatch('getSelf')
                 dispatch('getTasks')
-
                 dispatch('getFriends')
-                dispatch('setSockets')
             })
             .catch((error) => {
                 if (rootState.route.name !== 'login' && rootState.route.name !== 'register' && rootState.route.name !== 'landing' && rootState.route.name !== 'jobs')
@@ -263,7 +257,16 @@ const actions = {
                 commit(types.LOG_ERROR, error)
             })
     },
-
+    getMoments({ commit, dispatch }, pk) {
+        return userApi.getMoments()
+            .then((response) => {
+                commit(types.LOAD_MOMENTS, response)
+                return Promise.resolve(response)
+            })
+            .catch((error) => {
+                commit(types.LOG_ERROR, error)
+            })
+    },
     getTasks({ commit }) {
         return userApi.getTasks()
             .then((response) => {
@@ -459,7 +462,9 @@ const mutations = {
     [types.LOAD_PENDING_FRIENDS](state, response) {
         state.pending_friends = response
     },
-
+    [types.LOAD_MOMENTS](state, response) {
+        state.moments = response
+    },
     [types.LOAD_TASKS](state, response) {
         state.tasks = response
     },
