@@ -279,12 +279,14 @@ const actions = {
             })
     },
     getUser({ commit }, pk) {
-        userApi.getUser(pk)
+        return userApi.getUser(pk)
             .then((response) => {
                 commit(types.LOAD_USER, response)
+                return Promise.resolve(response)
             })
             .catch((error) => {
                 commit(types.LOG_ERROR, error)
+                return Promise.reject()
             })
     },
     addClassroom({ commit, dispatch }, pk) {

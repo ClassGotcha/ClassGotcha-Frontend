@@ -13,6 +13,11 @@
             <li><span class="m-r-sm text-muted welcome-message">
                </span>
             </li>
+            <li>
+               <a class="right-sidebar-toggle">
+               <i class="fa fa-user-plus"></i>
+               </a>
+            </li>
             <li class="dropdown">
                <a class="dropdown-toggle count-info" data-toggle="dropdown">
                <i class="fa fa-bell"></i><span class="label label-warning" v-show="pending_friends.length">{{pending_friends.length}}</span>   
@@ -22,22 +27,16 @@
                <ul v-else class="dropdown-menu dropdown-messages">
                   <li v-for="friend in pending_friends">
                      <div class="dropdown-messages-box">
-                        <router-link :to="{name:'userDetail', params:{user_id:friend.id}}" class="pull-left">
-                           <img alt="image" class="img-circle" src="img/a7.jpg">
-                        </router-link>
-                        <div>
-                           <small class="pull-right"></small>
-                           <strong>{{friend.full_name}}</strong> sent you a friend request<br>
-                           <small class="btn-group pull-right">
-                              <a class="btn btn-xs btn-primary" @click="acceptFriend(friend.id)">
-                                  <i class="fa fa-user-plus"></i> Accept
-                              </a>
-                              <a  class="btn btn-xs btn-white" @click="denyFriend(friend.id)">
-                                  <i class="fa fa-user"></i> Ignore 
-                              </a>
-                           </small>
-                        </div>
-                  <li class="divider"></li>
+                     <div class="">
+                     <router-link :to="{name:'userDetail', params:{user_id:friend.id}}">{{friend.full_name}}</router-link>  Friend request
+                                    <span class="pull-right text-muted small"><div class="btn-group">
+                                <button class="btn btn-xs btn-primary" type="button" @click="acceptFriend(friend.id)">Accept</button>
+                                <button class="btn btn-xs btn-white" type="button" @click="denyFriend(friend.id)">Dismiss</button>
+                                
+                            </div>
+</span>
+
+                    </div>
                   </div>
                   </li>
                </ul>
