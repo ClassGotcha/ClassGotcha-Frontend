@@ -18,6 +18,16 @@ export default {
             .then((response) => Promise.resolve(response.data))
             .catch((error) => Promise.reject(error))
     },
+    confirm(token) {
+        return Vue.http.post(API_ROOT + 'account/verify/' + token + '/')
+            .then((response) => Promise.resolve(response.data))
+            .catch((error) => Promise.reject(error))
+    },
+    reset(token) {
+        return Vue.http.post(API_ROOT + 'account/forget/' + token + '/')
+            .then((response) => Promise.resolve(response.data))
+            .catch((error) => Promise.reject(error))
+    },
     passwordReset(formData) {
         return Vue.http.post(API_ROOT + 'account/reset/', formData)
             .then((response) => Promise.resolve(response.data))

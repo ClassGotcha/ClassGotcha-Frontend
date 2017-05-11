@@ -7,11 +7,15 @@ import DefaultLayout from 'components/DefaultLayout'
 import App from 'components/App'
 
 import Home from 'views/Home'
+import Register from 'views/auth/Register'
+import Login from 'views/auth/Login'
+import Reset from 'views/auth/Reset'
+import ResetEmail from 'views/auth/ResetEmail'
+import Confirm from 'views/auth/Confirm'
+
 import AddClassroom from 'views/AddClassroom'
 import Classroom from 'views/Classroom'
 import ClassroomStudents from 'views/ClassroomStudents'
-import Register from 'views/Register'
-import Login from 'views/Login'
 import Profile from 'views/Profile'
 import Chat from 'views/Chat'
 import Notes from 'views/Notes'
@@ -57,6 +61,18 @@ export default new Router({
                 path: '/register',
                 component: Register,
                 name: 'register'
+            }, {
+                path: '/reset',
+                component: Reset,
+                name: 'reset'
+            }, {
+                path: '/resetemail',
+                component: ResetEmail,
+                name: 'resetemail'
+            }, {
+                path: '/confirm',
+                component: Confirm,
+                name: 'confirm'
             }]
         }, {
             // use default layout

@@ -7,7 +7,7 @@
             <p>ClassGotcha is a tool that makes the life of college students easier.</p>
             <p> It can help you organize, communicate and share learning materials at one place.</p>
             <p> All kinds of learning activities are automatically pushed to your calendar, including but not limited to homework, quiz, exams and projects. </p>
-            <p>If you want to ask questions and talk to classmates, this facebook like timeline and instant chatroom will make everyone in your class easy to find.</p>
+            <p>If you want to ask questions and talk to classmates, the classroom chalkboard and instant chatroom will make everyone in your class easy to find.</p>
             <p> You can also share notes to earn money, and be accessible to all the notes shared by your classmates.
             </p>
 
@@ -58,13 +58,14 @@
         },
         methods: {
             login() {
-                var formData = {
+                const formData = {
                     'email': this.email,
                     'password': this.password
                 }
                 this.$store.dispatch('login', formData)
                     .catch(() => {
                         this.errorMsg = 'Unable to login with provided email and password.'
+                        this.password = ''
                     })
             },
         }
