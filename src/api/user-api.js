@@ -23,8 +23,18 @@ export default {
             .then((response) => Promise.resolve(response.data))
             .catch((error) => Promise.reject(error))
     },
-    reset(token) {
-        return Vue.http.post(API_ROOT + 'account/forget/' + token + '/')
+    forgetSendEmail(formData) {
+        return Vue.http.post(API_ROOT + 'account/forget/', formData)
+            .then((response) => Promise.resolve(response.data))
+            .catch((error) => Promise.reject(error))
+    },
+    forgetTokenVerify(token) {
+        return Vue.http.get(API_ROOT + 'account/forget/' + token + '/')
+            .then((response) => Promise.resolve(response.data))
+            .catch((error) => Promise.reject(error))
+    },
+    forgetUpdate(formData) {
+        return Vue.http.put(API_ROOT + 'account/forget/', formData)
             .then((response) => Promise.resolve(response.data))
             .catch((error) => Promise.reject(error))
     },

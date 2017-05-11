@@ -9,8 +9,8 @@ import App from 'components/App'
 import Home from 'views/Home'
 import Register from 'views/auth/Register'
 import Login from 'views/auth/Login'
-import Reset from 'views/auth/Reset'
-import ResetEmail from 'views/auth/ResetEmail'
+import Forget from 'views/auth/Forget'
+import ForgetSendEmail from 'views/auth/ForgetSendEmail'
 import Confirm from 'views/auth/Confirm'
 
 import AddClassroom from 'views/AddClassroom'
@@ -54,26 +54,28 @@ export default new Router({
             path: '/authlayout',
             component: AuthLayout,
             children: [{
-                path: '/login',
-                component: Login,
-                name: 'login'
-            }, {
-                path: '/register',
-                component: Register,
-                name: 'register'
-            }, {
-                path: '/reset',
-                component: Reset,
-                name: 'reset'
-            }, {
-                path: '/resetemail',
-                component: ResetEmail,
-                name: 'resetemail'
-            }, {
-                path: '/confirm',
-                component: Confirm,
-                name: 'confirm'
-            }]
+                    path: '/login',
+                    component: Login,
+                    name: 'login'
+                }, {
+                    path: '/register',
+                    component: Register,
+                    name: 'register'
+                }, {
+                    path: '/forget',
+                    component: Forget,
+                    name: 'forget',
+                },
+                {
+                    path: '/forget/email',
+                    component: ForgetSendEmail,
+                    name: 'forgetemail'
+                }, {
+                    path: '/confirm',
+                    component: Confirm,
+                    name: 'confirm'
+                }
+            ]
         }, {
             // use default layout
             path: '/deafaultlayout',

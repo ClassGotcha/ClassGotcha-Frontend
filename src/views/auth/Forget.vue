@@ -9,8 +9,6 @@
                                 <h2><i class="fa fa-times"></i> Ooops, Something went wrong</h2>
                                 <p class="text-danger">Error Message: Invalid token</p>
                                 <p>Tips: Did you use the right link?</p>
-
-                                
                             </div>
                         </div>
                         <div v-else>

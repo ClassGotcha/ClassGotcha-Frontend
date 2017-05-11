@@ -178,8 +178,26 @@ const actions = {
                 return Promise.reject(error)
             })
     },
-    reset({ dispatch }, token) {
-        return userApi.reset(token)
+    forgetSendEmail({ dispatch }, formData) {
+        return userApi.forgetSendEmail(formData)
+            .then(() => {
+                return Promise.resolve()
+            })
+            .catch((error) => {
+                return Promise.reject(error)
+            })
+    },
+    forgetTokenVerify({ dispatch }, token) {
+        return userApi.forgetTokenVerify(token)
+            .then(() => {
+                return Promise.resolve()
+            })
+            .catch((error) => {
+                return Promise.reject(error)
+            })
+    },
+    forgetUpdate({ dispatch }, formData) {
+        return userApi.forgetUpdate(formData)
             .then(() => {
                 return Promise.resolve()
             })
@@ -202,10 +220,10 @@ const actions = {
                 if (rootState.route.name !== 'login' &&
                     rootState.route.name !== 'register' &&
                     rootState.route.name !== 'confirm' &&
-                    rootState.route.name !== 'reset' &&
                     rootState.route.name !== 'landing' &&
                     rootState.route.name !== 'jobs' &&
-                    rootState.route.name !== 'resetemail'
+                    rootState.route.name !== 'forget' &&
+                    rootState.route.name !== 'forgetemail'
                 ) {
                     dispatch('tokenRefresh', formData)
                 }
