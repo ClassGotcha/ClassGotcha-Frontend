@@ -11,14 +11,32 @@
                                 <p>Tips: Did you use the right link?</p>
                             </div>
                         </div>
-                        <div v-else>
+
+                        <div class="ibox">------------------------
                          <div class="ibox-content">
-                                <h2><i class="fa fa-check"></i> Congratulations</h2>
-                                <p>Your email address has been proved!</p>
-                                <router-link :to="{name:'home'}" class="btn btn-primary">Continue</router-link>
+                                <h2>Password Reset</h2>
+                                   <div class="form-group">
+                            <span class="help-block m-b-none">New Password</span>
+                                    <input type="password" v-model="password1" class="form-control" placeholder="Password" required>
+                                       </div>
+                                       <div class="form-group">
+                            <span class="help-block m-b-none">Re-enter Password</span>
+                                    <input type="password" v-model="password2" class="form-control" placeholder="Password" required>
+                                       </div>
+
+                                <router-link :to="{name:'home'}" class="btn btn-primary">Confirm</router-link>
+                            </div>
+                        </div>
+
+                        <div class="ibox" >
+                            <div class="ibox-content">
+                                <h2><i class="fa fa-check"></i> You are all set!</h2>
+                                <p>You have successfully reset your password.</p>
+                                <router-link :to="{name:'login'}" class="btn btn-primary">Login</router-link>
                             </div>
                         </div>
                     </div>
+                    
         </div>
   </div>
 
@@ -27,23 +45,24 @@
 <script>
     import Spinner from 'components/Spinner'
     export default {
-        name: 'reset',
+        name: 'forget',
         components: {
             'spinner': Spinner
         },
         data() {
             return {
                 loaded: false,
-                title: '',
+                password1: '',
+                password2: '',
                 confirmed: false
             }
         },
         methods: {
-            confirm() {
+            toeknVerify() {
                 if (typeof this.$route.qurey === 'undefined') {
                     this.loaded = true
                 } else {
-                    this.$store.dispatch('confirm', this.$route.qurey.token)
+                    this.$store.dispatch('forgetTokenVerify', this.$route.qurey.token)
                         .then(() => {
                             this.loaded = true
                             this.confirmed = true
@@ -55,7 +74,7 @@
             },
         },
         created() {
-            this.confirm()
+            this.toeknVerify()
         }
     }
 

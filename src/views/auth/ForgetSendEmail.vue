@@ -15,10 +15,9 @@
                                 </span>
                             </div>
                             <br>
-                            <p v-if="loaded && !confirmed" class="text-danger">We couldn't find the account with this email address</p>
+                            <p v-if="loaded && !confirmed" class="text-danger">We couldn't find any accounts with this email address</p>
                         </div>
-                        <div v-else-if="loaded && confirmed">
-                            <br>                            
+                        <div v-else-if="loaded && confirmed">                
                             <h3><i class="fa fa-check text-info"></i> We have sent a message that containing a link to reset your password. </h3>
                         </div>
                     </div>
@@ -32,7 +31,7 @@
 <script>
     import Spinner from 'components/Spinner'
     export default {
-        name: 'confirm',
+        name: 'ForgetSendEmail',
         components: {
             'spinner': Spinner
         },
