@@ -18,6 +18,26 @@ export default {
             .then((response) => Promise.resolve(response.data))
             .catch((error) => Promise.reject(error))
     },
+    confirm(token) {
+        return Vue.http.post(API_ROOT + 'account/verify/' + token + '/')
+            .then((response) => Promise.resolve(response.data))
+            .catch((error) => Promise.reject(error))
+    },
+    forgetSendEmail(formData) {
+        return Vue.http.post(API_ROOT + 'account/forget/', formData)
+            .then((response) => Promise.resolve(response.data))
+            .catch((error) => Promise.reject(error))
+    },
+    forgetTokenVerify(token) {
+        return Vue.http.get(API_ROOT + 'account/forget/' + token + '/')
+            .then((response) => Promise.resolve(response.data))
+            .catch((error) => Promise.reject(error))
+    },
+    forgetUpdate(formData) {
+        return Vue.http.patch(API_ROOT + 'account/forget/' + formData.token + '/', formData)
+            .then((response) => Promise.resolve(response.data))
+            .catch((error) => Promise.reject(error))
+    },
     passwordReset(formData) {
         return Vue.http.post(API_ROOT + 'account/reset/', formData)
             .then((response) => Promise.resolve(response.data))

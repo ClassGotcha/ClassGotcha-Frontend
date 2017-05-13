@@ -143,7 +143,7 @@ const actions = {
     register({ commit, dispatch }, formData) {
         return userApi.register(formData)
             .then((response) => {
-                console.log('register res', response)
+                // console.log('register res', response)
                 commit(types.REGSITER_SUCCESS, response)
                 dispatch('getSelf')
             })
@@ -155,7 +155,7 @@ const actions = {
     login({ commit, dispatch }, formData) {
         return userApi.login(formData)
             .then((response) => {
-                console.log(response)
+                // console.log(response)
                 commit(types.LOGIN_SUCCESS, response)
                 dispatch('getSelf')
                 dispatch('getTasks')
@@ -168,11 +168,48 @@ const actions = {
                 return Promise.reject(error)
             })
     },
+    confirm({ dispatch }, token) {
+        return userApi.confirm(token)
+            .then(() => {
+                dispatch('getSelf')
+                return Promise.resolve()
+            })
+            .catch((error) => {
+                return Promise.reject(error)
+            })
+    },
+    forgetSendEmail({ dispatch }, formData) {
+        return userApi.forgetSendEmail(formData)
+            .then(() => {
+                return Promise.resolve()
+            })
+            .catch((error) => {
+                return Promise.reject(error)
+            })
+    },
+    forgetTokenVerify({ dispatch }, token) {
+        return userApi.forgetTokenVerify(token)
+            .then(() => {
+                return Promise.resolve()
+            })
+            .catch((error) => {
+                return Promise.reject(error)
+            })
+    },
+    forgetUpdate({ dispatch }, formData) {
+        return userApi.forgetUpdate(formData)
+            .then(() => {
+                return Promise.resolve()
+            })
+            .catch((error) => {
+                return Promise.reject(error)
+            })
+    },
     tokenVerify({ rootState, commit, dispatch }, formData) {
         userApi.tokenVerify(formData)
             .then((response) => {
                 commit(types.VERIFY_SUCCESS, response)
-                if (rootState.route.name === 'login' || rootState.route.name === 'register' || rootState.route.name === 'landing') {
+                if (rootState.route.name === 'login') {
                     router.push({ path: 'home' })
                 }
                 dispatch('getSelf')
@@ -180,7 +217,14 @@ const actions = {
                 dispatch('getFriends')
             })
             .catch((error) => {
-                if (rootState.route.name !== 'register') {
+                if (rootState.route.name !== 'login' &&
+                    rootState.route.name !== 'register' &&
+                    rootState.route.name !== 'confirm' &&
+                    rootState.route.name !== 'landing' &&
+                    rootState.route.name !== 'jobs' &&
+                    rootState.route.name !== 'forget' &&
+                    rootState.route.name !== 'forgetemail'
+                ) {
                     dispatch('tokenRefresh', formData)
                 }
                 commit(types.LOG_ERROR, error)
@@ -195,8 +239,7 @@ const actions = {
                 dispatch('getFriends')
             })
             .catch((error) => {
-                if (rootState.route.name !== 'login' && rootState.route.name !== 'register' && rootState.route.name !== 'landing' && rootState.route.name !== 'jobs')
-                    commit(types.LOGIN_FAILED)
+                commit(types.LOGIN_FAILED)
                 commit(types.LOG_ERROR, error)
             })
     },
@@ -279,12 +322,14 @@ const actions = {
             })
     },
     getUser({ commit }, pk) {
-        userApi.getUser(pk)
+        return userApi.getUser(pk)
             .then((response) => {
                 commit(types.LOAD_USER, response)
+                return Promise.resolve(response)
             })
             .catch((error) => {
                 commit(types.LOG_ERROR, error)
+                return Promise.reject()
             })
     },
     addClassroom({ commit, dispatch }, pk) {
