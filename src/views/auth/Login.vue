@@ -30,9 +30,9 @@
     
     <button @click="login($event)" class="btn btn-primary block full-width m-b">Login</button>
 
-                        <a href="#">
+                        <router-link :to="{name:'forgetemail'}">
                             <small>Forgot password?</small>
-                        </a>
+                        </router-link>
 
                            <p class="text-muted text-center"><small>Do not have an account?</small></p>
 

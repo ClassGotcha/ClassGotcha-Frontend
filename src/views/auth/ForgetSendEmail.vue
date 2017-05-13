@@ -9,9 +9,9 @@
                         <div v-if="!loaded || loaded && !confirmed">
                             <p>Please enter the email associated with your account</p>
                             <div class="input-group">
-                                <input v-model="email" placeholder="Email" type="text" class="form-control"> 
+                                <input autofocus @keyup.enter="sendEmail()" v-model="email" placeholder="Email" type="text" class="form-control"> 
                                 <span class="input-group-btn"> 
-                                <button type="button" @click="sendEmail()"  class="btn btn-primary">Send Email</button> 
+                                <button type="button" @click="sendEmail()" class="btn btn-primary">Send Email</button> 
                                 </span>
                             </div>
                             <br>
@@ -54,7 +54,6 @@
                             this.confirmed = true
                         })
                         .catch(() => {
-                            console.log("fdsfas")
                             this.loaded = true
                             this.confirmed = false
                         })

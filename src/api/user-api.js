@@ -34,7 +34,7 @@ export default {
             .catch((error) => Promise.reject(error))
     },
     forgetUpdate(formData) {
-        return Vue.http.put(API_ROOT + 'account/forget/', formData)
+        return Vue.http.patch(API_ROOT + 'account/forget/' + formData.token + '/', formData)
             .then((response) => Promise.resolve(response.data))
             .catch((error) => Promise.reject(error))
     },
