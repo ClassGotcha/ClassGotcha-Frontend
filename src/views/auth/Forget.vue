@@ -40,6 +40,9 @@
     import Spinner from 'components/Spinner'
     export default {
         name: 'forget',
+        head: {
+            title: { inner: 'Reset Password' }
+        },
         components: {
             'spinner': Spinner
         },

@@ -400,7 +400,10 @@
 
 <script>
     export default {
-        name: 'Group'
+        name: 'Group',
+        head: {
+            title: { inner: 'Groups' }
+        },
     }
 
 </script>

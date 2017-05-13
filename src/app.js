@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Resource from 'vue-resource'
 import Router from 'vue-router'
 import Mask from 'v-mask'
+import VueHead from 'vue-head'
 import { sync } from 'vuex-router-sync'
 
 import router from './router'
@@ -10,6 +11,7 @@ import store from './store'
 import App from 'views/components/App'
 import * as cookie from './utils/cookie'
 
+Vue.use(VueHead, { complement: 'ClassGotcha' })
 Vue.use(Router)
 Vue.use(Resource)
 Vue.use(Mask)
@@ -18,7 +20,6 @@ sync(store, router)
 
 // set csrf token for django
 Vue.http.headers.common['X-CSRFToken'] = cookie.getCookie('csrftoken')
-Vue.config.devtools = true
 export const app = new Vue({
     el: '#app',
     data: {},

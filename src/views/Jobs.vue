@@ -250,7 +250,10 @@ students around you.</p>
 </template>
 <script>
     export default {
-        name: 'LandingPage',
+        name: 'Jobs',
+        head: {
+            title: { inner: 'Jobs' }
+        },
         mounted() {
             document.getElementsByTagName("body")[0].style['background-color'] = "#fff"
             /* global $:true */

@@ -1,4 +1,4 @@
- <template>
+<template>
    <div id="page-top">
    <div class="navbar-wrapper" >
       <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -242,6 +242,9 @@
 <script>
     export default {
         name: 'LandingPage',
+        head: {
+            title: { inner: 'ClassGotcha | Make college life easier.' }
+        },
         mounted() {
             document.getElementsByTagName("body")[0].style['background-color'] = "#fff"
             /* global $:true */

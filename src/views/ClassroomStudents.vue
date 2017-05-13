@@ -67,6 +67,9 @@
 
     export default {
         name: 'ClassroomStudent',
+        head: {
+            title: { inner: 'Classmates' }
+        },
         components: {
             'avatar': Avatar.Avatar
         },

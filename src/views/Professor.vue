@@ -416,6 +416,9 @@
 <script>
     export default {
         name: 'Professor',
+        head: {
+            title: { inner: 'Professor' }
+        },
         updated() {
             /* global $:true */
             $(document).ready(() => {
