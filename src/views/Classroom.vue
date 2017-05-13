@@ -235,6 +235,9 @@
     // VUe doesn't provide a method that can run after component load
     export default {
         name: 'Classroom',
+        head: {
+            title: { inner: 'Classroom' }
+        },
         components: {
             'upload': Upload,
             'task': ClassroomTask,

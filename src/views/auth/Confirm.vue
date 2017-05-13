@@ -30,6 +30,9 @@
     import Spinner from 'components/Spinner'
     export default {
         name: 'confirm',
+        head: {
+            title: { inner: 'Confirm Your Email' }
+        },
         components: {
             'spinner': Spinner
         },
@@ -57,7 +60,6 @@
                             this.loaded = true
                             this.err_msg = error.body.detail
                             console.log(error.body.detail)
-
                         })
                 }
             },

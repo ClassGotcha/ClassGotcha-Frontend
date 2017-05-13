@@ -16,7 +16,10 @@
 </template>
 <script>
     export default {
-        name: 'Page403'
+        name: 'Page403',
+        head: {
+            title: { inner: 'Error 403' }
+        }
     }
 
 </script>

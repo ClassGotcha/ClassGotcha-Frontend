@@ -146,6 +146,9 @@
 <script>
     export default {
         name: 'AddClassroom',
+        head: {
+            title: { inner: 'Add New Classroom' }
+        },
         data: function() {
             return {
                 search_token: '',
