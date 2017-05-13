@@ -18,7 +18,7 @@ sync(store, router)
 
 // set csrf token for django
 Vue.http.headers.common['X-CSRFToken'] = cookie.getCookie('csrftoken')
-
+Vue.config.devtools = true
 export const app = new Vue({
     el: '#app',
     data: {},

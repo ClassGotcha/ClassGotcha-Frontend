@@ -1,4 +1,4 @@
-<template>
+ <template>
    <div id="page-top">
    <div class="navbar-wrapper" >
       <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -52,7 +52,7 @@
          <div class="row">
             <div class="col-lg-12 text-center">
                <div class="navy-line"></div>
-               <h1>Our Great Feautres</h1>
+               <h1>Our Great Features</h1>
                <p>YOUR PERSONAL ASSISTANT FOR COURSES ORGANIZING.</p>
             </div>
          </div>

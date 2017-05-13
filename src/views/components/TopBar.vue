@@ -15,32 +15,33 @@
             </li>
             <li class="dropdown">
                <a class="dropdown-toggle count-info" data-toggle="dropdown">
-               <i class="fa fa-bell"></i><span class="label label-warning" v-show="pending_friends.length">{{pending_friends.length}}</span>   
+                    <i class="fa fa-user-plus"></i><span class="label label-warning" v-show="pending_friends.length">{{pending_friends.length}}</span>   
                </a>
                <ul v-if="!pending_friends.length">
                </ul>
                <ul v-else class="dropdown-menu dropdown-messages">
-                  <li v-for="friend in pending_friends">
+               <div v-for="(friend, index)  in pending_friends">
+                  <li class="divider" v-if="index!==0"></li>
+                  <li>
                      <div class="dropdown-messages-box">
-                        <router-link :to="{name:'userDetail', params:{user_id:friend.id}}" class="pull-left">
-                           <img alt="image" class="img-circle" src="img/a7.jpg">
-                        </router-link>
-                        <div>
-                           <small class="pull-right"></small>
-                           <strong>{{friend.full_name}}</strong> sent you a friend request<br>
-                           <small class="btn-group pull-right">
-                              <a class="btn btn-xs btn-primary" @click="acceptFriend(friend.id)">
-                                  <i class="fa fa-user-plus"></i> Accept
-                              </a>
-                              <a  class="btn btn-xs btn-white" @click="denyFriend(friend.id)">
-                                  <i class="fa fa-user"></i> Ignore 
-                              </a>
-                           </small>
+                        <router-link :to="{name:'userDetail', params:{user_id:friend.id}}">{{friend.full_name}}</router-link> send you a friend request
+                        <span class="pull-right text-muted small">
+                            <div class="btn-group">
+                            <button class="btn btn-xs btn-primary" type="button" @click="acceptFriend(friend.id)"> <i class="fa fa-check"></i></button>
+                            <button class="btn btn-xs btn-white" type="button" @click="denyFriend(friend.id)"> <i class="fa fa-times"></i></button>
                         </div>
-                  <li class="divider"></li>
-                  </div>
+                        </span>
+                    </div>
                   </li>
+               </div>
+                  
                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle count-info" data-toggle="dropdown">
+                    <i class="fa fa-bell"></i>
+                </a>
+
             </li>
             <li>
                <a class="right-sidebar-toggle">

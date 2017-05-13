@@ -17,13 +17,19 @@
             'calendar': Calendar
         },
         methods: {
-
+            login_check() {
+                if (!this.$store.getters.login_status)
+                    this.$router.push({ name: 'login' })
+            }
         },
         computed: {
             user() {
                 return this.$store.getters.me
             }
         },
+        created() {
+            this.login_check()
+        }
 
     }
 
