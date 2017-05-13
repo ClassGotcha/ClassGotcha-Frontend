@@ -388,6 +388,9 @@
 
     export default {
         name: 'UserDetail',
+        head: {
+            title: { inner: 'Profile' }
+        },
         components: {
             'upload-avatar': Upload,
             'avatar': Avatar.Avatar,

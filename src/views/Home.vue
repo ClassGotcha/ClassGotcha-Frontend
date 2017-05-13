@@ -8,6 +8,9 @@
 
     export default {
         name: 'Home',
+        head: {
+            title: { inner: 'Home' }
+        },
         // data() {
         //     // return {
         //     //     event_sources: []
@@ -17,19 +20,13 @@
             'calendar': Calendar
         },
         methods: {
-            login_check() {
-                if (!this.$store.getters.login_status)
-                    this.$router.push({ name: 'login' })
-            }
+
         },
         computed: {
             user() {
                 return this.$store.getters.me
             }
         },
-        created() {
-            this.login_check()
-        }
 
     }
 

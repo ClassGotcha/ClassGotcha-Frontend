@@ -399,6 +399,9 @@
 
     export default {
         name: 'Profile',
+        head: {
+            title: { inner: 'My Profile' }
+        },
         components: {
             'upload-avatar': Upload,
             'avatar': Avatar.Avatar

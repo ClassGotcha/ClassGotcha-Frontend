@@ -102,6 +102,9 @@
     import Upload from 'components/UploadFile'
     export default {
         name: 'Notes',
+        head: {
+            title: { inner: 'Notes' }
+        },
         data() {
             return {
                 files: [],

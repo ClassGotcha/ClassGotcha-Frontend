@@ -96,6 +96,9 @@
 
     export default {
         name: 'Chat',
+        head: {
+            title: { inner: 'Chatroom' }
+        },
         components: {
             'avatar': Avatar.Avatar,
             'spinner': Spinner

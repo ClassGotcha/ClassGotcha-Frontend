@@ -32,6 +32,9 @@
     import Spinner from 'components/Spinner'
     export default {
         name: 'ForgetSendEmail',
+        head: {
+            title: { inner: 'Forget Password' }
+        },
         components: {
             'spinner': Spinner
         },

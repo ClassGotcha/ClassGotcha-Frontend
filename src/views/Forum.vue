@@ -85,6 +85,9 @@
     import Spinner from 'components/Spinner'
     export default {
         name: 'posts',
+        head: {
+            title: { inner: 'User Forum' }
+        },
         components: {
             'spinner': Spinner
         },

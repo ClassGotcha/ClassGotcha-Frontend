@@ -90,6 +90,9 @@
 
     export default {
         name: 'Post',
+        head: {
+            title: { inner: 'Post' }
+        },
         components: {
             'spinner': Spinner,
             'avatar': Avatar.Avatar

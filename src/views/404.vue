@@ -14,8 +14,11 @@
     </div>
 </template>
 <script>
-  export default {
-    name: 'Page404'
-  }
+    export default {
+        name: 'Page404',
+        head: {
+            title: { inner: 'Error 404' }
+        }
+    }
 
 </script>

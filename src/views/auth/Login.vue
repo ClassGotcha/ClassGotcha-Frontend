@@ -49,6 +49,9 @@
 <script>
     export default {
         name: 'login',
+        head: {
+            title: { inner: 'Login' }
+        },
         data() {
             return {
                 email: '',

@@ -102,7 +102,10 @@
 </template>
 <script>
     export default {
-        name: 'register',
+        name: 'Register',
+        head: {
+            title: { inner: 'Register' }
+        },
         data() {
             return {
                 checked: false,
