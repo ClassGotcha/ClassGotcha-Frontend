@@ -73,7 +73,6 @@
                                         <li class="active"><a href="#tab-1" data-toggle="tab">Rencent activity</a></li>
                                         <li class=""><a href="#tab-2" data-toggle="tab">Personal Information</a></li>
                                         <li class=""><a href="#tab-3" data-toggle="tab">Badges Process</a></li>
-                                        <li class=""><a href="#tab-3" data-toggle="tab">Self</a></li>
                                     </ul>
                                 </div>
                                 </div>
@@ -120,7 +119,6 @@
                                             <div class="col-sm-5">
                                                 <img v-if="user.avatar" alt="image" class="img-circle" :src="user.avatar.avatar2x">
                                                 <avatar v-else class="img-circle" :size="64" :username="user.full_name"></avatar>
-                                                <button class="btn btn-white col-sm-offset-1" @click="toggleShow"> {{change_avatar_button_message}}</button>
                                             </div>
                                             </div>
                                             <div class="form-group">
@@ -212,160 +210,6 @@
                                                     </p>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Accepted</span>
-                                                </td>
-                                                <td>
-                                                    Various versions
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                                </td>
-                                                <td>
-                                                    There are many variations
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by
-                                                        injected humour, or randomised words which
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Reported</span>
-                                                </td>
-                                                <td>
-                                                    Latin words
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        Latin words, combined with a handful of model sentence structures
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Accepted</span>
-                                                </td>
-                                                <td>
-                                                    The generated Lorem
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                                </td>
-                                                <td>
-                                                    The first line
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Reported</span>
-                                                </td>
-                                                <td>
-                                                    The standard chunk
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Completed</span>
-                                                </td>
-                                                <td>
-                                                    Lorem Ipsum is that
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here',
-                                                        making it look like readable.
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                                </td>
-                                                <td>
-                                                    Contrary to popular
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                       {{this.$route.params.user_id}}
-                                                    </p>
-                                                </td>
-                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -450,14 +294,6 @@
                 //     this.$store.dispatch('getUser', this.$route.params.user_id)
                 //     this.user = this.$store.getters.loadedUser
                 // }
-            },
-            // UI trigers
-            toggleShow() {
-                this.show = !this.show
-                if (this.show)
-                    this.change_avatar_button_message = 'Cancel'
-                else
-                    this.change_avatar_button_message = 'Change avatar'
             },
             majorByID(id) {
                 for (let i in this.majors) {
