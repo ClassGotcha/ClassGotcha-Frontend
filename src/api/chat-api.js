@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import Resource from 'vue-resource'
-import ReconnectingWebSocket from 'reconnecting-websocket'
+// import Matrix from 'matrix-js-sdk'
 
-import { API_ROOT, WS_ROOT } from '../config.js'
+import { API_ROOT } from '../config.js'
 import { getCookie } from '../utils/cookie'
 
 Vue.use(Resource)
-
 export default {
     // fatch data
     getChatroom(pk) {
@@ -34,8 +33,4 @@ export default {
             .catch((error) => Promise.reject(error))
     },
 
-    // Web socket
-    connectSocket(pk) {
-        return new ReconnectingWebSocket(WS_ROOT + 'chat/' + pk)
-    }
 }
