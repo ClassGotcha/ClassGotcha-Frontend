@@ -385,6 +385,14 @@
         padding: 18px 0;
     }
 
+    .logo-element-show {
+        text-align: center;
+        font-size: 22px;
+        font-weight: 600;
+        color: white;
+        display: block;
+    }
+
     .pace-done .navbar-static-side,
     .pace-done .nav-header,
     .pace-done li.active,
@@ -501,8 +509,16 @@
         display: block;
     }
 
+    body.mini-navbar .logo-element-show {
+        display: none;
+    }
+
     body.canvas-menu .logo-element {
         display: none;
+    }
+
+    body.canvas-menu .logo-element-show {
+        display: block;
     }
 
     body.mini-navbar .nav-header {

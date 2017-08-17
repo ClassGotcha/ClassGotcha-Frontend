@@ -79,7 +79,6 @@
             </div>
          </div>
       </div>
-   </div>
 </template>
 <script>
     import Spinner from 'components/Spinner'
