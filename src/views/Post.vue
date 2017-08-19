@@ -28,8 +28,7 @@
                         </div>
                         <div class="media">
                             <router-link class="forum-avatar" :to="{name:'userDetail', params:{user_id:currentPost.creator.id}}">
-                                <img v-if="currentPost.creator.avatar" class="img-circle" :src="currentPost.creator.avatar.avatar1x">
-                                <avatar v-else class="img-circle" :size="86" :username="currentPost.creator.full_name"></avatar>
+                                <img class="img-circle" :src="currentPost.creator.avatar1x">
                                 <div class="author-info">
                                     <strong>{{currentPost.creator.full_name}}</strong><br><br>
                                     <span class="label label-warning">Level {{currentPost.creator.level}}</span>
@@ -51,8 +50,7 @@
                         </div>
                         <div class="media" v-for="comment in currentPost.comments">
                             <router-link class="forum-avatar" :to="{name:'userDetail', params:{user_id:comment.creator.id}}">
-                                <img v-if="comment.creator.avatar" class="img-circle" :src="comment.creator.avatar.avatar1x">
-                                <avatar v-else class="img-circle" :size="86" :username="comment.creator.full_name"></avatar>
+                                <img class="img-circle" :src="comment.creator.avatar1x">
                                 <div class="author-info">
                                     <strong>{{comment.creator.full_name}}</strong><br><br>
                                     <span class="label label-warning">Level {{comment.creator.level}}</span>
@@ -66,8 +64,7 @@
                         </div>
                         <div class="media">
                             <a class="forum-avatar">
-                                <img v-if="me.avatar" class="img-circle" :src="me.avatar.avatar1x">
-                                <avatar v-else class="img-circle" :size="86" :username="me.full_name"></avatar>
+                                <img class="img-circle" :src="me.avatar1x">
                                 <div class="author-info">
                                     <strong>{{me.full_name}}</strong><br><br>
                                     <span class="label label-warning">Level {{me.level}}</span>
@@ -86,7 +83,6 @@
 </template>
 <script>
   import Spinner from 'components/Spinner'
-  import Avatar from 'vue-avatar'
 
   export default {
     name: 'Post',
@@ -95,7 +91,6 @@
     },
     components: {
       'spinner': Spinner,
-      'avatar': Avatar.Avatar
     },
     data () {
       return {

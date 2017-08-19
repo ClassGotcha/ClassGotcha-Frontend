@@ -130,9 +130,8 @@
                         <h3>Classmates</h3>
                         <div class="user-friends row">
                             <a v-if="index!==18" class="col-sm-2" v-for="(student, index) in current_classroom.students">
-                                <img alt="image" class="img-circle" v-if="student.avatar"
-                                     :src="student.avatar.avatar1x">
-                                <avatar v-else :size="42" :username="student.full_name"></avatar>
+                                <img alt="image" class="img-circle"
+                                     :src="student.avatar1x">
                             </a>
                         </div>
                         <p>
@@ -196,9 +195,8 @@
                     </div>
                     <div class="social-avatar">
                         <router-link :to="{name:'userDetail', params:{user_id:moment.creator.id}}" class="pull-left">
-                            <img v-if="moment.creator.avatar" :src="moment.creator.avatar.avatar1x" alt="image"
+                            <img src="moment.creator.avatar1x" alt="image"
                                  class="img-circle">
-                            <avatar v-else class="m-r" :size="40" :username="moment.creator.full_name"></avatar>
                         </router-link>
                         <div class="media-body">
                             <router-link :to="{name:'userDetail', params:{user_id:moment.creator.id}}">
@@ -228,10 +226,9 @@
                         <div class="social-comment" v-for="comment in moment.comments">
                             <router-link :to="{name:'userDetail', params:{user_id:comment.creator.id}}"
                                          class="pull-left">
-                                <img v-if="comment.creator.avatar" class="img-circle" alt="image"
-                                     :src="comment.creator.avatar.avatar1x">
+                                <img  class="img-circle" alt="image"
+                                     :src="comment.creator.avatar1x">
 
-                                <avatar v-else :size="32" class="m-r" :username="comment.creator.full_name"></avatar>
                             </router-link>
                             <div class="media-body">
                                 <a href="">{{comment.creator.full_name}}</a>
@@ -243,9 +240,7 @@
                         <div class="social-comment" v-show="moment.id === comment_id">
                             <a href="" class="pull-left">
 
-                                <img v-if="user_avatar" alt="image" :src="user_avatar.avatar1x">
-                                <avatar v-else :size="42" :username="user_full_name"></avatar>
-
+                                <img  alt="image" :src="user_avatar.avatar1x">
                             </a>
                             <div class="media-body">
                                 <textarea class="form-control" v-model="comment_content"
@@ -264,7 +259,6 @@
 <script>
   import ClassroomTask from 'components/ClassroomTask'
   import Upload from 'components/UploadImg'
-  import Avatar from 'vue-avatar'
   // VUe doesn't provide a method that can run after component load
   export default {
     name: 'Classroom',
@@ -274,7 +268,6 @@
     components: {
       'upload': Upload,
       'task': ClassroomTask,
-      'avatar': Avatar.Avatar
     },
     data () {
       return {

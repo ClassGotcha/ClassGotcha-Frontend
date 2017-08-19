@@ -43,22 +43,22 @@ const getters = {
         }
     },
     userAvatar: state => {
-        if (state.user && state.user.avatar && state.login_status) {
-            return state.user.avatar
+        if (state.user && state.login_status) {
+            return state.user.avatar1x
         } else {
             return ''
         }
     },
     userAvatar1x: state => {
-        if (state.user && state.user.avatar && state.login_status) {
-            return state.user.avatar.avatar1x
+        if (state.user && state.login_status) {
+            return state.user.avatar1x
         } else {
             return ''
         }
     },
     userAvatar2x: state => {
         if (state.user && state.login_status) {
-            return state.user.avatar.avatar2x
+            return state.user.avatar2x
         } else {
             return ''
         }
@@ -338,7 +338,7 @@ const actions = {
                 commit(types.ADD_CLASSROOM)
                 dispatch('getSelf')
                 dispatch('getTasks')
-                dispatch('setSockets')
+                // dispatch('setSockets')
             })
             .catch((error) => {
                 commit(types.LOG_ERROR, error)
@@ -350,7 +350,7 @@ const actions = {
                 commit(types.REMOVE_CLASSROOM)
                 dispatch('getSelf')
                 dispatch('getTasks')
-                dispatch('setSockets')
+                // dispatch('setSockets')
             })
             .catch((error) => {
                 commit(types.LOG_ERROR, error)

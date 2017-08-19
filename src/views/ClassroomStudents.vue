@@ -27,8 +27,7 @@
 
                             <div class="col-sm-4">
                                 <div class="text-center">
-                                    <img v-if="student.avatar" class="img-circle m-t-xs img-responsive" :src="student.avatar.avatar2x">
-                                    <avatar v-else class="img-circle m-t-xs img-responsive" :size="86" :username="student.full_name"></avatar>
+                                    <img class="img-circle m-t-xs img-responsive" :src="student.avatar2x">
                                     <div class="m-t-xs font-bold hidden-xs">@{{student.username}}</div>
 
                                 </div>
@@ -63,15 +62,11 @@
 </template>
 
 <script>
-  import Avatar from 'vue-avatar'
 
   export default {
     name: 'ClassroomStudent',
     head: {
       title: {inner: 'Classmates'}
-    },
-    components: {
-      'avatar': Avatar.Avatar
     },
     methods: {
       addFriend (pk) {

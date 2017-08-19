@@ -53,6 +53,7 @@ export default {
             .then((response) => Promise.resolve(response.data))
             .catch((error) => Promise.reject(error))
     },
+  
     // Load User Data
     getSelf() {
         return Vue.http.get(API_ROOT + 'account/me/', { headers: { Authorization: 'JWT ' + getCookie('token') } })
@@ -61,11 +62,6 @@ export default {
     },
     getUser(pk) {
         return Vue.http.get(API_ROOT + 'account/' + pk + '/', { headers: { Authorization: 'JWT ' + getCookie('token') } })
-            .then((response) => Promise.resolve(response.data))
-            .catch((error) => Promise.reject(error))
-    },
-    getAvatar() {
-        return Vue.http.get(API_ROOT + 'account/avatar/', { headers: { Authorization: 'JWT ' + getCookie('token') } })
             .then((response) => Promise.resolve(response.data))
             .catch((error) => Promise.reject(error))
     },

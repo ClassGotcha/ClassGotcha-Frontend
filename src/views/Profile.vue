@@ -18,10 +18,8 @@
                 <tbody>
                 <tr>
                     <td width="90">
-                        <img v-if="user.avatar" alt="image" class="img-circle m-t-xs img-responsive"
-                             :src="user.avatar.avatar2x">
-                        <avatar v-else class="img-circle m-t-xs img-responsive" :size="80"
-                                :username="user.full_name"></avatar>
+                        <img  alt="image" class="img-circle m-t-xs img-responsive"
+                             :src="user.avatar2x">
                     </td>
 
                     <td class="desc">
@@ -130,10 +128,8 @@
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">Avatar</label>
                                                             <div class="col-sm-5">
-                                                                <img v-if="user.avatar" alt="image" class="img-circle"
-                                                                     :src="user.avatar.avatar2x">
-                                                                <avatar v-else class="img-circle" :size="64"
-                                                                        :username="user.full_name"></avatar>
+                                                                <img alt="image" class="img-circle"
+                                                                     :src="user.avatar2x">
                                                                 <button class="btn btn-white col-sm-offset-1"
                                                                         @click="toggleShow"> {{change_avatar_button_message}}
                                                                 </button>
@@ -277,7 +273,6 @@
 <script>
   import Upload from 'components/UploadAvatar'
   import * as cookie from '../utils/cookie'
-  import Avatar from 'vue-avatar'
 
   export default {
     name: 'Profile',
@@ -285,8 +280,7 @@
       title: {inner: 'My Profile'}
     },
     components: {
-      'upload-avatar': Upload,
-      'avatar': Avatar.Avatar
+      'upload-avatar': Upload
     },
     data: () => {
       return {
