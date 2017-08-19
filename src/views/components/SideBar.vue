@@ -34,14 +34,12 @@
                         </li>
                     </ul>
                 </li>
-                <!--
-                                                        <li>
-                                                        <router-link :to="{name: 'myNotes'}">
-                                                            <i class="fa fa-file-text"></i>
-                                                            <span class="nav-label">My Notes</span>
-                                                        </router-link>
-                                                        </li>
-                                                        -->
+                <!--<li>
+                <router-link :to="{name: 'myNotes'}">
+                    <i class="fa fa-file-text"></i>
+                    <span class="nav-label">My Notes</span>
+                </router-link>
+                </li>-->
                 <li>
                     <router-link :to="{name:'myGroups'}">
                         <i class="fa fa-users"></i>
@@ -66,22 +64,12 @@
 </template>
 
 <script>
-  import Avatar from 'vue-avatar'
   import { mapGetters } from 'vuex'
 
   export default {
     name: 'sidebar',
-    components: {
-      'avatar': Avatar.Avatar
-    },
-    methods: {
-      classroomUrl (id) {
-        return '/#/classroom/id/' + id
-      }
-    },
     computed: mapGetters({
       fullName: 'userFullName',
-      avatar: 'userAvatar1x',
       username: 'username',
       classrooms: 'userClassrooms'
     })

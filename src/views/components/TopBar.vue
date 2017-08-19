@@ -18,17 +18,19 @@
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown">
-                        <i class="fa fa-user-plus"></i>
-                        <span class="label label-warning" v-show="pending_friends.length">{{pending_friends.length}}</span>
+                        <i class="fa fa-bell"></i>
                     </a>
                     <ul v-if="!pending_friends.length">
+                        <!--<li>No Message</li>-->
                     </ul>
                     <ul v-else class="dropdown-menu dropdown-messages">
+                        <!-- TODO add notification-->
                         <div v-for="(friend, index)  in pending_friends">
                             <li class="divider" v-if="index!==0"></li>
                             <li>
                                 <div class="dropdown-messages-box">
-                                    <router-link :to="{name:'userDetail', params:{user_id:friend.id}}">{{friend.full_name}}</router-link> send you a friend request
+                                    <router-link :to="{name:'userDetail', params:{user_id:friend.id}}">{{friend.full_name}}</router-link>
+                                    send you a friend request
                                     <span class="pull-right text-muted small">
                                         <div class="btn-group">
                                             <button class="btn btn-xs btn-primary" type="button" @click="acceptFriend(friend.id)">
@@ -42,47 +44,71 @@
                                 </div>
                             </li>
                         </div>
-    
+
                     </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle count-info" data-toggle="dropdown">
-                        <i class="fa fa-bell"></i>
-                    </a>
                 </li>
                 <li>
                     <a class="dropdown-toggle count-info" data-toggle="dropdown">
-                        <i class="fa fa-user"></i>
+                        <i class="fa fa-user"></i> {{ username }}
                     </a>
+                    <ul class="dropdown-menu ">
+                        <li class="m-l-md">
+                            <router-link :to="{name:'profile'}">
+
+                                <i class="fa fa-user"></i> Profile
+
+                            </router-link>
+                        </li>
+
+                        <li class="divider"></li>
+                        <li class="m-l-md">
+                            <router-link :to="{name:'profile'}">
+
+                                <i class="fa fa-user-plus"></i> Add Friends
+
+                            </router-link>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li class="m-l-md">
+                            <a v-on:click="$store.dispatch('logout')">
+
+                                <i class="fa fa-sign-out"></i> Log out
+
+                            </a>
+                        </li>
+
+                    </ul>
                 </li>
             </ul>
         </nav>
     </div>
 </template>
 <script>
-export default {
+  export default {
     name: 'TopBar',
     methods: {
-        acceptFriend(pk) {
-            this.$store.dispatch('acceptFriend', pk).then(() => {
-                this.$store.dispatch('getFriends')
-                this.$store.dispatch('getPendingFriends')
-            })
-        },
-        denyFriend(pk) {
-            this.$store.dispatch('remFriend', pk).then(() => {
-                this.$store.dispatch('getPendingFriends')
-            })
-        }
+      acceptFriend (pk) {
+        this.$store.dispatch('acceptFriend', pk).then(() => {
+          this.$store.dispatch('getFriends')
+          this.$store.dispatch('getPendingFriends')
+        })
+      },
+      denyFriend (pk) {
+        this.$store.dispatch('remFriend', pk).then(() => {
+          this.$store.dispatch('getPendingFriends')
+        })
+      }
     },
     computed: {
-        pending_friends() {
-            return this.$store.getters.userPendingFriends
-        },
-        username() {
-            return this.$store.getters.userFullName
-        },
+      pending_friends () {
+        return this.$store.getters.userPendingFriends
+      },
+      username () {
+        return this.$store.getters.userFullName
+      },
     }
-}
+  }
 
 </script>
