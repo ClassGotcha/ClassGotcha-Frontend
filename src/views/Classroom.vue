@@ -127,9 +127,9 @@
                 </div>
                 <div class="ibox">
                     <div class="ibox-content">
-                        <h3>Your Classmates</h3>
+                        <h3>Classmates</h3>
                         <div class="user-friends row">
-                            <a v-if="index!=18" class="col-sm-2" v-for="(student, index) in current_classroom.students">
+                            <a v-if="index!==18" class="col-sm-2" v-for="(student, index) in current_classroom.students">
                                 <img alt="image" class="img-circle" v-if="student.avatar"
                                      :src="student.avatar.avatar1x">
                                 <avatar v-else :size="42" :username="student.full_name"></avatar>

@@ -172,16 +172,16 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Gender</label>
-                                                            <div class="col-sm-4">
-                                                                <select class="form-control" v-model="user.gender"
-                                                                        name="account">
-                                                                    <option value="Idw">I don't want to tell</option>
-                                                                    <option value="Man">Man</option>
-                                                                    <option value="Woman">Woman</option>
-                                                                </select>
-                                                            </div>
+                                                        <label class="col-sm-2 control-label">Gender</label>
+                                                        <div class="col-sm-4">
+                                                            <select class="form-control" v-model="user.gender"
+                                                                    name="account">
+                                                                <option value="Idw">I don't want to tell</option>
+                                                                <option value="Man">Man</option>
+                                                                <option value="Woman">Woman</option>
+                                                            </select>
                                                         </div>
+                                                    </div>
                                                         <!--<div class="form-group">
                                                         <label class="col-sm-2 control-label">Phone</label>
                                                         <div class="col-sm-4"><input type="text" v-mask="'(###) ###-####'" placeholder="(###) ###-####" class="form-control"></div>
