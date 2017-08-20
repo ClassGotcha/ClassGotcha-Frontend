@@ -19,10 +19,8 @@
                 <tbody>
                 <tr>
                     <td width="90">
-                        <img v-if="user.avatar" alt="image" class="img-circle m-t-xs img-responsive"
-                             :src="user.avatar.avatar2x">
-                        <avatar v-else class="img-circle m-t-xs img-responsive" :size="80"
-                                :username="user.full_name"></avatar>
+                        <img alt="image" class="img-circle m-t-xs img-responsive"
+                             :src="user.avatar2x">
                     </td>
 
                     <td class="desc">
@@ -41,16 +39,10 @@
                         <div class="progress progress-striped active m-b-sm">
                             <div style="width: 60%;" class="progress-bar"></div>
                         </div>
-                        </p>
-
                         <p>
                             <b>Badges</b>:     under development      </p>
-
                     </td>
                     <td>
-                        <h4>
-                            <a href="#tab-2" data-toggle="tab" class="btn btn-white">Edit My Profile</a>
-                        </h4>
                     </td>
                 </tr>
                 </tbody>
@@ -86,11 +78,14 @@
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="tab-1">
                                                     <div class="feed-activity-list">
+                                                        <div class="well" v-if="user_moments.length === 0">
 
+                                                            <p class="text-center"> Oops, nothing here～</p>
+                                                        </div>
                                                         <div class="feed-element" v-for="moment in user_moments">
                                                             <a href="#" class="pull-left">
                                                                 <img alt="image" class="img-circle"
-                                                                     :src="moment.creator.avatar.avatar1x">
+                                                                     :src="moment.creator.avatar1x">
                                                             </a>
                                                             <div class="media-body ">
                                                                 <strong>{{moment.creator.full_name}}</strong>
@@ -106,64 +101,38 @@
                                                 </div>
                                                 <div class="tab-pane" id="tab-2">
                                                     <div class="form-horizontal">
-                                                        <div class="hr-line-dashed"></div>
-                                                        <div class="form-group">
+                                                        <div class="form-group m-t-md">
                                                             <label class="col-lg-2 control-label">Email</label>
-                                                            <div class="col-lg-5"><input type="text" disabled
+                                                            <div class="col-lg-5"><input disabled
                                                                                          :placeholder="user.email"
                                                                                          class="form-control"></div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-lg-2 control-label">Username</label>
-                                                            <div class="col-lg-5"><input type="text" disabled
+                                                            <div class="col-lg-5"><input disabled
                                                                                          :placeholder="user.username"
                                                                                          class="form-control"></div>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Password</label>
-                                                            <div class="col-lg-5">
-                                                                <button class="btn btn-white" type="submit"><i
-                                                                        class="fa fa-lock"></i> Change password
-                                                                </button>
-                                                            </div>
-                                                        </div>
                                                         <div class="hr-line-dashed"></div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Avatar</label>
-                                                            <div class="col-sm-5">
-                                                                <img v-if="user.avatar" alt="image" class="img-circle"
-                                                                     :src="user.avatar.avatar2x">
-                                                                <avatar v-else class="img-circle" :size="64"
-                                                                        :username="user.full_name"></avatar>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
                                                             <label class="col-sm-2 control-label">Name</label>
-                                                            <div class="col-sm-4"><input type="text"
-                                                                                         placeholder="First Name"
-                                                                                         v-model="user.first_name"
-                                                                                         class="form-control"></div>
-                                                            <div class="col-sm-4"><input type="text"
-                                                                                         placeholder="Last Name"
-                                                                                         v-model="user.last_name"
-                                                                                         class="form-control"></div>
+                                                            <div class="col-sm-4">
+                                                                <p>{{user.full_name}}</p>
+                                                            </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">About me</label>
                                                             <div class="col-sm-8">
-                                                                <textarea type="text"
-                                                                          v-model="user.about_me"
-                                                                          class="form-control"></textarea></div>
+                                                                {{user.about_me}}
+                                                            </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">Gender</label>
                                                             <div class="col-sm-4">
-                                                                <select class="form-control" v-model="user.gender"
-                                                                        name="account">
-                                                                    <option value="Idw">I don't want to tell</option>
-                                                                    <option value="Man">Man</option>
-                                                                    <option value="Woman">Woman</option>
-                                                                </select>
+                                                                <p v-if="user.gender==='Idw'">I don't want to tell</p>
+                                                                <p v-if="user.gender==='Man'">Male</p>
+                                                                <p v-if="user.gender==='Woman'">Female</p>
+
                                                             </div>
                                                         </div>
                                                         <!--<div class="form-group">
@@ -178,26 +147,13 @@
                                                         <div class="form-group">
                                                             <label class="col-lg-2 control-label">Major</label>
                                                             <div class="col-lg-5">
-                                                                <select class="form-control" v-model="user.major"
-                                                                        name="account">
-                                                                    <option v-for="major in majors" :value="major.id">
-                                                                        {{major.major_short}}
-                                                                    </option>
-                                                                </select>
+                                                                {{majorByID(user.major)}}
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-lg-2 control-label">Class of</label>
                                                             <div class="col-lg-5">
-                                                                <select class="form-control" v-model="user.school_year"
-                                                                        name="account">
-                                                                    <option>I'm class of...</option>
-                                                                    <option>2016</option>
-                                                                    <option>2017</option>
-                                                                    <option>2018</option>
-                                                                    <option>2019</option>
-                                                                    <option>2020</option>
-                                                                </select>
+                                                                {{user.school_year}}
                                                             </div>
                                                         </div>
                                                         <div class="hr-line-dashed"></div>
@@ -260,7 +216,6 @@
 </template>
 <script>
   import Upload from 'components/UploadAvatar'
-  import Avatar from 'vue-avatar'
   import Spinner from 'components/Spinner'
 
   export default {
@@ -270,7 +225,6 @@
     },
     components: {
       'upload-avatar': Upload,
-      'avatar': Avatar.Avatar,
       'spinner': Spinner
     },
     data: () => {
@@ -322,11 +276,6 @@
           .then((response) => {
             this.user_moments = response
           })
-        // else {
-        //     // TODO: cannot load user immediatily after dispath getUser
-        //     this.$store.dispatch('getUser', this.$route.params.user_id)
-        //     this.user = this.$store.getters.loadedUser
-        // }
       },
       majorByID (id) {
         for (let i in this.majors) {
