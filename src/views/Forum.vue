@@ -58,7 +58,7 @@
                         <a @click="upVote(post.id)">
                         <i class="fa fa-chevron-up"> </i>
                         </a>
-                        <div>{{post.vote}}</div>
+                        <div>{{post.votes}}</div>
                         <a @click="downVote(post.id)">
                         <i class="fa fa-chevron-down"> </i>
                         </a>
