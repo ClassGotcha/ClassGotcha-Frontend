@@ -195,7 +195,7 @@
                     </div>
                     <div class="social-avatar">
                         <router-link :to="{name:'userDetail', params:{user_id:moment.creator.id}}" class="pull-left">
-                            <img src="moment.creator.avatar1x" alt="image"
+                            <img :src="moment.creator.avatar1x" alt="image"
                                  class="img-circle">
                         </router-link>
                         <div class="media-body">
@@ -226,12 +226,12 @@
                         <div class="social-comment" v-for="comment in moment.comments">
                             <router-link :to="{name:'userDetail', params:{user_id:comment.creator.id}}"
                                          class="pull-left">
-                                <img  class="img-circle" alt="image"
+                                <img class="img-circle" alt="image"
                                      :src="comment.creator.avatar1x">
-
                             </router-link>
                             <div class="media-body">
-                                <a href="">{{comment.creator.full_name}}</a>
+                                <router-link :to="{name:'userDetail', params:{user_id:comment.creator.id}}">{{comment.creator.full_name}}
+                                </router-link>
                                 <small class="text-muted">{{momentTime(comment.created)}}</small>
                                 <br/>
                                 {{comment.content}}
@@ -240,7 +240,7 @@
                         <div class="social-comment" v-show="moment.id === comment_id">
                             <a href="" class="pull-left">
 
-                                <img  alt="image" :src="user_avatar.avatar1x">
+                                <img alt="image" :src="user_avatar">
                             </a>
                             <div class="media-body">
                                 <textarea class="form-control" v-model="comment_content"

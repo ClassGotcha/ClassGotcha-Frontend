@@ -201,8 +201,8 @@
                                                                 <select class="form-control" v-model="user.gender"
                                                                         name="account">
                                                                     <option value="Idw">I don't want to tell</option>
-                                                                    <option value="Man">Man</option>
-                                                                    <option value="Woman">Woman</option>
+                                                                    <option value="Man">Male</option>
+                                                                    <option value="Woman">Female</option>
                                                                 </select>
                                                             </div>
                                                         </div>
