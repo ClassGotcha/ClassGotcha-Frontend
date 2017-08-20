@@ -18,7 +18,7 @@
                 <tbody>
                 <tr>
                     <td width="90">
-                        <img  alt="image" class="img-circle m-t-xs img-responsive"
+                        <img alt="image" class="img-circle m-t-xs img-responsive"
                              :src="user.avatar2x">
                     </td>
 
@@ -83,7 +83,7 @@
                                                         <div class="feed-element" v-for="moment in user_moments">
                                                             <a href="#" class="pull-left">
                                                                 <img alt="image" class="img-circle"
-                                                                     :src="moment.creator.avatar.avatar1x">
+                                                                     :src="moment.creator.avatar1x">
                                                             </a>
                                                             <div class="media-body">
                                                                 <strong>{{moment.creator.full_name}}</strong>
@@ -98,27 +98,28 @@
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane" id="tab-2">
+
                                                     <div class="form-horizontal">
                                                         <div class="hr-line-dashed"></div>
                                                         <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Email</label>
-                                                            <div class="col-lg-5">
-                                                                <input type="text" disabled
+                                                            <label class="col-sm-2 control-label">Email</label>
+                                                            <div class="col-sm-4">
+                                                                <input disabled
                                                                        :placeholder="user.email"
                                                                        class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Username</label>
-                                                            <div class="col-lg-5">
-                                                                <input type="text" disabled
+                                                            <label class="col-sm-2 control-label">Username</label>
+                                                            <div class="col-sm-4">
+                                                                <input disabled
                                                                        :placeholder="user.username"
                                                                        class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Password</label>
-                                                            <div class="col-lg-5">
+                                                            <label class="col-sm-2 control-label">Password</label>
+                                                            <div class="col-sm-4">
                                                                 <button class="btn btn-white" type="submit">
                                                                     <i class="fa fa-lock"></i> Change password
                                                                 </button>
@@ -141,26 +142,29 @@
                                                                         @crop-success="cropImg"
                                                                         @crop-upload-success="cropUploadSuccess"
                                                                         v-model="show"
-                                                                        :width="128"
-                                                                        :height="128"
+                                                                        :width="100"
+                                                                        :height="100"
                                                                         :headers="headers"
-                                                                        img-format="png"></upload-avatar>
+                                                                        img-format="png">
+                                                                </upload-avatar>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">Name</label>
-                                                            <div class="col-sm-4"><input type="text"
-                                                                                         placeholder="First Name"
-                                                                                         v-model="user.first_name"
-                                                                                         class="form-control"></div>
-                                                            <div class="col-sm-4"><input type="text"
-                                                                                         placeholder="Last Name"
-                                                                                         v-model="user.last_name"
-                                                                                         class="form-control"></div>
+                                                            <div class="col-sm-4 col-lg-2">
+                                                                <input placeholder="First Name"
+                                                                       v-model="user.first_name"
+                                                                       class="form-control">
+                                                            </div>
+                                                            <div class="col-sm-4 col-lg-2">
+                                                                <input placeholder="Last Name"
+                                                                       v-model="user.last_name"
+                                                                       class="form-control">
+                                                            </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">About me</label>
-                                                            <div class="col-sm-8">
+                                                            <div class="col-sm-4">
                                                                 <textarea type="text"
                                                                           v-model="user.about_me"
                                                                           class="form-control">
@@ -168,28 +172,27 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Gender</label>
-                                                        <div class="col-sm-4">
-                                                            <select class="form-control" v-model="user.gender"
-                                                                    name="account">
-                                                                <option value="Idw">I don't want to tell</option>
-                                                                <option value="Man">Man</option>
-                                                                <option value="Woman">Woman</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                        <!--<div class="form-group">
-                                                        <label class="col-sm-2 control-label">Phone</label>
-                                                        <div class="col-sm-4"><input type="text" v-mask="'(###) ###-####'" placeholder="(###) ###-####" class="form-control"></div>
+                                                            <label class="col-sm-2 control-label">Gender</label>
+                                                            <div class="col-sm-4">
+                                                                <select class="form-control" v-model="user.gender"
+                                                                        name="account">
+                                                                    <option value="Idw">I don't want to tell</option>
+                                                                    <option value="Man">Man</option>
+                                                                    <option value="Woman">Woman</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                         <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Birthday</label>
-                                                        <div class="col-sm-4"><input type="text" v-mask="'##-##-####'" placeholder="mm-dd-yyyy" class="form-control"></div>
-                                                        </div>-->
-                                                        <div class="hr-line-dashed"></div>
+                                                            <label class="col-sm-2 control-label">Phone</label>
+                                                            <div class="col-sm-4"><input v-mask="'(###) ###-####'" placeholder="(###) ###-####" class="form-control"></div>
+                                                        </div>
+                                                        <!--<div class="form-group">-->
+                                                        <!--<label class="col-sm-2 control-label">Birthday</label>-->
+                                                        <!--<div class="col-sm-4"><input v-mask="'##-##-####'" placeholder="mm-dd-yyyy" class="form-control"></div>-->
+                                                        <!--</div>-->
                                                         <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Major</label>
-                                                            <div class="col-lg-5">
+                                                            <label class="col-sm-2 control-label">Major</label>
+                                                            <div class="col-sm-4">
                                                                 <select class="form-control" v-model="user.major"
                                                                         name="account">
                                                                     <option v-for="major in majors" :value="major.id">
@@ -199,16 +202,16 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Class of</label>
-                                                            <div class="col-lg-5">
+                                                            <label class="col-sm-2 control-label">Class of</label>
+                                                            <div class="col-sm-4">
                                                                 <select class="form-control" v-model="user.school_year"
                                                                         name="account">
-                                                                    <option>I'm class of...</option>
-                                                                    <option>2016</option>
-                                                                    <option>2017</option>
-                                                                    <option>2018</option>
-                                                                    <option>2019</option>
-                                                                    <option>2020</option>
+                                                                    <option value="2016">2016</option>
+                                                                    <option value="2017">2017</option>
+                                                                    <option value="2018">2018</option>
+                                                                    <option value="2019">2019</option>
+                                                                    <option value="2020">2020</option>
+                                                                    <option value="2021">2021</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -320,13 +323,18 @@
       },
       postChange () {
         this.$store.dispatch('updateSelf', this.user)
+          .then((response) => {
+            this.$store.dispatch('loadSelf')
+          })
       },
       loadData () {
         this.user = this.$store.getters.me
+
         this.$store.dispatch('getMajors')
           .then(() => {
             this.majors = this.$store.getters.majors
           })
+
         this.$store.dispatch('getMoments')
           .then((response) => {
             this.user_moments = response
@@ -357,6 +365,9 @@
       },
       cropUploadSuccess (jsonData, field) {
         this.$store.dispatch('getSelf')
+          .then(() => {
+            this.user = this.$store.getters.me
+          })
       }
     },
     created () {
