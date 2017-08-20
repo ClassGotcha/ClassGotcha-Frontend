@@ -12,7 +12,7 @@
         </div>
         <right-side-bar></right-side-bar>
         <!-- End wrapper-->
-
+        <vue-toastr ref="toastr"></vue-toastr>
     </div>
 </template>
 
@@ -20,6 +20,9 @@
   import SideBar from './SideBar'
   import TopBar from './TopBar'
   import RightSideBar from './RightSideBar'
+  import VueToastr from 'vue-toastr'
+
+
   require('vue-toastr/dist/vue-toastr.css')
 
   export default {
@@ -28,6 +31,7 @@
       SideBar,
       TopBar,
       RightSideBar,
+      VueToastr
     },
     mounted () {
       document.getElementsByTagName('Body')[0].style['background-color'] = '#2f4050'

@@ -100,8 +100,7 @@
                                                 <div class="tab-pane" id="tab-2">
 
                                                     <div class="form-horizontal">
-                                                        <div class="hr-line-dashed"></div>
-                                                        <div class="form-group">
+                                                        <div class="form-group m-t-md">
                                                             <label class="col-sm-2 control-label">Email</label>
                                                             <div class="col-sm-4">
                                                                 <input disabled
@@ -163,6 +162,31 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
+                                                            <label class="col-sm-2 control-label">Major</label>
+                                                            <div class="col-sm-4">
+                                                                <select class="form-control" v-model="user.major"
+                                                                        name="account">
+                                                                    <option v-for="major in majors" :value="major.id">
+                                                                        {{major.major_short}}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">Class of</label>
+                                                            <div class="col-sm-4">
+                                                                <select class="form-control" v-model="user.school_year"
+                                                                        name="account">
+                                                                    <option value="2016">2016</option>
+                                                                    <option value="2017">2017</option>
+                                                                    <option value="2018">2018</option>
+                                                                    <option value="2019">2019</option>
+                                                                    <option value="2020">2020</option>
+                                                                    <option value="2021">2021</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
                                                             <label class="col-sm-2 control-label">About me</label>
                                                             <div class="col-sm-4">
                                                                 <textarea type="text"
@@ -190,31 +214,7 @@
                                                         <!--<label class="col-sm-2 control-label">Birthday</label>-->
                                                         <!--<div class="col-sm-4"><input v-mask="'##-##-####'" placeholder="mm-dd-yyyy" class="form-control"></div>-->
                                                         <!--</div>-->
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Major</label>
-                                                            <div class="col-sm-4">
-                                                                <select class="form-control" v-model="user.major"
-                                                                        name="account">
-                                                                    <option v-for="major in majors" :value="major.id">
-                                                                        {{major.major_short}}
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Class of</label>
-                                                            <div class="col-sm-4">
-                                                                <select class="form-control" v-model="user.school_year"
-                                                                        name="account">
-                                                                    <option value="2016">2016</option>
-                                                                    <option value="2017">2017</option>
-                                                                    <option value="2018">2018</option>
-                                                                    <option value="2019">2019</option>
-                                                                    <option value="2020">2020</option>
-                                                                    <option value="2021">2021</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
+
                                                         <div class="hr-line-dashed"></div>
                                                         <div class="form-group">
                                                             <div class="col-sm-4 col-sm-offset-2">
@@ -325,6 +325,8 @@
         this.$store.dispatch('updateSelf', this.user)
           .then((response) => {
             this.$store.dispatch('loadSelf')
+            this.$root.$children[0].$refs.toastr.s('Your Info is updated.', 'Success')
+
           })
       },
       loadData () {
@@ -349,7 +351,7 @@
       toggleShow () {
         this.show = !this.show
         if (this.show)
-          this.change_avatar_button_message = 'Cancel'
+          this.change_avatar_button_message = 'Close'
         else
           this.change_avatar_button_message = 'Change avatar'
       },
@@ -367,6 +369,7 @@
         this.$store.dispatch('getSelf')
           .then(() => {
             this.user = this.$store.getters.me
+            this.$root.$children[0].$refs.toastr.s('Your Avatar is updated.', 'Success')
           })
       }
     },
