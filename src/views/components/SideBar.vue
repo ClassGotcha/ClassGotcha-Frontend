@@ -55,7 +55,8 @@
                 <li>
                     <router-link :to="{name:'forum'}">
                         <i class="fa fa-question-circle"></i>
-                        <span class="nav-label">User Forum</span>
+                        <span class="nav-label">Forum</span>
+                        <span class="label label-success pull-right">NEW!</span>
                     </router-link>
                 </li>
             </ul>

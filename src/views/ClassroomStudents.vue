@@ -71,6 +71,13 @@
     methods: {
       addFriend (pk) {
         this.$store.dispatch('addFriend', pk)
+          .then(() => {
+            this.$root.$children[0].$refs.toastr.s('Your Invitation is sent.', 'Success')
+          })
+          .catch((error) => {
+            this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Error')
+            console.log(error)
+          })
       }
     },
     computed: {
