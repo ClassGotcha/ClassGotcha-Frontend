@@ -37,13 +37,13 @@
                             <div class="media-body">
                                 {{currentPost.content}}
                                 <br><br>
-                                Created By: <strong>{{formatTime(currentPost.created)}}</strong>
+                                <i class="fa fa-clock-o"></i> <strong>{{formatTime(currentPost.created)}}</strong>
                                 <hr>
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <strong class="m-l m-r">Tags:</strong>
-                                        <button class="btn btn-primary btn-xs" type="button">Model</button>
-                                        <button class="btn btn-white btn-xs" type="button">Publishing</button>
+                                    <div class="col-md-12">
+                                        <span v-if="currentPost.tag===0" class="label label-danger">Bug Report</span>
+                                        <span v-if="currentPost.tag===1" class="label label-primary">Suggestion</span>
+                                        <span v-if="currentPost.tag===2" class="label warning">Other</span>
                                     </div>
                                 </div>
                             </div>
