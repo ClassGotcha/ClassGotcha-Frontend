@@ -157,7 +157,6 @@
     .navbar-top-links .dropdown-menu li a {
         padding: 0px;
         min-height: 0;
-        color: #1ab394;
     }
 
     .navbar-top-links .dropdown-menu li a div {
@@ -385,6 +384,14 @@
         padding: 18px 0;
     }
 
+    .logo-element-show {
+        text-align: center;
+        font-size: 22px;
+        font-weight: 600;
+        color: white;
+        display: block;
+    }
+
     .pace-done .navbar-static-side,
     .pace-done .nav-header,
     .pace-done li.active,
@@ -501,8 +508,16 @@
         display: block;
     }
 
+    body.mini-navbar .logo-element-show {
+        display: none;
+    }
+
     body.canvas-menu .logo-element {
         display: none;
+    }
+
+    body.canvas-menu .logo-element-show {
+        display: block;
     }
 
     body.mini-navbar .nav-header {
@@ -1280,6 +1295,11 @@
         font-weight: 600;
         padding: 3px 8px;
         text-shadow: none;
+    }
+
+    .label-sm {
+        font-size: 9px;
+        padding: 1px 2px 1px 3px;
     }
 
     .badge {

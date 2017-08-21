@@ -12,7 +12,7 @@
                   <h2>Add a new task to classroom?</h2>
                </div>
                <div class="col-md-2">
-                  <a data-toggle="modal" data-target="#add-task" class=" btn btn-primary"><i class="fa fa-plus"></a>
+                  <a data-toggle="modal" data-target="#add-task" class=" btn btn-primary"><i class="fa fa-plus"></i></a>
                </div>
             </div>
          </div>
@@ -37,7 +37,8 @@
          <div class="modal-dialog">
             <div class="modal-content">
                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                     <span class="sr-only">Close</span></button>
                   <h4 class="modal-title"><i class="fa fa-tasks"></i> Task Detail</h4>
                </div>
                <div class="modal-body">
@@ -55,7 +56,7 @@
                   <div class="row">
                      <div class="col-md-12">
                         <span>Title</span>
-                        <input class="form-control m-b" v-model="task_title" placeholder="eg. Homework 1"></input>
+                        <input class="form-control m-b" v-model="task_title" placeholder="eg. Homework 1">
                      </div>
                      <div class="col-md-12" >
                         <input type="radio" v-model="task_subcategory" value="1" id="in-class" name="a">
@@ -75,14 +76,14 @@
                               <input type="text" v-show="task_subcategory==2" placeholder="Which day?" v-model="task_due_date" id="task-due-date" class="form-control" />
                               <input type="text" v-show="task_subcategory==3" placeholder="Start at?" v-model="task_start" id="task-start" class="form-control" />
                               <input type="text" v-show="task_subcategory==3" placeholder="End at?" v-model="task_end" id="task-end" class="form-control" />
-                              <span class="input-group-addon">
+                              <span class="input-group-addon"></span>
                               <span class="fa fa-calendar"></span>
                            </div>
                         </div>
                      </div>
                      <div class="col-md-12" v-show="task_subcategory==3">
                         <span>Location</span>
-                        <input class="form-control m-b" v-model="task_location" placeholder="eg. Willard Building 123"></input>                  
+                        <input class="form-control m-b" v-model="task_location" placeholder="eg. Willard Building 123">
                      </div>
                      <div class="col-md-12 m-b">
                         <span>Repeat Every</span>
@@ -120,7 +121,8 @@
          <div class="modal-dialog">
             <div class="modal-content">
                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                     <span class="sr-only">Close</span></button>
                   <h4 class="modal-title"><i class="fa fa-tasks"></i> Task Detail</h4>
                </div>
                <div class="modal-body">
@@ -138,7 +140,7 @@
                   <div class="row">
                      <div class="col-md-12">
                         <span>Title</span>
-                        <input class="form-control m-b" v-model="chosen_task.task_name"></input>
+                        <input class="form-control m-b" v-model="chosen_task.task_name">
                      </div>
                      <div class="col-md-12">
                         <div class="form-group">
@@ -146,14 +148,14 @@
                            <div class="input-group date">
                               <input type="text" v-show="chosen_task.start" placeholder="Start at?" v-model="chosen_task.start" id="chosen-task-start" class="form-control" />
                               <input type="text" v-show="chosen_task.end" placeholder="End at?" v-model="chosen_task.end" id="chosen-task-end" class="form-control" />
-                              <span class="input-group-addon">
+                              <span class="input-group-addon"></span>
                               <span class="fa fa-calendar"></span>
                            </div>
                         </div>
                      </div>
                      <div class="col-md-12" v-show="task_subcategory==3">
                         <span>Location</span>
-                        <input class="form-control m-b" v-model="chosen_task.location" placeholder="eg. Willard Building 123"></input>                  
+                        <input class="form-control m-b" v-model="chosen_task.location" placeholder="eg. Willard Building 123">
                      </div>
                      <div class="col-md-12 m-b">
                         <span>Repeat Every</span>

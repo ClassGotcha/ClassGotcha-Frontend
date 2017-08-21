@@ -1,22 +1,22 @@
 <template>
     <div>
-    <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>My Groups</h2>
-                    <ol class="breadcrumb">
-                        <li>
-         <router-link :to="{name:'home'}">Home</router-link>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>My Groups</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <router-link :to="{name:'home'}">Home</router-link>
 
-                        </li>
-                        <li class="active">
-                            <strong>My Groups</strong>
-                        </li>
-                    </ol>
-                </div>
-                <div class="col-lg-2">
-
-                </div>
+                    </li>
+                    <li class="active">
+                        <strong>My Groups</strong>
+                    </li>
+                </ol>
             </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
         <div class="wrapper wrapper-content animated fadeInRight">
             <!--<div class="row">
                 <div class="col-lg-4">
@@ -385,25 +385,25 @@
                     </div>
                 </div>
             </div>-->
-<div class="middle-box text-center animated fadeInRightBig">
-                    <h3 class="font-bold">This page is under developing</h3>
-                    <div class="error-desc">
-                       Coming soon!
-                        <br>
-                        <router-link :to="{name:'home'}" class="btn btn-primary m-t">Home</router-link>
-                    </div>
+            <div class="middle-box text-center animated fadeInRightBig">
+                <h3 class="font-bold">This page is under developing</h3>
+                <div class="error-desc">
+                    Coming soon!
+                    <br>
+                    <router-link :to="{name:'home'}" class="btn btn-primary m-t">Home</router-link>
                 </div>
+            </div>
 
         </div>
     </div>
 </template>
 
 <script>
-    export default {
-        name: 'Group',
-        head: {
-            title: { inner: 'Groups' }
-        },
-    }
+  export default {
+    name: 'Group',
+    head: {
+      title: {inner: 'Groups'}
+    },
+  }
 
 </script>
