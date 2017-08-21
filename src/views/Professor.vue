@@ -27,6 +27,9 @@
                             <div class="ibox-content">
                                 <h2>{{professor.full_name}}</h2>
                                 <table class="table table-stripped ">
+                                    <thead>
+
+                                    </thead>
                                     <tbody>
                                     <tr>
                                         <td class="no-borders">
