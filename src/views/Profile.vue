@@ -39,9 +39,6 @@
                             <div style="width: 60%;" class="progress-bar"></div>
                         </div>
 
-                        <p>
-                            <b>Badges</b>:under development
-                        </p>
 
                     </td>
                     <td>

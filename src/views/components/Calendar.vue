@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <br>
-                <button class="btn form-control m-b" v-show="show_event_detail || create_new_event" @click="show_event_detail=false; create_new_event=false;">Go back to recommended tasks</button>
+                <!--<button class="btn form-control m-b" v-show="show_event_detail || create_new_event" @click="show_event_detail=false; create_new_event=false;">Go back to recommended tasks</button>-->
                 <div v-if="show_event_detail">
                     <div class="form-group">
                         <label>Event Name</label>
@@ -197,7 +197,7 @@ export default {
             sync: false,
             // UI triggers
             show_event_detail: false,
-            create_new_event: false
+            create_new_event: true
 
         }
     },

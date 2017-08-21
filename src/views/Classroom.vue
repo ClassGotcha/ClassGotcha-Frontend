@@ -31,15 +31,7 @@
                 Semester Process
             </p>
             <div class="progress  m-b">
-                <div style="width: 25%" class="progress-bar progress-bar-primary">
-                </div>
-                <div style="width: 1%" class="progress-bar progress-bar-danger">
-                </div>
-                <div style="width: 25%" class="progress-bar progress-bar-primary">
-                </div>
-                <div style="width: 1%" class="progress-bar progress-bar-warning">
-                </div>
-                <div style="width: 25%" class="progress-bar progress-bar-primary">
+                <div style="width: 1%" class="progress-bar progress-bar-primary">
                 </div>
             </div>
         </div>
@@ -52,7 +44,7 @@
                             <tbody>
                             <tr>
                                 <td class="no-borders">
-                                    Class Time
+                                    Time
                                 </td>
                                 <td class="no-borders">
                                     <strong>{{current_classroom.class_time.repeat}} {{current_classroom.class_time.formatted_start_time}}-{{current_classroom.class_time.formatted_end_time}}</strong>
@@ -71,7 +63,7 @@
                                     Professor
                                 </td>
                                 <td>
-                                    {{current_classroom.professors[0].full_name}}
+                                    <router-link :to="{name:'professor', params:{professor_id:current_classroom.professors[0].id}}"> {{current_classroom.professors[0].full_name}}</router-link>
                                 </td>
                             </tr>
                             <tr>
@@ -95,7 +87,7 @@
                 <div class="ibox">
                     <div class="ibox-content">
                         <h3>Class Notes</h3>
-                        <ul class="folder-list" style="padding: 0">
+                        <ul class="folder-list m-l-n-lg">
                             <li>
                                 <router-link :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}}">
                                     <i class="fa fa-align-justify"></i> All Files
@@ -133,8 +125,14 @@
                                     <i class="fa fa-bolt"></i> Exams
                                 </router-link>
                             </li>
+                            <li v-show="showFolder('Other')">
+                                <router-link
+                                        :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}, query:{folder:'Other'}}">
+                                    <i class="fa fa-bolt"></i> Others
+                                </router-link>
+                            </li>
                         </ul>
-                        <a>Upload new..</a>
+                        <router-link :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}}">Upload new..</router-link>
                     </div>
                 </div>
                 <div class="ibox">
@@ -193,27 +191,27 @@
                 </div>
                 <div class="social-feed-box" v-for="moment in moments">
                     <div class="pull-right social-action dropdown">
-                        <button data-toggle="dropdown" class="dropdown-toggle btn-white"><i
-                                class="fa fa-angle-down"></i></button>
+                        <button data-toggle="dropdown" class="dropdown-toggle btn-white">
+                            <i class="fa fa-angle-down"></i>
+                        </button>
                         <ul class="dropdown-menu m-t-xs">
                             <li><a @click="addReport(moment.id)">Report</a></li>
                             <li v-if="moment.creator.id === user_id"><a @click="delMoment(moment.id)">Delete</a></li>
-                            <li v-if="moment.creator.id === user_id && moment.solved === false"><a
-                                    @click="addSolve(moment.id)">Mark as solved</a></li>
+                            <li v-if="moment.creator.id === user_id && moment.solved === false">
+                                <a @click="addSolve(moment.id)">Mark as solved</a>
+                            </li>
                         </ul>
                     </div>
                     <div class="social-avatar">
                         <router-link :to="{name:'userDetail', params:{user_id:moment.creator.id}}" class="pull-left">
-                            <img :src="moment.creator.avatar1x" alt="image"
-                                 class="img-circle">
+                            <img :src="moment.creator.avatar1x" alt="image" class="img-circle">
                         </router-link>
                         <div class="media-body">
                             <router-link :to="{name:'userDetail', params:{user_id:moment.creator.id}}">
-                                {{moment.creator.full_name}}
+                                {{moment.creator.full_name}} <span class="label label-warning">Level {{moment.creator.level}}</span>
                             </router-link>
-                            <span v-show="moment.solved" class="label label-primary">Solved</span>
-                            <span v-show="moment.solved!==null&&!moment.solved"
-                                  class="label label-warning">Question</span>
+                            <span v-show="moment.solved" class="badge badge-primary">Solved</span>
+                            <span v-show="moment.solved===false" class="badge badge-info">Question</span>
                             <small class="text-muted">{{momentTime(moment.created)}}</small>
                         </div>
                     </div>
@@ -239,8 +237,12 @@
                                      :src="comment.creator.avatar1x">
                             </router-link>
                             <div class="media-body">
-                                <router-link :to="{name:'userDetail', params:{user_id:comment.creator.id}}">{{comment.creator.full_name}}
+                                <router-link :to="{name:'userDetail', params:{user_id:comment.creator.id}}">
+                                    {{comment.creator.full_name}}
+                                    <span class="label label-warning">Level {{comment.creator.level}}</span>
                                 </router-link>
+                                <br/>
+
                                 <small class="text-muted">{{momentTime(comment.created)}}</small>
                                 <br/>
                                 {{comment.content}}
@@ -301,9 +303,15 @@
       // Classroom Add/Drop
       addClassroom () {
         this.$store.dispatch('addClassroom', this.$route.params.classroom_id)
+          .then(() => {
+            this.$root.$children[0].$refs.toastr.s('You added the classroom to your schedule, refresh to see the change', 'Success')
+          })
       },
       remClassroom () {
         this.$store.dispatch('remClassroom', this.$route.params.classroom_id)
+          .then(() => {
+            this.$root.$children[0].$refs.toastr.s('You removed the classroom to your schedule, refresh to see the change', 'Success')
+          })
       },
       // Moments
       addLike (moment) {

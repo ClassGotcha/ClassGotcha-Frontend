@@ -1297,6 +1297,11 @@
         text-shadow: none;
     }
 
+    .label-sm {
+        font-size: 9px;
+        padding: 1px 2px 1px 3px;
+    }
+
     .badge {
         background-color: #d1dade;
         color: #5e5e5e;

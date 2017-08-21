@@ -39,8 +39,7 @@
                         <div class="progress progress-striped active m-b-sm">
                             <div style="width: 60%;" class="progress-bar"></div>
                         </div>
-                        <p>
-                            <b>Badges</b>:     under development      </p>
+
                     </td>
                     <td>
                     </td>
