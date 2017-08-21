@@ -29,7 +29,6 @@
                                 {{user.full_name}}
                                 <span><small> @{{user.username}} </small></span>
                             </p>
-
                         </h3>
                         <p>
                             <b>Level</b>:    <span class="label label-warning">Level {{user.level}}</span>
@@ -39,6 +38,8 @@
                         <div class="progress progress-striped active m-b-sm">
                             <div style="width: 60%;" class="progress-bar"></div>
                         </div>
+                        <button class="btn btn-sm btn-primary" @click="addFriend()"><i class="fa fa-user-plus"></i> Send Friend Request</button>
+                        <button class="btn btn-sm btn-default" ><i class="fa fa-info"></i> Report</button>
 
                     </td>
                     <td>
@@ -255,12 +256,17 @@
       }
     },
     methods: {
-      editName () {
-        // TODO
+      addFriend () {
+        this.$store.dispatch('addFriend', this.$route.params.user_id)
+          .then(() => {
+            this.$root.$children[0].$refs.toastr.s('Your Invitation is sent.', 'Success')
+          })
+          .catch((error) => {
+            this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Error')
+            console.log(error)
+          })
       },
-      postChange () {
-        this.$store.dispatch('updateSelf', this.user)
-      },
+
       loadData () {
         this.$store.dispatch('getUser', this.$route.params.user_id)
           .then((response) => {
@@ -271,7 +277,7 @@
           .then(() => {
             this.majors = this.$store.getters.majors
           })
-        this.$store.dispatch('getMoments')
+        this.$store.dispatch('getUserMoment', this.$route.params.user_id)
           .then((response) => {
             this.user_moments = response
           })
@@ -285,7 +291,6 @@
       },
     },
     created () {
-
       this.loadData()
     },
     watch: {

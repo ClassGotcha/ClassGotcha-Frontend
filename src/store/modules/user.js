@@ -14,6 +14,7 @@ const state = {
   login_status: false,
   token: null,
   loaded_user: {},
+  loaded_user_moments: [],
   uploaded: null
 }
 
@@ -134,6 +135,9 @@ const getters = {
   },
   loadedUser: state => {
     return state.loaded_user
+  },
+  loadedUserMoments: state => {
+    return state.loaded_user_moments
   }
 
 }
@@ -332,6 +336,16 @@ const actions = {
         return Promise.reject()
       })
   },
+  getUserMoment ({commit}, pk) {
+    return userApi.getUserMoment(pk)
+      .then((response) => {
+        commit(types.LOAD_USER_MOMENTS, response)
+        return Promise.resolve(response)
+      })
+      .catch((error) => {
+        commit(types.LOG_ERROR, error)
+      })
+  },
   addClassroom ({commit, dispatch}, pk) {
     return userApi.addClassroom(pk)
       .then(() => {
@@ -406,12 +420,16 @@ const actions = {
       })
   },
   addFriend ({commit}, pk) {
-    userApi.addFriend(pk)
+    return userApi.addFriend(pk)
       .then(() => {
         commit(types.ADD_FRIEND)
+        return Promise.resolve()
+
       })
       .catch((error) => {
         console.log(error)
+        return Promise.reject(error)
+
       })
   },
   remFriend ({commit}, pk) {
@@ -519,6 +537,9 @@ const mutations = {
   },
   [types.LOAD_USER] (state, response) {
     state.loaded_user = response
+  },
+  [types.LOAD_USER_MOMENTS] (state, response) {
+    state.loaded_user_moments = response
   },
 
   // post change
