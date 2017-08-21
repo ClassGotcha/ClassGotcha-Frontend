@@ -2,7 +2,7 @@
     <div class="page animated fadeInRight">
         <div>
             <div class="row m-b-lg m-t-lg">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="profile-image">
                         <img src="~img/major/math.jpg" class="img-circle circle-border m-b-md" alt="profile">
                     </div>
@@ -26,42 +26,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2" v-for="professor in professors">
-                    <table class="table small m-b-xs">
-                        <tbody>
-                        <tr>
-                            <td>
-                                professor:
-                            </td>
-                            <td>
-                                <strong>{{professor.full_name}}
-                                    <router-link :to="{name:'professor', params:{professor_id:professor.id}}"
-                                                 class="m-l">Detail
-                                    </router-link>
-                                </strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                email:
-                            </td>
-                            <td><strong>{{professor.email}}</strong></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                office:
-                            </td>
-                            <td>
-                                <strong class="pull-right">{{professor.office}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <p>
                 Semester Process
@@ -83,8 +47,55 @@
             <div class="col-lg-3">
                 <div class="ibox">
                     <div class="ibox-content">
-                        <h3>Class Files</h3>
-                        <ul class="folder-list m-b-md" style="padding: 0">
+                        <h3>Class Info</h3>
+                        <table class="table table-stripped m-b-n-sm">
+                            <tbody>
+                            <tr>
+                                <td class="no-borders">
+                                    Class Time
+                                </td>
+                                <td class="no-borders">
+                                    <strong>{{current_classroom.class_time.repeat}} {{current_classroom.class_time.formatted_start_time}}-{{current_classroom.class_time.formatted_end_time}}</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Location
+                                </td>
+                                <td>
+                                    <strong>{{current_classroom.class_time.location}}</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Professor
+                                </td>
+                                <td>
+                                    {{current_classroom.professors[0].full_name}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Office Hour
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a>Edit..</a>
+                                </td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <h3>Class Notes</h3>
+                        <ul class="folder-list" style="padding: 0">
                             <li>
                                 <router-link :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}}">
                                     <i class="fa fa-align-justify"></i> All Files
@@ -123,6 +134,7 @@
                                 </router-link>
                             </li>
                         </ul>
+                        <a>Upload new..</a>
                     </div>
                 </div>
                 <div class="ibox">
@@ -144,19 +156,16 @@
                 </div>
                 <div class="ibox">
                     <div class="ibox-content">
-                        <h3>Create a Group</h3>
+                        <h3>Create a Study Group</h3>
+                        <h5>Topic</h5>
+                        <input placeholder="Review Exam1" class="form-control">
                         <h5>Location</h5>
-                        <input type="text" placeholder="IST 231" class="form-control">
+                        <input placeholder="IST 231" class="form-control">
                         <h5>Time</h5>
-                        <input type="text" placeholder="4/12 5:00pm-6:00pm" class="form-control">
-                        <h5>People invited</h5>
-                        <div class="user-friends">
-                            <a href=""><img alt="image" class="img-circle" src="~img/avatar/a1.jpg"></a>
-                            <a href=""><img alt="image" class="img-circle" src="~img/avatar/a2.jpg"></a>
-                            <a href=""><img alt="image" class="img-circle" src="~img/avatar/a4.jpg"></a>
-                        </div>
+                        <input placeholder="4/12 5:00pm-6:00pm" class="form-control">
+
                         <br>
-                        <a href="#" class="btn btn-sm btn-primary"> Invite!</a>
+                        <a href="#" class="btn btn-sm btn-primary"> Create!</a>
                     </div>
                 </div>
             </div>

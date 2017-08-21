@@ -101,3 +101,7 @@ export const ADD_POST_VOTE = 'ADD_POST_VOTE'
 // ----- tasks -----
 export const UPDATE_TASK = 'UPDATE_TASK'
 export const DELETE_TASK = 'DELETE_TASK'
+
+// ----- Professor ----
+export const LOAD_PROFESSOR = 'LOAD_PROFESSOR'
+export const LOAD_PROFESSOR_COMMENTS = 'LOAD_PROFESSOR_COMMENTS'
