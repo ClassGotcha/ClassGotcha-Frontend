@@ -249,6 +249,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="m-b-lg">
+                    <button @click="loadMomentByPage()" class="btn btn-default btn-sm btn-block"><i class="fa fa-chevron-down"></i> Load More</button>
+                </div>
             </div>
             <div class="col-lg-4">
                 <task></task>
@@ -275,6 +278,7 @@
         content: '',
         question: false,
         dropzone: false,
+        moment_page: 1,
         // comment
         comment_content: '',
         comment_id: -1,
@@ -312,8 +316,12 @@
         this.$store.dispatch('postMoment', formData).then(() => {
           this.content = ''
           this.dropzone = false
+          this.$root.$children[0].$refs.toastr.s('You posted a new moment', 'Success')
         })
-
+      },
+      loadMomentByPage () {
+        this.moment_page = this.moment_page + 1
+        this.$store.dispatch('getClassroomMomentsByPage', this.moment_page)
       },
       delMoment (pk) {
         this.$store.dispatch('delMoment', pk)
@@ -328,8 +336,6 @@
         this.comment_content = ''
         this.comment_id = -1
       },
-      // Tasks
-
       // Utils
       showFolder (name) {
         for (let i in this.current_classroom.folders) {
@@ -343,14 +349,6 @@
         return moment(time).fromNow()
       },
       // UI Switches
-      showAddTask () {
-        /* global $:true */
-        this.add_task = !this.add_task
-        if (this.add_task) this.add_task_button_class = 'fa fa-minus'
-        else this.add_task_button_class = 'fa fa-plus'
-        $('#add-task').modal('show')
-
-      },
       showCommentBox (moment) {
         this.comment_content = ''
         this.comment_id = moment.id
