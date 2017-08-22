@@ -25,6 +25,10 @@
                         <label>Event Name</label>
                         <input class="form-control" :disabled="event.category!==6" placeholder="Title" v-model="event.task_name">
                     </div>
+                    <div class="form-group" v-if="event.task_of_classroom">
+                        <label>Classroom</label>
+                        <input class="form-control" disabled v-model="event.task_of_classroom.class_short">
+                    </div>
                     <div class="form-group" v-show="event.start&&event.end">
                         <div class="row" v-if="event.repeat">
                             <div class="col-md-6">
@@ -61,23 +65,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" v-show="event.category!==6">
                         <label>Category</label>
-                        <input class="form-control" :disabled="event.category!==6" placeholder="Category" :value="categoryName(event.category)">
-                    </div>
-                    <div class="form-group" v-if="event.classroom">
-                        <label>Classroom</label>
-                        <input class="form-control" :disabled="event.category!==6" placeholder="Classroom" :value="event.classroom.class_short">
+                        <input class="form-control" disabled :value="categoryName(event.category)">
                     </div>
                     <div class="form-group" v-if="event.group">
                         <label>Group</label>
                         <input class="form-control" :disabled="event.category!==6" placeholder="Group" :value="event.group">
                     </div>
-                    <div class="form-group" v-show="event.location">
+                    <div class="form-group" v-show="event.location || event.category===6">
                         <label>Location</label>
                         <input class="form-control" :disabled="event.category!==6" placeholder="Location" :value="event.location">
                     </div>
-                    <div class="form-group" v-if="event.repeat">
+                    <div class="form-group" v-if="event.repeat || event.category===6">
                         <label>Repeat</label>
                         <br>
                         <div class="btn-group">
@@ -92,7 +92,11 @@
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary btn-block" @click="updateTask()" v-if="event.category===6">Update</button>
-                        <router-link class="btn btn-primary btn-block" v-if="event.category===0" :to="{name:'classroom', params:{classroom_id:event.classroom.id}}" >Go to {{event.classroom.class_short}}</router-link>
+                        <button class="btn btn-danger btn-block" @click="deleteTask()" v-if="event.category===6">Delete</button>
+                        <router-link class="btn btn-primary btn-block" v-if="event.category===0" :to="{name:'classroom', params:{classroom_id:event.classroom.id}}">Go to {{event.classroom.class_short}}</router-link>
+                        <router-link class="btn btn-primary btn-block" v-if="event.task_of_classroom" :to="{name:'classroom', params:{classroom_id:event.task_of_classroom.id}}">
+                            Go to {{event.task_of_classroom.class_short}}
+                        </router-link>
 
                     </div>
                 </div>
@@ -185,6 +189,7 @@
           repeat: '',
         },
         // created_event: {},
+
         // for fullcalendar
         events: [],
         event_sources: [],
@@ -219,6 +224,7 @@
           // color: ''
           // }
         ]
+
         let event_list0 = [] // classes
         let event_list1 = [] // homework
         let event_list2 = [] // quiz
@@ -229,13 +235,13 @@
         const event_color1 = '#f8ac59'
         const event_color2 = '#ed5565'
         const event_color3 = '#ed5565'
-        const event_color7 = '#23c6c8'
+        const event_color6 = '#23c6c8'
 
         for (let i in this.user_tasks) {
           const task = this.user_tasks[i]
           /* global moment:true */
-          // classes
 
+          // classes
           if (task.category === 0) {
             event_list0.push({
               id: task.id,
@@ -289,7 +295,10 @@
               end: (task.start ? task.end : moment.utc(task.end).add(0.5, 'hours').format()),
 
             })
-          } else if (task.category === 6) {
+          }
+
+          // others
+          else if (task.category === 6) {
             event_list7.push({
               id: task.id,
               title: (task.location ? task.task_name + '\n' + task.location : task.task_name),
@@ -304,53 +313,76 @@
         event_sources_list.push({events: event_list1, color: event_color1})
         event_sources_list.push({events: event_list2, color: event_color2})
         event_sources_list.push({events: event_list3, color: event_color3})
-        event_sources_list.push({events: event_list7, color: event_color7})
+        event_sources_list.push({events: event_list7, color: event_color6})
 
         this.event_sources = event_sources_list
+
+        return Promise.resolve()
       },
 
-      //      createExternalEvents () {
-      //        /* global $:true */
-      //        $('#external-events div.external-event').each(function () {
-      //          // store data so the calendar knows to render an event upon drop
-      //          $(this).data('event', {
-      //            title: $.trim($(this).text()), // use the element's text as the event title
-      //            stick: true // maintain when user navigates (see docs on the renderEvent method)
-      //          })
-      //          // make the event draggable using jQuery UI
-      //          $(this).draggable({
-      //            zIndex: 10,
-      //            revert: true, // will cause the event to go back to its
-      //            revertDuration: 1 //  original position after the drag
-      //          })
-      //
-      //        })
-      //      },
+      createExternalEvents () {
+        //        /* global $:true */
+        //        $('#external-events div.external-event').each(function () {
+        //          // store data so the calendar knows to render an event upon drop
+        //          $(this).data('event', {
+        //            title: $.trim($(this).text()), // use the element's text as the event title
+        //            stick: true // maintain when user navigates (see docs on the renderEvent method)
+        //          })
+        //          // make the event draggable using jQuery UI
+        //          $(this).draggable({
+        //            zIndex: 10,
+        //            revert: true, // will cause the event to go back to its
+        //            revertDuration: 1 //  original position after the drag
+        //          })
+        //
+        //        })
+      },
 
       postNewTask () {
         let formData = this.new_event
         formData.start = formData.start_date + 'T' + formData.start_time
         formData.end = formData.end_date + 'T' + formData.end_time
         formData.involved = [this.user.id]
+        formData.creator = this.user.id
         if (!formData.repeat) {
           delete formData['repeat']
         }
         this.$store.dispatch('postTask', formData)
           .then(() => {
-            this.$store.dispatch('getTasks').then(() => {
-              this.createEvents()
-            })
+            this.$store.dispatch('getTasks')
+              .then(() => {
+                this.createEvents().then(() => {
+                  this.$emit('rebuild-sources')
+                  this.$emit('reload-events')
+                })
+              })
           })
       },
 
       updateTask () {
-        // updateTask
+        this.$store.dispatch('updateTask', this.event)
+          .then(() => {
+            this.$store.dispatch('getTasks')
+              .then(() => {
+                this.createEvents()
+                $(this.$el).fullCalendar('rerenderEvents')
+              })
+          })
       },
-
-      getEventClassroomId (event) {
-
+      deleteTask () {
+        this.$emit('remove-event', this.event)
+        this.$store.dispatch('deleteTask', this.event.id)
+          .then(() => {
+            this.$store.dispatch('getTasks')
+              .then(() => {
+                this.createEvents().then(() => {
+                  console.log('rebuild-sources')
+                  this.$emit('rebuild-sources')
+                  this.$emit('reload-events')
+                })
+              })
+          })
       },
-
       // data formatter
       formatTime (time) {
         /* global moment: true */
@@ -418,8 +450,8 @@
       const self = this
 
       cal.fullCalendar({
-        scrollTime: '07:30:00',
-        droppable: true,
+        scrollTime: '08:00:00',
+        // droppable: true,
         // ignoreTimezone: false,
         header: this.calendar_header,
         defaultView: 'agendaWeek',
@@ -444,7 +476,6 @@
         //     }
         // },
         eventClick (event) {
-
           // The following code did this:
           // When click a event, if the event id is found in self.user_tasks, show event
           // else, this is a new event, create it
@@ -455,7 +486,6 @@
               found = true
               self.show_event_detail = true
               self.create_new_event = false
-
             }
           }
           if (!found) {
@@ -505,13 +535,15 @@
 //      this.createExternalEvents()
     },
     watch: {
-      events: {
+      event_sources: {
         deep: true,
-        handler (val) {
-          $(this.$el).fullCalendar('rerenderEvents')
+        handler () {
+          this.$emit('refetch-events')
+          this.$emit('rerender-events')
         },
-      }
+      },
     },
+
     events: {
       'remove-event' (event) {
         $(this.$el).fullCalendar('removeEvents', event.id)
@@ -527,16 +559,15 @@
       },
       'reload-events' () {
         $(this.$el).fullCalendar('removeEvents')
-        $(this.$el).fullCalendar('addEventSource', this.events)
+        $(this.$el).fullCalendar('addEventSource', this.event_sources)
       },
       'rebuild-sources' () {
         $(this.$el).fullCalendar('removeEvents')
-        this.eventSources.map(event => {
+        this.event_sources.map(event => {
           $(this.$el).fullCalendar('addEventSource', event)
         })
       },
-    },
-
+    }
   }
 
 </script>
