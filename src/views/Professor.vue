@@ -151,67 +151,24 @@
                                                             </div>
                                                         </div>
                                                         <div class="feed-element">
-                                                            <a href="#" class="pull-left">
-                                                                <img alt="image" class="img-circle" src="img/a3.jpg">
-                                                            </a>
-                                                            <div class="media-body ">
-                                                                <small class="pull-right">2h ago</small>
-                                                                <strong>Janet Rosowski</strong> add 1 photo on <strong>Monica Smith</strong>.
-                                                                <br>
-                                                                <small class="text-muted">2 days ago at 8:30am</small>
-                                                            </div>
-                                                        </div>
-                                                        <div class="feed-element">
-                                                            <a href="#" class="pull-left">
-                                                                <img alt="image" class="img-circle" src="img/a4.jpg">
-                                                            </a>
-                                                            <div class="media-body ">
-                                                                <small class="pull-right text-navy">5h ago</small>
-                                                                <strong>Chris Johnatan Overtunk</strong> started following
-                                                                <strong>Monica Smith</strong>. <br>
-                                                                <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
-                                                                <div class="actions">
-                                                                    <a class="btn btn-xs btn-white"><i class="fa fa-thumbs-up"></i> Like </a>
-                                                                    <a class="btn btn-xs btn-white"><i class="fa fa-heart"></i> Love</a>
+                                                            <a class="pull-left">
+                                                                <img class="img-circle">
+                                                                <div class="author-info">
+                                                                    <strong>name</strong><br><br>
+                                                                    <span class="label label-warning">Level </span>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="feed-element">
-                                                            <a href="#" class="pull-left">
-                                                                <img alt="image" class="img-circle" src="img/a5.jpg">
                                                             </a>
-                                                            <div class="media-body ">
-                                                                <small class="pull-right">2h ago</small>
-                                                                <strong>Kim Smith</strong> posted message on <strong>Monica Smith</strong> site. <br>
-                                                                <small class="text-muted">Yesterday 5:20 pm - 12.06.2014</small>
-                                                                <div class="well">
-                                                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-                                                                    text ever since the 1500s. Over the years, sometimes
-                                                                    by accident, sometimes on purpose (injected humour and
-                                                                    the like).
+                                                            <div class="media-body">
+                                                                <textarea class="form-control" v-model="comment_content"></textarea>
+                                                                <div class="m-b-10 m-t-sm">
+                                                                    <input type="checkbox" id="check" name="check"> <label for="check"></label>
+                                                                    Post as anonymous
+                                                                    <button data-dismiss="modal" class=" btn btn-sm btn-primary pull-right">
+                                                                        Post
+                                                                    </button>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="feed-element">
-                                                            <a href="#" class="pull-left">
-                                                                <img alt="image" class="img-circle" src="img/profile.jpg">
-                                                            </a>
-                                                            <div class="media-body ">
-                                                                <small class="pull-right">23h ago</small>
-                                                                <strong>Monica Smith</strong> love <strong>Kim Smith</strong>.
-                                                                <br>
-                                                                <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
-                                                            </div>
-                                                        </div>
-                                                        <div class="feed-element">
-                                                            <a href="#" class="pull-left">
-                                                                <img alt="image" class="img-circle" src="img/a7.jpg">
-                                                            </a>
-                                                            <div class="media-body ">
-                                                                <small class="pull-right">46h ago</small>
-                                                                <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>.
-                                                                <br>
-                                                                <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -233,6 +190,11 @@
     name: 'Professor',
     head: {
       title: {inner: 'Professor'}
+    },
+    data: () => {
+      return {
+        comment_content: ''
+      }
     },
     methods: {
       // Data Loading
