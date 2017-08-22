@@ -162,10 +162,10 @@ const actions = {
         // console.log(response)
         commit(types.LOGIN_SUCCESS, response)
         dispatch('getSelf')
-        dispatch('getTasks')
         dispatch('getFriends')
-        router.push({path: 'home'})
-
+        dispatch('getTasks').then(() => {
+          router.push({path: 'home'})
+        })
       })
       .catch((error) => {
         commit(types.LOGIN_FAILED, error)
@@ -213,12 +213,12 @@ const actions = {
     userApi.tokenVerify(formData)
       .then((response) => {
         commit(types.VERIFY_SUCCESS, response)
-        if (rootState.route.name === 'login') {
-          router.push({path: 'home'})
+        if (rootState.route.name === 'login' || rootState.route.name === 'register') { router.push({path: 'home'}) }
+        else {
+          dispatch('getSelf')
+          dispatch('getTasks')
+          dispatch('getFriends')
         }
-        dispatch('getSelf')
-        dispatch('getTasks')
-        dispatch('getFriends')
       })
       .catch((error) => {
         if (rootState.route.name !== 'login' &&
@@ -244,6 +244,7 @@ const actions = {
       })
       .catch((error) => {
         commit(types.LOGIN_FAILED)
+        router.push({name: 'landing'})
         commit(types.LOG_ERROR, error)
       })
   },
@@ -490,7 +491,6 @@ const mutations = {
     state.login_status = false
     state.token = null
     state.error_msg = error
-    router.push({name: 'login'})
   },
   [types.REGSITER_FAILED] (state, error) {
     state.login_status = false
