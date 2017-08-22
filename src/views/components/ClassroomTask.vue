@@ -9,7 +9,7 @@
             <div class="vertical-timeline-content" v-show="user_in_classroom">
                 <div class="row">
                     <div class="col-md-10">
-                        <h2>Add a new task to classroom?</h2>
+                        <h2>Create a new task?</h2>
                     </div>
                     <div class="col-md-2">
                         <a data-toggle="modal" data-target="#add-task" class=" btn btn-primary"><i class="fa fa-plus"></i></a>
