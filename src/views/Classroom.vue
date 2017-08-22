@@ -315,7 +315,7 @@
       remClassroom () {
         this.$store.dispatch('remClassroom', this.$route.params.classroom_id)
           .then(() => {
-            this.$root.$children[0].$refs.toastr.s('You removed the classroom to your schedule, refresh to see the change', 'Success')
+            this.$root.$children[0].$refs.toastr.s('The classroom is removed from your schedule, refresh to see the change', 'Success')
           })
       },
       // Moments

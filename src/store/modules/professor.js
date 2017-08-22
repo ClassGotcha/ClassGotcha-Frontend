@@ -8,7 +8,7 @@ const state = {
 
 const getters = {
   professor_detail: state => {
-      return state.professor
+    return state.professor
   },
   professor_comments: state => {
     return state.comments
@@ -27,6 +27,19 @@ const actions = {
         return Promise.reject()
       })
   },
+
+  updateProfessor ({commit, dispatch}, formData) {
+    return professorApi.updateProfessor(formData)
+      .then((response) => {
+        commit(types.UPDATE_PROFESSOR, response)
+        dispatch('getProfessor', formData.id)
+        return Promise.resolve(response)
+      })
+      .catch((error) => {
+        commit(types.LOG_ERROR, error)
+        return Promise.reject()
+      })
+  },
   getProfessorComments ({commit}, pk) {
     return professorApi.getProfessorComments(pk)
       .then((response) => {
@@ -38,8 +51,17 @@ const actions = {
         return Promise.reject()
       })
   },
-  postProfessorComments ({commit}, pk) {
-
+  postProfessorComment ({commit, dispatch}, formData) {
+    return professorApi.postProfessorComment(formData)
+      .then((response) => {
+        commit(types.POST_PROFESSOR_COMMENTS, response)
+        dispatch('getProfessorComments', formData.id)
+        return Promise.resolve(response)
+      })
+      .catch((error) => {
+        commit(types.LOG_ERROR, error)
+        return Promise.reject()
+      })
   }
 }
 
@@ -50,7 +72,9 @@ const mutations = {
   },
   [types.LOAD_PROFESSOR_COMMENTS] (state, response) {
     state.comments = response
-  }
+  },
+  [types.POST_PROFESSOR_COMMENTS] (state, response) {},
+  [types.UPDATE_PROFESSOR] (state, response) {}
 }
 
 export default {

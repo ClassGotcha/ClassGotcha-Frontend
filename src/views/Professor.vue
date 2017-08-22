@@ -63,14 +63,14 @@
                                             <strong>{{professor.office}}</strong>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            Rate
-                                        </td>
-                                        <td>
-                                            {{professor.avg_rate.num__avg}}
-                                        </td>
-                                    </tr>
+                                    <!--<tr>-->
+                                    <!--<td>-->
+                                    <!--Rate-->
+                                    <!--</td>-->
+                                    <!--<td>-->
+                                    <!--{{professor.avg_rate.num__avg}}-->
+                                    <!--</td>-->
+                                    <!--</tr>-->
 
                                     </tbody>
                                 </table>
@@ -117,6 +117,9 @@
                                                                 Section {{classroom.class_section}}
                                                             </td>
                                                             <td>
+                                                                {{classroom.class_credit}} Unit(s)
+                                                            </td>
+                                                            <td>
                                                                 {{classroom.class_time.repeat}} {{classroom.class_time.formatted_start_time}}-{{classroom.class_time.formatted_end_time}}
                                                             </td>
                                                             <td>
@@ -134,36 +137,40 @@
                                                 </div>
                                                 <div class="tab-pane" id="tab-2">
                                                     <div class="feed-activity-list">
-                                                        <div class="feed-element">
-                                                            <a href="#" class="pull-left">
-                                                                <img alt="image" class="img-circle" src="img/a2.jpg">
+                                                        <div class="well" v-if="professor_comments.length === 0">
+                                                            <p class="text-center"> Oops, nothing here～</p>
+                                                        </div>
+                                                        <div class="feed-element" v-for="comment in professor_comments">
+                                                            <a href="#" class="pull-left" v-if="comment.is_anonymous">
+                                                                <img alt="image" class="img-circle" src="https://classgotcha-us-standard-20161024.s3.amazonaws.com/avatars/default/user-male50.png">
+                                                            </a>
+                                                            <a href="#" class="pull-left" v-else>
+                                                                <img alt="image" class="img-circle" :src="comment.creator.avatar1x">
                                                             </a>
                                                             <div class="media-body ">
-                                                                <small class="pull-right">2h ago</small>
-                                                                <strong>Mark Johnson</strong> posted message on <strong>Monica Smith</strong> site. <br>
-                                                                <small class="text-muted">Today 2:10 pm - 12.06.2014</small>
+                                                                <small class="pull-right"></small>
+                                                                <strong v-if="comment.is_anonymous">Anonymous User</strong><strong v-else>{{comment.creator.full_name}}</strong> <span class="label label-sm label-warning">Level {{comment.creator.level}}</span>
+                                                                <br>
+                                                                <small class="text-muted">{{momentTime(comment.created)}}</small>
                                                                 <div class="well">
-                                                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-                                                                    text ever since the 1500s. Over the years, sometimes
-                                                                    by accident, sometimes on purpose (injected humour and
-                                                                    the like).
+                                                                    {{comment.content}}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="feed-element">
-                                                            <a class="pull-left">
-                                                                <img class="img-circle">
+                                                            <a class="forum-avatar">
+                                                                <img :src="user.avatar1x" class="img-circle">
                                                                 <div class="author-info">
-                                                                    <strong>name</strong><br><br>
-                                                                    <span class="label label-warning">Level </span>
+                                                                    <strong>{{user.full_name}}</strong><br><br>
+                                                                    <span class="label label-warning">Level {{user.level}}</span>
                                                                 </div>
                                                             </a>
                                                             <div class="media-body">
                                                                 <textarea class="form-control" v-model="comment_content"></textarea>
                                                                 <div class="m-b-10 m-t-sm">
-                                                                    <input type="checkbox" id="check" name="check"> <label for="check"></label>
+                                                                    <input type="checkbox" v-model="is_anonymous" id="check" name="check"> <label for="check"></label>
                                                                     Post as anonymous
-                                                                    <button data-dismiss="modal" class=" btn btn-sm btn-primary pull-right">
+                                                                    <button @click="postProfessorComment()" data-dismiss="modal" class=" btn btn-sm btn-primary pull-right">
                                                                         Post
                                                                     </button>
                                                                 </div>
@@ -193,15 +200,30 @@
     },
     data: () => {
       return {
-        comment_content: ''
+        comment_content: '',
+        is_anonymous: false
       }
     },
     methods: {
       // Data Loading
       getProfessorData () {
         this.$store.dispatch('getProfessor', this.$route.params.professor_id)
-
         this.$store.dispatch('getProfessorComments', this.$route.params.professor_id)
+      },
+
+      postProfessorComment () {
+        const formData = {
+          id: this.$route.params.professor_id,
+          content: this.comment_content,
+          is_anonymous: this.is_anonymous
+        }
+        this.$store.dispatch('postProfessorComment', formData).then(() => {
+          this.$root.$children[0].$refs.toastr.s('Comment on professor!', 'Success')
+        })
+      },
+      momentTime (time) {
+        /* global moment:true */
+        return moment(time).fromNow()
       },
     },
     computed: {
@@ -211,6 +233,9 @@
       professor_comments () {
         return this.$store.getters.professor_comments
       },
+      user () {
+        return this.$store.getters.me
+      }
     },
     created () {
       // Once the vue instance is created, load data
