@@ -102,9 +102,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        {{event}}
                         <button class="btn btn-primary btn-block" @click="updateTask()" v-if="event.category===6">Update</button>
                         <button class="btn btn-danger btn-block" @click="deleteTask()" v-if="event.category===6">Delete</button>
+                        <button class="btn btn-primary btn-block" @click="deleteTask()" v-if="event.task_of_classroom">Remove From My Calendar</button>
                         <router-link class="btn btn-primary btn-block" v-if="event.category===0" :to="{name:'classroom', params:{classroom_id:event.classroom.id}}">Go to {{event.classroom.class_short}}</router-link>
                         <router-link class="btn btn-primary btn-block" v-if="event.task_of_classroom" :to="{name:'classroom', params:{classroom_id:event.task_of_classroom.id}}">
                             Go to {{event.task_of_classroom.class_short}}
@@ -371,6 +371,8 @@
               .then(() => {
                 this.createEvents().then(() => {
                   $(this.$el).fullCalendar('rerenderEvents')
+                  this.$root.$children[0].$refs.toastr.s('Event is updated, refresh to see the change', 'Success')
+
                 })
               })
           })
