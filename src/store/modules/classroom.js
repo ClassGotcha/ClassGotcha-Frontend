@@ -197,6 +197,7 @@ const actions = {
       .then((response) => {
         commit(types.POST_CLASSROOM_TASK, response)
         dispatch('getClassroomTasks', data.pk)
+        dispatch('getTasks')
       })
       .catch((error) => {
         commit(types.LOG_ERROR, error)
