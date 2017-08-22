@@ -425,7 +425,6 @@ const actions = {
       .then(() => {
         commit(types.ADD_FRIEND)
         return Promise.resolve()
-
       })
       .catch((error) => {
         console.log(error)
@@ -453,7 +452,7 @@ const actions = {
         return Promise.reject(error)
       })
   },
-  postTask ({commit}, data) {
+  postTask ({commit, dispatch}, data) {
     return userApi.postTask(data)
       .then(() => {
         commit(types.POST_TASK)
