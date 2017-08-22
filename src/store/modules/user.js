@@ -92,41 +92,41 @@ const getters = {
       return []
     }
   },
-  userRecommendedTasks: (state, getters) => {
-    let tasks = []
-    for (let i in getters.userTasks) {
-      // Have to do this to avoid fucking stupid js optimize which only create an reference to the object.
-      let task = Object.assign({}, getters.userTasks[i])
-      /* global moment:true */
-      if (task.category === 1) { // Homework
-        const today = moment.utc().startOf('day')
-        const due_date = moment.utc(task.end)
-        const from_now_in_days = Math.round(moment.duration(due_date - today).asDays())
-        if (from_now_in_days >= 0 && from_now_in_days <= 10) {
-          task.task_name = 'Do ' + task.task_name + ' of ' + task.classroom.class_short
-          tasks.push(task)
-        }
-      } else if (task.category === 2) { // Quiz
-        const today = moment.utc().startOf('day')
-        const due_date = moment.utc(task.end)
-        const from_now_in_days = Math.round(moment.duration(due_date - today).asDays())
-        if (from_now_in_days >= 0 && from_now_in_days <= 10) {
-          task.task_name = 'Prepare ' + task.task_name + ' of ' + task.classroom.class_short
-
-          tasks.push(task)
-        }
-      } else if (task.category === 3) { // Exam
-        const today = moment.utc().startOf('day')
-        const due_date = moment.utc(task.end)
-        const from_now_in_days = Math.round(moment.duration(due_date - today).asDays())
-        if (from_now_in_days >= 0 && from_now_in_days <= 10) {
-          task.task_name = 'Prepare ' + task.task_name + ' of ' + task.classroom.class_short
-          tasks.push(task)
-        }
-      }
-    }
-    return tasks
-  },
+  // userRecommendedTasks: (state, getters) => {
+  //   let tasks = []
+  //   for (let i in getters.userTasks) {
+  //     // Have to do this to avoid fucking stupid js optimize which only create an reference to the object.
+  //     let task = Object.assign({}, getters.userTasks[i])
+  //     /* global moment:true */
+  //     if (task.category === 1) { // Homework
+  //       const today = moment.utc().startOf('day')
+  //       const due_date = moment.utc(task.end)
+  //       const from_now_in_days = Math.round(moment.duration(due_date - today).asDays())
+  //       if (from_now_in_days >= 0 && from_now_in_days <= 10) {
+  //         task.task_name = 'Do ' + task.task_name + ' of ' + task.task_of_classroom.class_short
+  //         tasks.push(task)
+  //       }
+  //     } else if (task.category === 2) { // Quiz
+  //       const today = moment.utc().startOf('day')
+  //       const due_date = moment.utc(task.end)
+  //       const from_now_in_days = Math.round(moment.duration(due_date - today).asDays())
+  //       if (from_now_in_days >= 0 && from_now_in_days <= 10) {
+  //         task.task_name = 'Prepare ' + task.task_name + ' of ' + task.task_of_classroom.class_short
+  //
+  //         tasks.push(task)
+  //       }
+  //     } else if (task.category === 3) { // Exam
+  //       const today = moment.utc().startOf('day')
+  //       const due_date = moment.utc(task.end)
+  //       const from_now_in_days = Math.round(moment.duration(due_date - today).asDays())
+  //       if (from_now_in_days >= 0 && from_now_in_days <= 10) {
+  //         task.task_name = 'Prepare ' + task.task_name + ' of ' + task.task_of_classroom.class_short
+  //         tasks.push(task)
+  //       }
+  //     }
+  //   }
+  //   return tasks
+  // },
   userFriends: state => {
     return state.friends
   },
