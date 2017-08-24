@@ -13,6 +13,7 @@ import chat from './modules/chat'
 import post from './modules/post'
 import task from './modules/task'
 import professor from './modules/professor'
+import notification from './modules/notification'
 
 Vue.use(Vuex)
 const mutations = {
@@ -24,11 +25,11 @@ const mutations = {
     state.user.tasks = []
     state.user.login_status = false
     state.user.token = null
-    state.chat.chatrooms = {}
-    state.chat.valid = false
-    state.chat.current_chatroom_pk = null
-    state.chat.error_msg = null
-    state.chat.sockets = {}
+    // state.chat.chatrooms = {}
+    // state.chat.valid = false
+    // state.chat.current_chatroom_pk = null
+    // state.chat.error_msg = null
+    // state.chat.sockets = {}
     state.classroom.search_results = []
     state.classroom.classroom = {}
     state.classroom.is_in_class = false
@@ -51,7 +52,8 @@ const store = new Vuex.Store({
     chat,
     post,
     task,
-    professor
+    professor,
+    notification
   }
 })
 export default store
