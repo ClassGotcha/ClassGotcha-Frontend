@@ -392,7 +392,7 @@
                     $(this.$el).fullCalendar('removeEvents')
                     $(this.$el).fullCalendar('addEventSource', this.events)
                     $(this.$el).fullCalendar('rerenderEvents')
-                    this.$root.$children[0].$refs.toastr.s('Event is removed to your schedule, refresh to see the change', 'Success')
+                    this.$root.$children[0].$refs.toastr.s('Event is removed from your schedule, refresh to see the change', 'Success')
                   })
               })
           })
