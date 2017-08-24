@@ -22,16 +22,17 @@
                             </h4>
                             <small>
                                 {{current_classroom.description}}
+
                             </small>
                         </div>
                     </div>
                 </div>
             </div>
             <p>
-                Semester Process
+                {{current_classroom.semester.name}} Semester Process
             </p>
             <div class="progress  m-b">
-                <div style="width: 1%" class="progress-bar progress-bar-primary">
+                <div :style="semesterProcess()" class="progress-bar progress-bar-primary">
                 </div>
             </div>
         </div>
@@ -96,39 +97,43 @@
                             <li v-show="showFolder('Note')">
                                 <router-link
                                         :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}, query:{folder:'Note'}}">
-                                    <i class="fa fa-certificate"></i> Notes <span
-                                        class="label label-warning pull-right">16</span>
+                                    <i class="fa fa-certificate"></i> Notes
+                                    <span class="label label-warning pull-right">NEW!</span>
                                 </router-link>
                             </li>
                             <li v-show="showFolder('Lecture')">
                                 <router-link
                                         :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}, query:{folder:'Lecture'}}">
                                     <i class="fa fa-inbox"></i> Lectures
+                                    <span class="label label-warning pull-right">NEW!</span>
                                 </router-link>
                             </li>
                             <li v-show="showFolder('Lab')">
                                 <router-link
                                         :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}, query:{folder:'Lab'}}">
                                     <i class="fa fa-flask"></i> Labs
+                                    <span class="label label-warning pull-right">NEW!</span>
                                 </router-link>
                             </li>
                             <li v-show="showFolder('Homework')">
                                 <router-link
                                         :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}, query:{folder:'Homework'}}">
-                                    <i class="fa fa-file-text-o"></i> Homeworks <span
-                                        class="label label-plain pull-right">2</span>
+                                    <i class="fa fa-file-text-o"></i> Homework
+                                    <span class="label label-warning pull-right">NEW!</span>
                                 </router-link>
                             </li>
                             <li v-show="showFolder('Exam')">
                                 <router-link
                                         :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}, query:{folder:'Exam'}}">
                                     <i class="fa fa-bolt"></i> Exams
+                                    <span class="label label-warning pull-right">NEW!</span>
                                 </router-link>
                             </li>
                             <li v-show="showFolder('Other')">
                                 <router-link
                                         :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}, query:{folder:'Other'}}">
                                     <i class="fa fa-bolt"></i> Others
+                                    <span class="label label-warning pull-right">NEW!</span>
                                 </router-link>
                             </li>
                         </ul>
@@ -310,7 +315,7 @@
       remClassroom () {
         this.$store.dispatch('remClassroom', this.$route.params.classroom_id)
           .then(() => {
-            this.$root.$children[0].$refs.toastr.s('You removed the classroom to your schedule, refresh to see the change', 'Success')
+            this.$root.$children[0].$refs.toastr.s('The classroom is removed from your schedule, refresh to see the change', 'Success')
           })
       },
       // Moments
@@ -364,6 +369,13 @@
       momentTime (time) {
         /* global moment:true */
         return moment(time).fromNow()
+      },
+      semesterProcess () {
+        let s = Date.parse(this.current_classroom.semester.formatted_start_date)
+        let e = Date.parse(this.current_classroom.semester.formatted_end_date)
+        let t = new Date()
+        let percent = Math.round(100 - ((e - s) * 100) / t) + '%'
+        return 'width:' + percent
       },
       // UI Switches
       showCommentBox (moment) {

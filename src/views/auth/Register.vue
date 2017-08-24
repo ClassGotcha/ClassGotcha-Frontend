@@ -159,8 +159,8 @@
           this.emailMsg = 'This field is required'
         else if (!formData.password)
           this.passwordMsg = 'This field is required'
-        else if (!formData.checked)
-          this.policyMsg = 'This field is required'
+//        else if (!formData.checked)
+//          this.policyMsg = 'This field is required'
         else
           this.$store.dispatch('register', formData)
             .catch((error) => {

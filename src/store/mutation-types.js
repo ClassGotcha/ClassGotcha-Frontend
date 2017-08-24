@@ -25,6 +25,7 @@ export const UPDATE_SELF = 'UPDATE_SELF'
 export const UPDATE_SELF_FAILED = 'UPDATE_SELF_FAILED'
 
 export const LOAD_USER = 'LOAD_USER'
+export const LOAD_USER_MOMENTS = 'LOAD_USER_MOMENTS'
 
 export const LOAD_CLASSROOMS = 'LOAD_CLASSROOMS'
 export const ADD_CLASSROOM = 'ADD_CLASSROOM'
@@ -100,8 +101,15 @@ export const ADD_POST_VOTE = 'ADD_POST_VOTE'
 
 // ----- tasks -----
 export const UPDATE_TASK = 'UPDATE_TASK'
+export const ADD_TASK = 'ADD_TASK'
 export const DELETE_TASK = 'DELETE_TASK'
 
 // ----- Professor ----
 export const LOAD_PROFESSOR = 'LOAD_PROFESSOR'
+export const UPDATE_PROFESSOR = 'UPDATE_PROFESSOR'
 export const LOAD_PROFESSOR_COMMENTS = 'LOAD_PROFESSOR_COMMENTS'
+export const POST_PROFESSOR_COMMENTS = 'POST_PROFESSOR_COMMENTS'
+
+// ----- Notifications ----
+export const LOAD_NOTIFICATIONS = 'LOAD_NOTIFICATIONS'
+export const READ_NOTIFICATION = 'READ_NOTIFICATION'

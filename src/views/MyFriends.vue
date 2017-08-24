@@ -1,27 +1,25 @@
 <template>
     <div>
         <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-9">
-                <h2>Students</h2>
+            <div class="col-lg-10">
+                <h2>My Friends</h2>
                 <ol class="breadcrumb">
                     <li>
                         <router-link :to="{name:'home'}">Home</router-link>
-                    </li>
-                    <li>
-                        Classrooms
-                    </li>
-                    <li>
-                        <router-link :to="{name:'classroom', params:{classroom_id:currentClassroom.id}}"> {{currentClassroom.class_short}}</router-link>
+
                     </li>
                     <li class="active">
-                        <strong>Classmates</strong>
+                        <strong>My Friends</strong>
                     </li>
                 </ol>
+            </div>
+            <div class="col-lg-2">
+
             </div>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-12" v-for="student in currentClassroom.students">
+                <div class="col-lg-3 col-md-6 col-sm-12" v-for="student in userFriends">
                     <div class="contact-box">
                         <router-link :to="{name:'userDetail', params:{user_id:student.id}}">
 
@@ -46,44 +44,33 @@
                                 {{student.about_me}}
                             </address>
                             <div class="m-t-xs btn-group">
-                                <a @click="addFriend(student.id)" class="btn btn-xs btn-primary"><i class="fa fa-user-plus"></i> + Add Friend</a>
+                                <a @click="sendMessage()" class="btn btn-xs btn-primary"><i class="fa fa-envelope"></i> Send Message</a>
                                 <router-link :to="{name:'userDetail', params:{user_id:student.id}}" class="btn btn-xs btn-white"><i class="fa fa-user"></i> Profile </router-link>
                             </div>
-
                         </div>
-
                         <div class="clearfix"></div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </template>
 
 <script>
-
   export default {
-    name: 'ClassroomStudent',
+    name: 'MyFriends',
     head: {
-      title: {inner: 'Classmates'}
+      title: {inner: 'MyFriends'}
     },
     methods: {
-      addFriend (pk) {
-        this.$store.dispatch('addFriend', pk)
-          .then(() => {
-            this.$root.$children[0].$refs.toastr.s('Your Invitation is sent.', 'Success')
-          })
-          .catch((error) => {
-            this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Error')
-            console.log(error)
-          })
+      sendMessage () {
+        this.$root.$children[0].$refs.toastr.w('We are still working on this :)', 'Sorry')
       }
     },
     computed: {
-      currentClassroom () {
-        return this.$store.getters.currentClassroom
-      }
+      userFriends () {
+        return this.$store.getters.userFriends
+      },
     }
   }
 

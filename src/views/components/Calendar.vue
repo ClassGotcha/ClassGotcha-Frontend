@@ -2,119 +2,145 @@
     <div>
         <div class="row  border-bottom white-bg dashboard-header">
             <div class="col-sm-3">
-                <h2 v-show="!show_event_detail && !create_new_event">Recommended Tasks</h2>
+                <!--<h2 v-show="!show_event_detail && !create_new_event">Recommended Tasks</h2>-->
                 <h2 v-show="show_event_detail">Event Detail</h2>
                 <h2 v-show="create_new_event">Create New Event</h2>
-                <div class="ibox-content" v-show="!show_event_detail && !create_new_event">
-                    <div id="external-events">
-                        <p>Drag a event and drop into callendar.</p>
-                        <div v-for="recommened_task in user_recommened_tasks" class="external-event" :class="eventTaskBg(recommened_task)">{{recommened_task.task_name}} </div>
-                    </div>
-                </div>
+
+                <!--<div class="ibox-content" v-show="!show_event_detail && !create_new_event">-->
+                <!--<div id="external-events">-->
+                <!--<p>Drag a event and drop into calendar.</p>-->
+                <!--<div v-for="recommened_task in user_recommended_tasks" class="external-event" :class="eventTaskBg(recommened_task)">{{recommened_task.task_name}} </div>-->
+                <!--</div>-->
+                <!--</div>-->
+
                 <br>
                 <!--<button class="btn form-control m-b" v-show="show_event_detail || create_new_event" @click="show_event_detail=false; create_new_event=false;">Go back to recommended tasks</button>-->
+                <button class="btn form-control m-b"
+                        v-show="show_event_detail"
+                        @click="show_event_detail=false; create_new_event=true;">Create New Event
+                </button>
+
                 <div v-if="show_event_detail">
                     <div class="form-group">
                         <label>Event Name</label>
-                        <input type="text" class="form-control" placeholder="Title" v-model="event.task_name">
+                        <input class="form-control" :disabled="event.category!==6" placeholder="Title" v-model="event.task_name">
                     </div>
-                    <div class="form-group" v-show="event.start&&event.end">
-                        <div class="row" v-if="event.repeat">
-                            <div class="col-md-6">
-                                <label>Start</label>
-                                <input type="text" class="form-control" :value="event.formatted_start_time" placeholder="Start">
-                            </div>
-                            <div class="col-md-6">
-                                <label>End</label>
-                                <input type="text" class="form-control" :value="event.formatted_end_time" placeholder="End">
-                            </div>
-                        </div>
-                        <div class="row" v-else>
-                            <div class="col-md-12">
-                                <label>Start</label>
-                                <input type="text" class="form-control m-b" :value="formatTime(event.formatted_start_datetime)" placeholder="Start">
-                            </div>
-                            <div class="col-md-12">
-                                <label>End</label>
-                                <input type="text" class="form-control" :value="formatTime(event.formatted_end_datetime)" placeholder="End">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" v-show="(!event.start)&&event.end">
-                        <div class="row" v-if="event.repeat">
-                            <div class="col-md-12">
-                                <label>Due</label>
-                                <input type="text" class="form-control" :value="event.formatted_end_time" placeholder="End">
-                            </div>
-                        </div>
-                        <div class="row" v-else>
-                            <div class="col-md-12">
-                                <label>Due</label>
-                                <input type="text" class="form-control" :value="formatTime(event.formatted_end_datetime)" placeholder="End">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Category</label>
-                        <input type="text" class="form-control" placeholder="Category" :value="categoryName(event.category)">
-                    </div>
-                    <div class="form-group" v-if="event.classroom">
+                    <div class="form-group" v-if="event.task_of_classroom">
                         <label>Classroom</label>
-                        <input type="text" class="form-control" placeholder="Classroom" :value="event.classroom.class_short">
+                        <input class="form-control" disabled v-model="event.task_of_classroom.class_short">
                     </div>
+
+                    <div class="form-group" v-show="event.start">
+                        <div class="row" v-if="event.repeat">
+                            <div class="col-md-6">
+                                <label>Start</label>
+                                <input class="form-control" disabled v-show="event.category!==6" :value="event.formatted_start_time" placeholder="Start">
+                                <input class="form-control" v-if="event.category===6" v-model="event.formatted_start_time" placeholder="Start">
+                            </div>
+                            <div class="col-md-6">
+                                <label>End</label>
+                                <input class="form-control" disabled v-show="event.category!==6" :value="event.formatted_end_time" placeholder="End">
+                                <input class="form-control" v-if="event.category===6" v-model="event.formatted_end_time" placeholder="End">
+                            </div>
+                        </div>
+                        <div class="row" v-else>
+                            <div class="col-md-12">
+                                <label>Start</label>
+                                <input class="form-control m-b" disabled v-show="event.category!==6" :value="formatTime(event.formatted_start_datetime)" placeholder="Start">
+                                <input class="form-control" v-if="event.category===6" v-model="event.formatted_start_datetime" placeholder="Start">
+                            </div>
+                            <div class="col-md-12">
+                                <label>End</label>
+                                <input class="form-control" disabled v-show="event.category!==6" :value="formatTime(event.formatted_end_datetime)" placeholder="End">
+                                <input class="form-control" v-if="event.category===6" v-model="event.formatted_end_datetime" placeholder="End">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" v-show="!event.start">
+                        <div class="row" v-if="event.repeat">
+                            <div class="col-md-12">
+                                <label>Due</label>
+                                <input class="form-control" disabled v-show="event.category!==6" :value="event.formatted_end_time" placeholder="End">
+                                <input class="form-control" v-if="event.category===6" v-model="event.formatted_end_time" placeholder="End">
+                            </div>
+                        </div>
+                        <div class="row" v-else>
+                            <div class="col-md-12">
+                                <label>Due</label>
+                                <input class="form-control" disabled v-show="event.category!==6" :value="formatTime(event.formatted_end_datetime)" placeholder="End">
+                                <input class="form-control" v-if="event.category===6" v-model="event.formatted_end_datetime" placeholder="End">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" v-show="event.category!==6">
+                        <label>Category</label>
+                        <input class="form-control" disabled :value="categoryName(event.category)">
+                    </div>
+
                     <div class="form-group" v-if="event.group">
                         <label>Group</label>
-                        <input type="text" class="form-control" placeholder="Group" :value="event.group">
+                        <input class="form-control" :disabled="event.category!==6" placeholder="Group" :value="event.group">
                     </div>
-                    <div class="form-group" v-show="event.location">
+
+                    <div class="form-group" v-show="event.location || event.category===6">
                         <label>Location</label>
-                        <input type="text" class="form-control" placeholder="Location" :value="event.location">
+                        <input class="form-control" disabled v-show="event.category!==6" placeholder="Location" :value="event.location">
+                        <input class="form-control" v-if="event.category===6" placeholder="Location" v-model="event.location">
                     </div>
-                    <div class="form-group" v-if="event.repeat">
+                    <div class="form-group" v-if="event.repeat || event.category===6">
                         <label>Repeat</label>
                         <br>
                         <div class="btn-group">
-                            <button class="btn btn-white btn-sm" :class="event.repeat.includes('Su')? 'active':''" @click="addTaskRepeat('Su')">Su</button>
-                            <button class="btn btn-white btn-sm" :class="event.repeat.includes('Mo')? 'active':''" @click="addTaskRepeat('Mo')">Mo</button>
-                            <button class="btn btn-white btn-sm" :class="event.repeat.includes('Tu')? 'active':''" @click="addTaskRepeat('Tu')">Tu</button>
-                            <button class="btn btn-white btn-sm" :class="event.repeat.includes('We')? 'active':''" @click="addTaskRepeat('We')">We</button>
-                            <button class="btn btn-white btn-sm" :class="event.repeat.includes('Th')? 'active':''" @click="addTaskRepeat('Th')">Th</button>
-                            <button class="btn btn-white btn-sm" :class="event.repeat.includes('Fr')? 'active':''" @click="addTaskRepeat('Fr')">Fr</button>
-                            <button class="btn btn-white btn-sm" :class="event.repeat.includes('Sa')? 'active':''" @click="addTaskRepeat('Sa')">Sa</button>
+                            <button class="btn btn-white btn-sm" :disabled="event.category!==6" :class="event.repeat.includes('Su')? 'active':''" @click="addTaskRepeat('Su')">Su</button>
+                            <button class="btn btn-white btn-sm" :disabled="event.category!==6" :class="event.repeat.includes('Mo')? 'active':''" @click="addTaskRepeat('Mo')">Mo</button>
+                            <button class="btn btn-white btn-sm" :disabled="event.category!==6" :class="event.repeat.includes('Tu')? 'active':''" @click="addTaskRepeat('Tu')">Tu</button>
+                            <button class="btn btn-white btn-sm" :disabled="event.category!==6" :class="event.repeat.includes('We')? 'active':''" @click="addTaskRepeat('We')">We</button>
+                            <button class="btn btn-white btn-sm" :disabled="event.category!==6" :class="event.repeat.includes('Th')? 'active':''" @click="addTaskRepeat('Th')">Th</button>
+                            <button class="btn btn-white btn-sm" :disabled="event.category!==6" :class="event.repeat.includes('Fr')? 'active':''" @click="addTaskRepeat('Fr')">Fr</button>
+                            <button class="btn btn-white btn-sm" :disabled="event.category!==6" :class="event.repeat.includes('Sa')? 'active':''" @click="addTaskRepeat('Sa')">Sa</button>
                         </div>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary btn-block" @click="updateTask()">Update</button>
+                        <button class="btn btn-primary btn-block" @click="updateTask()" v-if="event.category===6">Update</button>
+                        <button class="btn btn-danger btn-block" @click="deleteTask()" v-if="event.category===6">Delete</button>
+                        <button class="btn btn-primary btn-block" @click="deleteTask()" v-if="event.task_of_classroom">Remove From My Calendar</button>
+                        <router-link class="btn btn-primary btn-block" v-if="event.category===0" :to="{name:'classroom', params:{classroom_id:event.classroom.id}}">Go to {{event.classroom.class_short}}</router-link>
+                        <router-link class="btn btn-primary btn-block" v-if="event.task_of_classroom" :to="{name:'classroom', params:{classroom_id:event.task_of_classroom.id}}">
+                            Go to {{event.task_of_classroom.class_short}}
+                        </router-link>
+
                     </div>
                 </div>
+
                 <div v-if="create_new_event">
                     <div class="form-group">
                         <label>Event Name</label>
-                        <input type="text" class="form-control" placeholder="Title" v-model="new_event.task_name">
+                        <input class="form-control" placeholder="Title" v-model="new_event.task_name">
                     </div>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Start date</label>
-                                <input type="text" class="form-control" v-model="new_event.start_date" placeholder="Start">
+                                <input class="form-control" v-model="new_event.start_date" placeholder="Start">
                             </div>
                             <div class="col-md-6">
                                 <label>Start time</label>
-                                <input type="text" class="form-control" v-model="new_event.start_time" placeholder="Start">
+                                <input class="form-control" v-model="new_event.start_time" placeholder="Start">
                             </div>
                             <div class="col-md-6">
                                 <label>End date</label>
-                                <input type="text" class="form-control" v-model="new_event.end_date" placeholder="End">
+                                <input class="form-control" v-model="new_event.end_date" placeholder="End">
                             </div>
                             <div class="col-md-6">
                                 <label>End time</label>
-                                <input type="text" class="form-control" v-model="new_event.end_time" placeholder="End">
+                                <input class="form-control" v-model="new_event.end_time" placeholder="End">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Location</label>
-                        <input type="text" class="form-control" placeholder="Location" v-model="new_event.location">
+                        <input class="form-control" placeholder="Location" v-model="new_event.location">
                     </div>
                     <div class="form-group">
                         <label>Repeat</label>
@@ -141,489 +167,507 @@
     </div>
 </template>
 <script>
-export default {
-    data() {
-        return {
-            // event
-            // selected event
-            event: {
-                // type: 0, // Event
-                // formatted_start_time: '',
-                // formatted_start_date: '',
-                // formatted_end_date: '',
-                // category: 7, // Other
-                // formatted_end_time: '',
-                // description: '',
-                // id: '',
-                // location: '',
-                // repeat_list: [],
-                // start: '',
-                // task_name: '',
-            },
-            new_event: {
-                task_name: '',
-                type: 0, // Event
-                start_time: '',
-                start_date: '',
-                start: '',
-                end_time: '',
-                end_date: '',
-                end: '',
-                category: 6, // Other
-                description: '',
-                location: '',
-                repeat: '',
-            },
-            // created_event: {},
-            // for fullcalendar
-            events: [],
-            event_sources: [],
-            // category dictionary
-            category_choices: {
-                0: { name: 'Class' },
-                1: { name: 'Homework' },
-                2: { name: 'Quiz' },
-                3: { name: 'Exam' },
-                4: { name: 'Todo' },
-                5: { name: 'Group Meeting' },
-                6: { name: 'Other' }
-            },
-            // calendar settings
-            calendar_header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay,listWeek'
-            },
-            sync: false,
-            // UI triggers
-            show_event_detail: false,
-            create_new_event: true
+  export default {
+    data () {
+      return {
+        // selected event
+        event: {
+          // type: 0, // Event
+          // formatted_start_time: '',
+          // formatted_start_date: '',
+          // formatted_end_date: '',
+          // category: 7, // Other
+          // formatted_end_time: '',
+          // description: '',
+          // id: '',
+          // location: '',
+          // repeat_list: [],
+          // start: '',
+          // task_name: '',
+        },
+        // new event
+        new_event: {
+          task_name: '',
+          type: 0, // Event
+          start_time: '',
+          start_date: '',
+          start: '',
+          end_time: '',
+          end_date: '',
+          end: '',
+          category: 6, // Other
+          description: '',
+          location: '',
+          repeat: '',
+        },
 
-        }
+        // full calendar
+        events: [],
+        event_sources: [],
+
+        // category dictionary
+        category_choices: {
+          0: {name: 'Class'},
+          1: {name: 'Homework'},
+          2: {name: 'Quiz'},
+          3: {name: 'Exam'},
+          4: {name: 'Todo'},
+          5: {name: 'Group Meeting'},
+          6: {name: 'Other'}
+        },
+
+        // UI triggers
+        show_event_detail: false,
+        create_new_event: true
+
+      }
     },
     methods: {
-        createEvents() {
-            let event_sources_list = [
-                // {
-                // events: []
-                // color: ''
-                // }
-            ]
-            let event_list0 = [] // classes
-            let event_list1 = [] // homework
-            let event_list2 = [] // quiz
-            let event_list3 = [] // exam
-            let event_list7 = [] // other
-            const event_color0 = '#1ab394'
-            const event_color1 = '#f8ac59'
-            const event_color2 = '#ed5565'
-            const event_color3 = '#ed5565'
-            const event_color7 = '#23c6c8'
-            for (let i in this.user_tasks) {
-                const task = this.user_tasks[i]
-                /* global moment:true */
-                // classes
-                if (task.category === 0) {
-                    event_list0.push({
-                        id: task.id,
-                        title: task.task_name + '\n' + task.location,
-                        editable: false,
-                        start: task.formatted_start_time,
-                        end: task.formatted_end_time,
-                        dow: task.repeat_list,
-                        repeat: [{
-                            start: task.formatted_start_date,
-                            end: task.formatted_end_date
-                        }]
-                    })
-                }
-                // homework
-                else if (task.category === 1) {
-                    let homework = {
-                        id: task.id,
-                        title: task.task_name,
-                        editable: false,
-                        start: moment.utc(task.end).add(-0.5, 'hours').format(),
-                        end: task.end,
-                    }
-                    if (task.repeat_list.length) {
-                        homework.dow = task.repeat_list
-                        homework.start = moment.utc(task.formatted_end_time, 'HH:mm:ss').add(-0.5, 'hours').format('HH:mm:ss')
-                        homework.end = task.formatted_end_time
-                        console.log(homework)
-                    }
-                    event_list1.push(homework)
+      createEvents () {
+        const event_color0 = '#1ab394'
+        const event_color1 = '#f8ac59'
+        const event_color2 = '#ed5565'
+        const event_color3 = '#ed5565'
+        const event_color6 = '#23c6c8'
 
-                }
-                // quiz
-                else if (task.category === 2) {
-                    event_list2.push({
-                        id: task.id,
-                        title: task.task_name,
-                        editable: false,
-                        start: (task.start ? task.start : task.end),
-                        end: (task.start ? task.end : moment.utc(task.end).add(0.5, 'hours').format()),
-                    })
-                }
-                // exam
-                else if (task.category === 3) {
-                    event_list3.push({
-                        id: task.id,
-                        title: (task.location ? task.task_name + '\n' + task.location : task.task_name),
-                        editable: false,
-                        start: (task.start ? task.start : task.end),
-                        end: (task.start ? task.end : moment.utc(task.end).add(0.5, 'hours').format()),
+        const user_tasks = this.$store.getters.userTasks
 
-                    })
-                } else if (task.category === 6) {
-                    event_list7.push({
-                        id: task.id,
-                        title: (task.location ? task.task_name + '\n' + task.location : task.task_name),
-                        editable: true,
-                        start: (task.start ? task.start : task.end),
-                        end: (task.start ? task.end : moment.utc(task.end).add(0.5, 'hours').format()),
+        for (let i in user_tasks) {
+          const task = user_tasks[i]
+          /* global moment:true */
 
-                    })
-                }
+          // classes
+          if (task.category === 0) {
+            this.events.push({
+              id: task.id,
+              title: task.task_name + '\n' + task.location,
+              editable: false,
+              color: event_color0,
+              start: task.formatted_start_time,
+              end: task.formatted_end_time,
+              dow: task.repeat_list,
+              repeat: [{
+                start: task.formatted_start_date,
+                end: task.formatted_end_date
+              }]
+            })
+          }
+
+          // homework
+          else if (task.category === 1) {
+            let homework = {
+              id: task.id,
+              title: task.task_name,
+              color: event_color1,
+              editable: false,
+              start: moment.utc(task.end).add(-0.5, 'hours').format(),
+              end: task.end,
             }
-            event_sources_list.push({ events: event_list0, color: event_color0 })
-            event_sources_list.push({ events: event_list1, color: event_color1 })
-            event_sources_list.push({ events: event_list2, color: event_color2 })
-            event_sources_list.push({ events: event_list3, color: event_color3 })
-            event_sources_list.push({ events: event_list7, color: event_color7 })
+            if (task.repeat_list.length) {
+              homework.dow = task.repeat_list
+              homework.start = moment.utc(task.formatted_end_time, 'HH:mm:ss').add(-0.5, 'hours').format('HH:mm:ss')
+              homework.end = task.formatted_end_time
+            }
+            this.events.push(homework)
+          }
 
-            this.event_sources = event_sources_list
-        },
-        createExternalEvents() {
-            /* global $:true */
-            $('#external-events div.external-event').each(function () {
-                // store data so the calendar knows to render an event upon drop
-                $(this).data('event', {
-                    title: $.trim($(this).text()), // use the element's text as the event title
-                    stick: true // maintain when user navigates (see docs on the renderEvent method)
-                })
-                // make the event draggable using jQuery UI
-                $(this).draggable({
-                    zIndex: 10,
-                    revert: true, // will cause the event to go back to its
-                    revertDuration: 1 //  original position after the drag
-                })
+          // quiz
+          else if (task.category === 2) {
+            this.events.push({
+              id: task.id,
+              title: task.task_name,
+              editable: false,
+              color: event_color2,
+
+              start: (task.start ? task.start : task.end),
+              end: (task.start ? task.end : moment.utc(task.end).add(0.5, 'hours').format()),
+            })
+          }
+
+          // exam
+          else if (task.category === 3) {
+            this.events.push({
+              id: task.id,
+              title: (task.location ? task.task_name + '\n' + task.location : task.task_name),
+              editable: false,
+              color: event_color3,
+              start: (task.start ? task.start : task.end),
+              end: (task.start ? task.end : moment.utc(task.end).add(0.5, 'hours').format()),
 
             })
-        },
-        postNewTask() {
-            let formData = this.new_event
-            formData.start = formData.start_date + 'T' + formData.start_time
-            formData.end = formData.end_date + 'T' + formData.end_time
-            formData.involved = [this.user.id]
-            if (!formData.repeat) {
-                delete formData['repeat']
+          }
+
+          // others
+          else if (task.category === 6) {
+
+            let other = {
+              id: task.id,
+              title: (task.location ? task.task_name + '\n' + task.location : task.task_name),
+              editable: true,
+              color: event_color6,
+              start: (task.start ? task.start : task.end),
+              end: (task.start ? task.end : moment.utc(task.end).add(0.5, 'hours').format()),
             }
-            this.$store.dispatch('postTask', formData)
-                .then(() => {
-                    this.create_new_event = false
-                    this.$store.dispatch('getTasks').then(() => {
-                        this.createEvents()
-                    })
+            if (task.repeat_list.length) {
+              other.dow = task.repeat_list
+              other.start = (task.formatted_start_time ? task.formatted_start_time : task.formatted_end_time)
+              other.end = (task.formatted_start_time ? task.formatted_end_time : moment.utc(task.formatted_end_time).add(0.5, 'hours').format())
+
+            }
+            this.events.push(other)
+
+          }
+        }
+
+        return Promise.resolve(this.events)
+      },
+
+      createExternalEvents () {
+        //        /* global $:true */
+        //        $('#external-events div.external-event').each(function () {
+        //          // store data so the calendar knows to render an event upon drop
+        //          $(this).data('event', {
+        //            title: $.trim($(this).text()), // use the element's text as the event title
+        //            stick: true // maintain when user navigates (see docs on the renderEvent method)
+        //          })
+        //          // make the event draggable using jQuery UI
+        //          $(this).draggable({
+        //            zIndex: 10,
+        //            revert: true, // will cause the event to go back to its
+        //            revertDuration: 1 //  original position after the drag
+        //          })
+        //
+        //        })
+      },
+
+      postNewTask () {
+        let formData = this.new_event
+        formData.start = formData.start_date + 'T' + formData.start_time
+        formData.end = formData.end_date + 'T' + formData.end_time
+        formData.involved = [this.user.id]
+        formData.creator = this.user.id
+        if (!formData.repeat) {
+          delete formData['repeat']
+        }
+        this.$store.dispatch('postTask', formData)
+          .then(() => {
+            this.$store.dispatch('getTasks')
+              .then(() => {
+                this.createEvents().then(() => {
+                  this.$emit('reload-events')
+                  this.$root.$children[0].$refs.toastr.s('New event is added to your schedule, refresh to see the change', 'Success')
                 })
-        },
-        updateTask() {
-            // updateTask
-        },
-        // data formatter
-        formatTime(time) {
-            /* global moment: true */
-            return moment.utc(time).format('l LT')
-        },
-        // look up method
-        categoryName(id) {
-            if (this.category_choices[id])
-                return this.category_choices[id].name
-            else return null
-        },
-        // data control
-        addTaskRepeat(day) {
-            if (this.event.repeat.includes(day))
-                this.event.repeat = this.event.repeat.replace(day, '')
-            else
-                this.event.repeat = this.event.repeat + day
-        },
-        addNewTaskRepeat(day) {
-            if (this.new_event.repeat.includes(day))
-                this.new_event.repeat = this.new_event.repeat.replace(day, '')
-            else
-                this.new_event.repeat = this.new_event.repeat + day
-        },
-        // UI control
-        eventTaskBg(event) {
-            // Homewrok
-            if (event.category === 1) {
-                return 'bg-warning'
-            }
-            // Quiz
-            else if (event.category === 2) {
-                return 'bg-danger'
-            }
-            // Exam
-            else if (event.category === 3) {
-                return 'bg-danger'
-            }
-        },
+              })
+          })
+          .catch((error) => {
+            this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Success')
+          })
+      },
+
+      updateTask () {
+        this.$store.dispatch('updateTask', this.event)
+          .then(() => {
+            this.$store.dispatch('getTasks')
+              .then(() => {
+                this.createEvents().then(() => {
+                  $(this.$el).fullCalendar('rerenderEvents')
+                  this.$root.$children[0].$refs.toastr.s('Event is updated, refresh to see the change', 'Success')
+
+                })
+              })
+          })
+          .catch((error) => {
+          this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Success')
+        })
+      },
+
+      deleteTask () {
+        this.$store.dispatch('deleteTask', this.event.id)
+          .then(() => {
+            this.$store.dispatch('getTasks')
+              .then(() => {
+                this.createEvents()
+                  .then((e) => {
+                    console.log(e)
+                    $(this.$el).fullCalendar('removeEvents')
+                    $(this.$el).fullCalendar('addEventSource', this.events)
+                    $(this.$el).fullCalendar('rerenderEvents')
+                    this.$root.$children[0].$refs.toastr.s('Event is removed from your schedule, refresh to see the change', 'Success')
+                  })
+              })
+          })
+          .catch((error) => {
+            this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Error')
+
+          })
+      },
+      // data formatter
+      formatTime (time) {
+        /* global moment: true */
+        return moment.utc(time).format('l LT')
+      },
+
+      // look up method
+      categoryName (id) {
+        if (this.category_choices[id])
+          return this.category_choices[id].name
+        else return null
+      },
+
+      // data control
+      addTaskRepeat (day) {
+        if (this.event.repeat.includes(day))
+          this.event.repeat = this.event.repeat.replace(day, '')
+        else
+          this.event.repeat = this.event.repeat + day
+      },
+
+      addNewTaskRepeat (day) {
+        if (this.new_event.repeat.includes(day))
+          this.new_event.repeat = this.new_event.repeat.replace(day, '')
+        else
+          this.new_event.repeat = this.new_event.repeat + day
+      },
     },
     computed: {
-        user() {
-            return this.$store.getters.me
-        },
-        user_tasks() {
-            return this.$store.getters.userTasks
-        },
-        user_recommened_tasks() {
-            return this.$store.getters.userRecommendedTasks
-        },
-        windowHeight() {
-            return window.innerHeight
+      user () {
+        return this.$store.getters.me
+      },
+
+    },
+    created () {
+      this.createEvents()
+    },
+    mounted () {
+      /* global $:true */
+      const cal = $('#calendar')
+      const self = this
+
+      this.$on('remove-event', (event) => {
+        if (event && event.hasOwnProperty('id')) {
+          $(this.$el).fullCalendar('removeEvents', event.id)
+        } else {
+          $(this.$el).fullCalendar('removeEvents', event)
         }
-    },
-    created() {
-        this.createEvents()
-    },
-    mounted() {
-        /* global $:true */
-        const cal = $('#calendar')
-        const self = this
+      })
 
-        cal.fullCalendar({
-            scrollTime: '07:30:00',
-            droppable: true,
-            // ignoreTimezone: false,
-            header: this.calendar_header,
-            defaultView: 'agendaWeek',
-            editable: true,
-            selectable: true,
-            selectHelper: true,
-            aspectRatio: 1.3,
-            timeFormat: 'HH:mm',
-            events: self.events,
-            eventSources: self.event_sources,
-            nowIndicator: true,
-            unselectAuto: false,
+      this.$on('rerender-events', () => {
+        $(this.$el).fullCalendar('rerenderEvents')
+      })
 
-            // eventRender(event, element) {
-            //     if (this.sync) {
-            //         self.events = cal.fullCalendar('clientEvents')
-            //     }
-            // },
-            // eventDestroy(event) {
-            //     if (this.sync) {
-            //         self.events = cal.fullCalendar('clientEvents')
-            //     }
-            // },
-            eventClick(event) {
-                console.log(event)
+      this.$on('refetch-events', () => {
+        $(this.$el).fullCalendar('refetchEvents')
+      })
 
-                // The following code did this:
-                // When click a event, if the event id is found in self.user_tasks, show event
-                // else, this is a new event, create it
-                let found = false
-                for (let i in self.user_tasks) {
-                    if (self.user_tasks[i].id === event.id) {
-                        self.event = self.user_tasks[i]
-                        found = true
-                        self.show_event_detail = true
-                        self.create_new_event = false
+      this.$on('render-event', (event) => {
+        $(this.$el).fullCalendar('renderEvent', event)
+      })
 
-                    }
-                }
-                if (!found) {
-                    self.new_event.task_name = event.title
-                    // Here I'm doing the hack, 
-                    // fullcalendar event has a start attribute with an 
-                    // So I'm constructing time from this
-                    const event_start_iso_string = event.start._d.toISOString()
-                    const event_start = moment.utc(event_start_iso_string)
-                    let event_end
-                    if (event.end) {
-                        event_end = moment.utc(event.end._d.toISOString())
-                    } else {
-                        // default length of the event is 2 hours 
-                        event_end = moment.utc(event_start_iso_string).add(2, 'hours')
-                    }
-                    console.log(event.end, event_start, event_end)
+      this.$on('reload-events', () => {
+        $(this.$el).fullCalendar('removeEvents')
+        $(this.$el).fullCalendar('addEventSource', this.events)
+      })
 
-                    self.new_event.start_date = event_start.format('YYYY-MM-DD')
-                    self.new_event.start_time = event_start.format('HH:mm:ss')
-                    self.new_event.end_date = event_end.format('YYYY-MM-DD')
-                    self.new_event.end_time = event_end.format('HH:mm:ss')
-                    self.show_event_detail = false
-                    self.create_new_event = true
-                }
-                // $('#event-detail').modal('show')
-                $(self.$el).trigger('event-selected', event)
-            },
-            // eventResize(event) {
-            //     $(self.$el).trigger('event-resize', event)
-            //     self.event = event
-            //     self.show_event_detail = true
-            // },
-            // eventReceive(event) {
-            //     $(this).remove()
-            //     console.log(event)
-            //     self.event = event
-            //     self.show_event_detail = true
-            // },
-            // select(start, end, jsEvent) {
-            //     $(self.$el).trigger('event-created', {
-            //         start,
-            //         end,
-            //         allDay: !start.hasTime() && !end.hasTime(),
-            //     })
-            // },
+      this.$on('rebuild-sources', () => {
+        $(this.$el).fullCalendar('removeEvents')
+        this.event_sources.map(event => {
+          $(this.$el).fullCalendar('addEventSource', event)
         })
-        this.createExternalEvents()
+      })
+
+      cal.fullCalendar({
+        scrollTime: '08:00:00',
+        // droppable: true,
+        // ignoreTimezone: false,
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay,listWeek'
+        },
+        sync: false,
+        defaultView: 'agendaWeek',
+        editable: true,
+        selectable: true,
+        selectHelper: true,
+        aspectRatio: 1.3,
+        timeFormat: 'HH:mm',
+        events: self.events,
+        eventSources: self.event_sources,
+        nowIndicator: true,
+        unselectAuto: false,
+
+        eventClick (event) {
+          // The following code did this:
+          // When click a event, if the event id is found in self.user_tasks, show event
+          // else, this is a new event, create it
+          let found = false
+          const user_tasks = self.$store.getters.userTasks
+
+          for (let i in user_tasks) {
+            if (user_tasks[i].id === event.id) {
+              self.event = user_tasks[i]
+              found = true
+              self.show_event_detail = true
+              self.create_new_event = false
+            }
+          }
+          if (!found) {
+            self.new_event.task_name = event.title
+            // full calendar event has a start attribute with an time
+            // So I'm constructing time from this
+            const event_start = moment.utc(event.start._d.toISOString())
+            const event_end = moment.utc(event.end._d.toISOString())
+
+            self.new_event.start_date = event_start.format('YYYY-MM-DD')
+            self.new_event.start_time = event_start.format('HH:mm:ss')
+            self.new_event.end_date = event_end.format('YYYY-MM-DD')
+            self.new_event.end_time = event_end.format('HH:mm:ss')
+            self.show_event_detail = false
+            self.create_new_event = true
+          }
+          $(self.$el).trigger('event-selected', event)
+        },
+        eventResize (event) {
+          $(self.$el).trigger('event-resize', event)
+          self.event = event
+          self.show_event_detail = true
+        },
+
+      })
+      // this.createExternalEvents()
     },
     watch: {
-        events: {
-            deep: true,
-            handler(val) {
-                $(this.$el).fullCalendar('rerenderEvents')
-            },
-        }
+      events: {
+        deep: true,
+        handler (val) {
+          this.$emit('reload-events')
+        },
+      },
+      event_sources: {
+        deep: true,
+        handler (val) {
+          this.$emit('rebuild-sources')
+        },
+      },
     },
-    events: {
-        'remove-event'(event) {
-            $(this.$el).fullCalendar('removeEvents', event.id)
-        },
-        'rerender-events'(event) {
-            $(this.$el).fullCalendar('rerenderEvents')
-        },
-        'refetch-events'(event) {
-            $(this.$el).fullCalendar('refetchEvents')
-        },
-        'render-event'(event) {
-            $(this.$el).fullCalendar('renderEvent', event)
-        },
-        'reload-events'() {
-            $(this.$el).fullCalendar('removeEvents')
-            $(this.$el).fullCalendar('addEventSource', this.events)
-        },
-        'rebuild-sources'() {
-            $(this.$el).fullCalendar('removeEvents')
-            this.eventSources.map(event => {
-                $(this.$el).fullCalendar('addEventSource', event)
-            })
-        },
+    beforeDestroy () {
+      this.$off('remove-event')
+      this.$off('rerender-events')
+      this.$off('refetch-events')
+      this.$off('render-event')
+      this.$off('reload-events')
+      this.$off('rebuild-sources')
     },
-
-}
+  }
 
 </script>
 <style>
-/* FULLCALENDAR */
+    /* FULLCALENDAR */
 
-.fc-time-grid .fc-slats td {
-    height: 2.5em;
-    border-bottom: 0;
-}
+    .fc-time-grid .fc-slats td {
+        height: 2.5em;
+        border-bottom: 0;
+    }
 
-.fc-ltr .fc-time-grid .fc-event-container {
-    margin: 0 2px;
-}
+    .fc-ltr .fc-time-grid .fc-event-container {
+        margin: 0 2px;
+    }
 
-.fc-event {
-    border-radius: 1px
-}
+    .fc-event {
+        border-radius: 1px
+    }
 
-.fc-state-default {
-    background-color: #ffffff;
-    background-image: none;
-    background-repeat: repeat-x;
-    box-shadow: none;
-    color: #333333;
-    text-shadow: none;
-}
+    .fc-state-default {
+        background-color: #ffffff;
+        background-image: none;
+        background-repeat: repeat-x;
+        box-shadow: none;
+        color: #333333;
+        text-shadow: none;
+    }
 
-.fc-state-default {
-    border: 1px solid;
-}
+    .fc-state-default {
+        border: 1px solid;
+    }
 
-.fc-button {
-    color: inherit;
-    border: 1px solid #e7eaec;
-    cursor: pointer;
-    display: inline-block;
-    height: 1.9em;
-    line-height: 1.9em;
-    overflow: hidden;
-    padding: 0 0.6em;
-    position: relative;
-    white-space: nowrap;
-}
+    .fc-button {
+        color: inherit;
+        border: 1px solid #e7eaec;
+        cursor: pointer;
+        display: inline-block;
+        height: 1.9em;
+        line-height: 1.9em;
+        overflow: hidden;
+        padding: 0 0.6em;
+        position: relative;
+        white-space: nowrap;
+    }
 
-.fc-state-active {
-    background-color: #1ab394;
-    border-color: #1ab394;
-    color: #ffffff;
-}
+    .fc-state-active {
+        background-color: #1ab394;
+        border-color: #1ab394;
+        color: #ffffff;
+    }
 
-.fc-header-title h2 {
-    font-size: 16px;
-    font-weight: 600;
-    color: inherit;
-}
+    .fc-header-title h2 {
+        font-size: 16px;
+        font-weight: 600;
+        color: inherit;
+    }
 
-.fc-content .fc-widget-header,
-.fc-content .fc-widget-content {
-    border-color: #e7eaec;
-    font-weight: normal;
-}
+    .fc-content .fc-widget-header,
+    .fc-content .fc-widget-content {
+        border-color: #e7eaec;
+        font-weight: normal;
+    }
 
-.fc-border-separate tbody {
-    background-color: #F8F8F8;
-}
+    .fc-border-separate tbody {
+        background-color: #F8F8F8;
+    }
 
-.fc-state-highlight {
-    background: none repeat scroll 0 0 #FCF8E3;
-}
+    .fc-state-highlight {
+        background: none repeat scroll 0 0 #FCF8E3;
+    }
 
-.external-event {
-    padding: 5px 10px;
-    border-radius: 2px;
-    cursor: pointer;
-    margin-bottom: 5px;
-}
+    .external-event {
+        padding: 5px 10px;
+        border-radius: 2px;
+        cursor: pointer;
+        margin-bottom: 5px;
+    }
 
-.fc-ltr .fc-event-hori.fc-event-end,
-.fc-rtl .fc-event-hori.fc-event-start {
-    border-radius: 2px;
-}
+    .fc-ltr .fc-event-hori.fc-event-end,
+    .fc-rtl .fc-event-hori.fc-event-start {
+        border-radius: 2px;
+    }
 
-.fc-event,
-.fc-agenda .fc-event-time,
-.fc-event a {
-    padding: 4px 6px;
-    background-color: #23c6c8;
-    /* background color */
-    border-color: #23c6c8;
-    /* border color */
-}
+    .fc-event,
+    .fc-agenda .fc-event-time,
+    .fc-event a {
+        padding: 4px 6px;
+        background-color: #23c6c8;
+        /* background color */
+        border-color: #23c6c8;
+        /* border color */
+    }
 
-.fc-event {
-    border: 0px;
-    border-left: 5px solid #23c6c8;
-}
+    .fc-event {
+        border: 0px;
+        border-left: 5px solid #23c6c8;
+    }
 
-.fc-event-time,
-.fc-event-title {
-    color: #717171;
-    padding: 0 1px;
-}
+    .fc-event-time,
+    .fc-event-title {
+        color: #717171;
+        padding: 0 1px;
+    }
 
-.ui-calendar .fc-event-time,
-.ui-calendar .fc-event-title {
-    color: #fff;
-}
+    .ui-calendar .fc-event-time,
+    .ui-calendar .fc-event-title {
+        color: #fff;
+    }
 
-.fc-agenda-view .fc-day-grid .fc-row {
-    min-height: 1.5em;
-}
+    .fc-agenda-view .fc-day-grid .fc-row {
+        min-height: 1.5em;
+    }
 </style>

@@ -38,13 +38,8 @@
                         <div class="progress progress-striped active m-b-sm">
                             <div style="width: 60%;" class="progress-bar"></div>
                         </div>
-
-
                     </td>
                     <td>
-                        <h4>
-                            <a href="#tab-2" data-toggle="tab" class="btn btn-white">Edit My Profile</a>
-                        </h4>
                     </td>
                 </tr>
                 </tbody>
@@ -323,7 +318,6 @@
           .then((response) => {
             this.$store.dispatch('loadSelf')
             this.$root.$children[0].$refs.toastr.s('Your Info is updated.', 'Success')
-
           })
       },
       loadData () {

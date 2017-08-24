@@ -41,9 +41,15 @@
                 </router-link>
                 </li>-->
                 <li>
-                    <router-link :to="{name:'myGroups'}">
+                    <router-link :to="{name:'myFriends'}">
                         <i class="fa fa-users"></i>
-                        <span class="nav-label">My Groups</span>
+                        <span class="nav-label">My Friends</span>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link :to="{name:'myNotes'}">
+                        <i class="fa fa-file"></i>
+                        <span class="nav-label">My Notes</span>
                     </router-link>
                 </li>
                 <li>
@@ -55,7 +61,8 @@
                 <li>
                     <router-link :to="{name:'forum'}">
                         <i class="fa fa-question-circle"></i>
-                        <span class="nav-label">User Forum</span>
+                        <span class="nav-label">Forum</span>
+                        <span class="label label-success pull-right">NEW!</span>
                     </router-link>
                 </li>
             </ul>

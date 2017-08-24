@@ -6,9 +6,9 @@
                     <i class="fa fa-bars"></i>
                 </a>
                 <div role="search" class="navbar-form-custom">
-                    <div class="form-group">
-                        <input type="text" placeholder="" class="form-control" name="top-search" id="top-search">
-                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<input type="text" placeholder="" class="form-control" name="top-search" id="top-search">-->
+                    <!--</div>-->
                 </div>
             </div>
             <ul class="nav navbar-top-links navbar-right">
@@ -18,13 +18,15 @@
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown">
-                        <i class="fa fa-bell"></i>
+                        <i class="fa fa-user-plus"></i>
+                        <span class="label label-primary" v-if="pending_friends.length">{{pending_friends.length}}</span>
                     </a>
-                    <ul v-if="!pending_friends.length">
-                        <!--<li>No Message</li>-->
+                    <ul v-if="!pending_friends.length" class="dropdown-menu dropdown-messages">
+                        <div>
+                            No New Friend Invitations
+                        </div>
                     </ul>
-                    <ul v-else class="dropdown-menu dropdown-messages">
-                        <!-- TODO add notification-->
+                    <ul class="dropdown-menu dropdown-messages" v-else>
                         <div v-for="(friend, index)  in pending_friends">
                             <li class="divider" v-if="index!==0"></li>
                             <li>
@@ -44,41 +46,65 @@
                                 </div>
                             </li>
                         </div>
-
                     </ul>
                 </li>
-                <li>
+                <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown">
-                        <i class="fa fa-user"></i> {{ username }}
+                        <i class="fa fa-bell"></i>
+                        <span class="label label-primary" v-if="notifications.length">{{notifications.length}}</span>
+
+                    </a>
+                    <ul v-if="!notifications.length" class="dropdown-menu dropdown-messages">
+                        <div>
+                            No New Notifications
+                        </div>
+                    </ul>
+                    <ul class="dropdown-menu dropdown-messages" v-else>
+                        <!-- TODO add notification-->
+                        <div v-for="(notification, index) in notifications">
+                            <li class="divider" v-if="index!==0"></li>
+                            <li>
+                                <div class="dropdown-messages-box">
+                                    <!--<router-link :to="{name:'userDetail', params:{user_id:friend.id}}">{{friend.full_name}}</router-link>-->
+                                    {{notification.content}}
+                                    <br>
+                                    <small class="text-muted">{{momentTime(notification.created)}} | {{momentFormat(notification.created)}}   </small>
+                                    <span class="pull-right text-muted small">
+                                        <div class="btn-group">
+                                            <button class="btn btn-xs btn-white" type="button" @click="readNotification(notification.id)">
+                                                <i class="fa fa-times"></i> Dismiss
+                                            </button>
+                                        </div>
+                                    </span>
+                                </div>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-toggle="dropdown">
+                        <img :src="user.avatar1x" alt="image" style="width: 30px; height: 30px;" class="img-circle m-t-n-xs m-r-sm">
+                         {{ username }}
                     </a>
                     <ul class="dropdown-menu ">
                         <li class="m-l-md">
                             <router-link :to="{name:'profile'}">
-
                                 <i class="fa fa-user"></i> Profile
-
                             </router-link>
                         </li>
 
                         <li class="divider"></li>
                         <li class="m-l-md">
                             <router-link :to="{name:'profile'}">
-
                                 <i class="fa fa-user-plus"></i> Add Friends
-
                             </router-link>
                         </li>
-
                         <li class="divider"></li>
-
                         <li class="m-l-md">
                             <a v-on:click="$store.dispatch('logout')">
-
                                 <i class="fa fa-sign-out"></i> Log out
-
                             </a>
                         </li>
-
                     </ul>
                 </li>
             </ul>
@@ -88,7 +114,18 @@
 <script>
   export default {
     name: 'TopBar',
+    data () {
+      return {
+        interval: null
+      }
+    },
     methods: {
+      getNotifications () {
+        this.$store.dispatch('getNotifications')
+      },
+      readNotification (pk) {
+        this.$store.dispatch('readNotification', pk)
+      },
       acceptFriend (pk) {
         this.$store.dispatch('acceptFriend', pk).then(() => {
           this.$store.dispatch('getFriends')
@@ -99,7 +136,15 @@
         this.$store.dispatch('remFriend', pk).then(() => {
           this.$store.dispatch('getPendingFriends')
         })
-      }
+      },
+      momentTime (time) {
+        /* global moment:true */
+        return moment(time).fromNow()
+      },
+      momentFormat (time) {
+        /* global moment:true */
+        return moment(time).format('h:mm a - MM.D.YYYY')
+      },
     },
     computed: {
       pending_friends () {
@@ -108,6 +153,22 @@
       username () {
         return this.$store.getters.userFullName
       },
+      notifications () {
+        return this.$store.getters.notifications
+      },
+      user () {
+        return this.$store.getters.me
+      },
+    },
+    mounted () {
+      this.getNotifications()
+
+      this.interval = setInterval(function () {
+        this.getNotifications()
+      }.bind(this), 30000)
+    },
+    beforeDestroy () {
+      clearInterval(this.interval)
     }
   }
 

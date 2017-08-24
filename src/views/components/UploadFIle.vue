@@ -31,11 +31,12 @@
               <a class="btn btn-white" @click="chooseCategory('Other')"><i class="fa fa-tag"></i> Other</a>
             </div>
             <div v-show="step3">
-              <p class="m-t">Tell your classmates more about your <strong>{{choice[0]}}</strong>!</p>
+              <p class="m-t">Tell your classmates more about your <strong>{{choice}}</strong>!</p>
                 <div class="form-group">
-                  <input v-model="file_title" type="text" class="form-control m-b" :placeholder="file.name">
+                  <!--<input v-model="file_title" type="text" class="form-control m-b" :placeholder="file.name">-->
              
                   <textarea v-model="file_dscr" type="text" class="form-control m-b" placeholder="Describe it in detail (optional)"></textarea>
+
                   <input-tag :tags="tags" :on-change="tagManager"></input-tag>
               </div>
             </div>
@@ -79,10 +80,9 @@
             onFileChange(e) {
                 var files = e.target.files || e.dataTransfer.files
                 if (!files.length) return
-                console.log(files)
                 this.file = files[0]
                 this.$store.dispatch('uploadFile', files[0])
-                this.file_title = this.file.name.split('.')[0]
+                this.file_title = this.file.name
                 this.nextStep()
             },
             removeFile(e) {
@@ -104,7 +104,6 @@
                         pk: this.$route.params.classroom_id,
                         formData: formData
                     }
-                    console.log('UploadFile.uploadFile', data)
                     this.$store.dispatch('postClassroomNote', data)
                         .then(() => {
                             this.step1 = false

@@ -14,6 +14,7 @@ const state = {
   login_status: false,
   token: null,
   loaded_user: {},
+  loaded_user_moments: [],
   uploaded: null
 }
 
@@ -91,41 +92,41 @@ const getters = {
       return []
     }
   },
-  userRecommendedTasks: (state, getters) => {
-    let tasks = []
-    for (let i in getters.userTasks) {
-      // Have to do this to avoid fucking stupid js optimize which only create an reference to the object.
-      let task = Object.assign({}, getters.userTasks[i])
-      /* global moment:true */
-      if (task.category === 1) { // Homework
-        const today = moment.utc().startOf('day')
-        const due_date = moment.utc(task.end)
-        const from_now_in_days = Math.round(moment.duration(due_date - today).asDays())
-        if (from_now_in_days >= 0 && from_now_in_days <= 10) {
-          task.task_name = 'Do ' + task.task_name + ' of ' + task.classroom.class_short
-          tasks.push(task)
-        }
-      } else if (task.category === 2) { // Quiz
-        const today = moment.utc().startOf('day')
-        const due_date = moment.utc(task.end)
-        const from_now_in_days = Math.round(moment.duration(due_date - today).asDays())
-        if (from_now_in_days >= 0 && from_now_in_days <= 10) {
-          task.task_name = 'Prepare ' + task.task_name + ' of ' + task.classroom.class_short
-
-          tasks.push(task)
-        }
-      } else if (task.category === 3) { // Exam
-        const today = moment.utc().startOf('day')
-        const due_date = moment.utc(task.end)
-        const from_now_in_days = Math.round(moment.duration(due_date - today).asDays())
-        if (from_now_in_days >= 0 && from_now_in_days <= 10) {
-          task.task_name = 'Prepare ' + task.task_name + ' of ' + task.classroom.class_short
-          tasks.push(task)
-        }
-      }
-    }
-    return tasks
-  },
+  // userRecommendedTasks: (state, getters) => {
+  //   let tasks = []
+  //   for (let i in getters.userTasks) {
+  //     // Have to do this to avoid fucking stupid js optimize which only create an reference to the object.
+  //     let task = Object.assign({}, getters.userTasks[i])
+  //     /* global moment:true */
+  //     if (task.category === 1) { // Homework
+  //       const today = moment.utc().startOf('day')
+  //       const due_date = moment.utc(task.end)
+  //       const from_now_in_days = Math.round(moment.duration(due_date - today).asDays())
+  //       if (from_now_in_days >= 0 && from_now_in_days <= 10) {
+  //         task.task_name = 'Do ' + task.task_name + ' of ' + task.task_of_classroom.class_short
+  //         tasks.push(task)
+  //       }
+  //     } else if (task.category === 2) { // Quiz
+  //       const today = moment.utc().startOf('day')
+  //       const due_date = moment.utc(task.end)
+  //       const from_now_in_days = Math.round(moment.duration(due_date - today).asDays())
+  //       if (from_now_in_days >= 0 && from_now_in_days <= 10) {
+  //         task.task_name = 'Prepare ' + task.task_name + ' of ' + task.task_of_classroom.class_short
+  //
+  //         tasks.push(task)
+  //       }
+  //     } else if (task.category === 3) { // Exam
+  //       const today = moment.utc().startOf('day')
+  //       const due_date = moment.utc(task.end)
+  //       const from_now_in_days = Math.round(moment.duration(due_date - today).asDays())
+  //       if (from_now_in_days >= 0 && from_now_in_days <= 10) {
+  //         task.task_name = 'Prepare ' + task.task_name + ' of ' + task.task_of_classroom.class_short
+  //         tasks.push(task)
+  //       }
+  //     }
+  //   }
+  //   return tasks
+  // },
   userFriends: state => {
     return state.friends
   },
@@ -134,6 +135,9 @@ const getters = {
   },
   loadedUser: state => {
     return state.loaded_user
+  },
+  loadedUserMoments: state => {
+    return state.loaded_user_moments
   }
 
 }
@@ -158,10 +162,10 @@ const actions = {
         // console.log(response)
         commit(types.LOGIN_SUCCESS, response)
         dispatch('getSelf')
-        dispatch('getTasks')
         dispatch('getFriends')
-        router.push({path: 'home'})
-
+        dispatch('getTasks').then(() => {
+          router.push({path: 'home'})
+        })
       })
       .catch((error) => {
         commit(types.LOGIN_FAILED, error)
@@ -209,12 +213,12 @@ const actions = {
     userApi.tokenVerify(formData)
       .then((response) => {
         commit(types.VERIFY_SUCCESS, response)
-        if (rootState.route.name === 'login') {
-          router.push({path: 'home'})
+        if (rootState.route.name === 'login' || rootState.route.name === 'register') { router.push({path: 'home'}) }
+        else {
+          dispatch('getSelf')
+          dispatch('getTasks')
+          dispatch('getFriends')
         }
-        dispatch('getSelf')
-        dispatch('getTasks')
-        dispatch('getFriends')
       })
       .catch((error) => {
         if (rootState.route.name !== 'login' &&
@@ -240,6 +244,7 @@ const actions = {
       })
       .catch((error) => {
         commit(types.LOGIN_FAILED)
+        router.push({name: 'landing'})
         commit(types.LOG_ERROR, error)
       })
   },
@@ -332,6 +337,16 @@ const actions = {
         return Promise.reject()
       })
   },
+  getUserMoment ({commit}, pk) {
+    return userApi.getUserMoment(pk)
+      .then((response) => {
+        commit(types.LOAD_USER_MOMENTS, response)
+        return Promise.resolve(response)
+      })
+      .catch((error) => {
+        commit(types.LOG_ERROR, error)
+      })
+  },
   addClassroom ({commit, dispatch}, pk) {
     return userApi.addClassroom(pk)
       .then(() => {
@@ -406,12 +421,15 @@ const actions = {
       })
   },
   addFriend ({commit}, pk) {
-    userApi.addFriend(pk)
+    return userApi.addFriend(pk)
       .then(() => {
         commit(types.ADD_FRIEND)
+        return Promise.resolve()
       })
       .catch((error) => {
         console.log(error)
+        return Promise.reject(error)
+
       })
   },
   remFriend ({commit}, pk) {
@@ -434,7 +452,7 @@ const actions = {
         return Promise.reject(error)
       })
   },
-  postTask ({commit}, data) {
+  postTask ({commit, dispatch}, data) {
     return userApi.postTask(data)
       .then(() => {
         commit(types.POST_TASK)
@@ -472,7 +490,6 @@ const mutations = {
     state.login_status = false
     state.token = null
     state.error_msg = error
-    router.push({name: 'login'})
   },
   [types.REGSITER_FAILED] (state, error) {
     state.login_status = false
@@ -519,6 +536,9 @@ const mutations = {
   },
   [types.LOAD_USER] (state, response) {
     state.loaded_user = response
+  },
+  [types.LOAD_USER_MOMENTS] (state, response) {
+    state.loaded_user_moments = response
   },
 
   // post change

@@ -35,7 +35,7 @@
                                     </li>
                                     <li v-show="showFolder('Note')">
                                         <router-link :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}, query:{folder:'Note'}}">
-                                            <i class="fa fa-certificate"></i> Notes <span class="label label-warning pull-right">16</span>
+                                            <i class="fa fa-certificate"></i> Notes
                                         </router-link>
                                     </li>
                                     <li v-show="showFolder('Lecture')">
@@ -50,7 +50,7 @@
                                     </li>
                                     <li v-show="showFolder('Homework')">
                                         <router-link :to="{name:'classroomNotes', params:{classroom_id: current_classroom.id}, query:{folder:'Homework'}}">
-                                            <i class="fa fa-file-text-o"></i> Homeworks <span class="label label-danger pull-right">2</span>
+                                            <i class="fa fa-file-text-o"></i> Homework
                                         </router-link>
                                     </li>
                                     <li v-show="showFolder('Exam')">
