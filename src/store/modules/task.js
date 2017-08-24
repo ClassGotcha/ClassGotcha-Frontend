@@ -29,9 +29,23 @@ const actions = {
         return Promise.reject(error)
       })
   },
+  addTask ({commit, dispatch}, id) {
+    return taskApi.addTask(id)
+      .then((response) => {
+        commit(types.UPDATE_TASK, response)
+        dispatch('getTasks')
+        return Promise.resolve()
+      })
+      .catch((error) => {
+        console.log(error)
+        return Promise.reject(error)
+      })
+  },
 }
 
 const mutations = {
+  [types.ADD_TASK] (state, response) {},
+
   [types.UPDATE_TASK] (state, response) {},
   [types.DELETE_TASK] (state, response) {},
 }
