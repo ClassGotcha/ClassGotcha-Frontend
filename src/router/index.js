@@ -24,7 +24,8 @@ import Page403 from 'views/403'
 import Professor from 'views/Professor'
 import UserDetail from 'views/UserDetail'
 import Forum from 'views/Forum'
-import Groups from 'views/Groups'
+import MyFriends from 'views/MyFriends'
+import MyNotes from 'views/MyNotes'
 import Post from 'views/Post'
 import Landing from 'views/Landing'
 import Jobs from 'views/Jobs'
@@ -129,11 +130,12 @@ export default new Router({
                 name: 'professor'
             }, {
                 path: '/mynotes',
-                name: 'myNotes'
+              component: MyNotes,
+              name: 'myNotes'
             }, {
-                path: '/mygroups',
-                component: Groups,
-                name: 'myGroups'
+                path: '/myFriends',
+                component: MyFriends,
+                name: 'myFriends'
             }, {
                 path: '/forum/:post_id',
                 component: Post,
