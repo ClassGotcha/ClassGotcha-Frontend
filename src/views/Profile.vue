@@ -58,7 +58,8 @@
                                                     </li>
                                                     <li class=""><a href="#tab-2"
                                                                     data-toggle="tab">Personal Information</a></li>
-                                                    <li class=""><a href="#tab-3" data-toggle="tab">Badges</a>
+                                                    <li class=""><a href="#tab-3" data-toggle="tab">Earned Badges</a>
+                                                    <li class=""><a href="#tab-4" data-toggle="tab">In Progress Badges</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -88,7 +89,7 @@
                                                                 <div class="well">
                                                                     <b>{{moment.content}}</b>
                                                                 </div>
-                                                                <button class="btn btn-white btn-xs" @click="addLike(moment)" ><i
+                                                                <button class="btn btn-white btn-xs" @click="addLike(moment)"><i
                                                                         class="fa fa-thumbs-up"></i> {{moment.likes}} Liked this!
                                                                 </button>
                                                             </div>
@@ -98,7 +99,7 @@
                                                 <div class="tab-pane" id="tab-2">
                                                     <div class="form-horizontal">
                                                         <div class="form-group m-t-md">
-                                                            <label class="col-sm-2 control-label">Email</label>
+                                                            <label class="col-sm-2 col-lg-1 control-label">Email</label>
                                                             <div class="col-sm-4">
                                                                 <input disabled
                                                                        :placeholder="user.email"
@@ -106,7 +107,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Username</label>
+                                                            <label class="col-sm-2 col-lg-1 control-label">Username</label>
                                                             <div class="col-sm-4">
                                                                 <input disabled
                                                                        :placeholder="user.username"
@@ -114,7 +115,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Password</label>
+                                                            <label class="col-sm-2 col-lg-1 control-label">Password</label>
                                                             <div class="col-sm-4">
                                                                 <button class="btn btn-white">
                                                                     <i class="fa fa-lock"></i> Change password
@@ -123,8 +124,8 @@
                                                         </div>
                                                         <div class="hr-line-dashed"></div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Avatar</label>
-                                                            <div class="col-sm-5">
+                                                            <label class="col-sm-2 col-lg-1 control-label">Avatar</label>
+                                                            <div class="col-sm-5 col-xm-10">
                                                                 <img alt="image" class="img-circle"
                                                                      :src="user.avatar2x">
                                                                 <button class="btn btn-white col-sm-offset-1"
@@ -146,21 +147,21 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Name</label>
-                                                            <div class="col-sm-4 col-lg-2">
+                                                            <label class="col-sm-2 col-lg-1 control-label">Name</label>
+                                                            <div class="col-sm-4 col-md-4 col-lg-2">
                                                                 <input placeholder="First Name"
                                                                        v-model="user.first_name"
                                                                        class="form-control">
                                                             </div>
-                                                            <div class="col-sm-4 col-lg-2">
+                                                            <div class="col-sm-4 col-md-4 col-lg-2">
                                                                 <input placeholder="Last Name"
                                                                        v-model="user.last_name"
                                                                        class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Major</label>
-                                                            <div class="col-sm-4">
+                                                            <label class="col-sm-2 col-lg-1 control-label">Major</label>
+                                                            <div class="col-sm-8 col-md-8 col-lg-4">
                                                                 <select class="form-control" v-model="user.major"
                                                                         name="account">
                                                                     <option v-for="major in majors" :value="major.id">
@@ -170,8 +171,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Class of</label>
-                                                            <div class="col-sm-4">
+                                                            <label class="col-sm-2 col-lg-1 control-label">Class of</label>
+                                                            <div class="col-sm-8 col-md-8 col-lg-4">
                                                                 <select class="form-control" v-model="user.school_year"
                                                                         name="account">
                                                                     <option value="2016">2016</option>
@@ -184,8 +185,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">About me</label>
-                                                            <div class="col-sm-4">
+                                                            <label class="col-sm-2 col-lg-1 control-label">About me</label>
+                                                            <div class="col-sm-8 col-md-8 col-lg-4">
                                                                 <textarea type="text"
                                                                           v-model="user.about_me"
                                                                           class="form-control">
@@ -193,8 +194,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Gender</label>
-                                                            <div class="col-sm-4">
+                                                            <label class="col-sm-2 col-lg-1 control-label">Gender</label>
+                                                            <div class="col-sm-8 col-md-8 col-lg-4">
                                                                 <select class="form-control"
                                                                         v-model="user.gender"
                                                                         name="account">
@@ -205,30 +206,40 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Phone</label>
-                                                            <div class="col-sm-4"><input v-mask="'(###) ###-####'" placeholder="(###) ###-####" class="form-control"></div>
+                                                            <label class="col-sm-2 col-lg-1 control-label">Phone</label>
+                                                            <div class="col-sm-8 col-md-8 col-lg-4">
+                                                                <input v-mask="'(###) ###-####'" placeholder="(###) ###-####" class="form-control">
+                                                            </div>
                                                         </div>
 
                                                         <div class="hr-line-dashed"></div>
 
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Facebook</label>
-                                                            <div class="col-sm-4"><input  class="form-control"></div>
+                                                            <label class="col-sm-2 col-lg-1 control-label">Facebook</label>
+                                                            <div class="col-sm-8 col-md-8 col-lg-4">
+                                                                <input class="form-control">
+                                                            </div>
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">LinkedIn</label>
-                                                            <div class="col-sm-4"><input  class="form-control"></div>
+                                                            <label class="col-sm-2 col-lg-1 control-label">LinkedIn</label>
+                                                            <div class="col-sm-8 col-md-8 col-lg-4">
+                                                                <input class="form-control">
+                                                            </div>
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Twitter</label>
-                                                            <div class="col-sm-4"><input  class="form-control"></div>
+                                                            <label class="col-sm-2 col-lg-1 control-label">Twitter</label>
+                                                            <div class="col-sm-8 col-md-8 col-lg-4">
+                                                                <input class="form-control">
+                                                            </div>
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">SnapChat</label>
-                                                            <div class="col-sm-4"><input  class="form-control"></div>
+                                                            <label class="col-sm-2 col-lg-1 control-label">SnapChat</label>
+                                                            <div class="col-sm-8 col-md-8 col-lg-4">
+                                                                <input class="form-control">
+                                                            </div>
                                                         </div>
                                                         <div class="hr-line-dashed"></div>
 
@@ -247,37 +258,77 @@
                                                         <tr>
                                                             <th>Status</th>
                                                             <th>Badge Name</th>
-                                                            <th>Start Time</th>
-                                                            <th>End Time</th>
                                                             <th>Description</th>
+                                                            <th>Badge Level</th>
+                                                            <th>Action Required</th>
+                                                            <th>Achieved Time</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <tr v-if="user.badges.length === 0">
-                                                            <td colspan="5">
-                                                                <p class="text-center"> Oops, nothing here～</p>
+                                                        <tr v-for="badge in user.badges" v-if="badge.finished">
+                                                            <td>
+                                                                <span class="label label-primary">
+                                                                    <i class="fa fa-check"></i>  Achieved
+                                                                </span>
                                                             </td>
+                                                            <td>
+                                                                <b class="text-warning">{{badge.badge_type.name}}</b>
+                                                            </td>
+                                                            <td>
+                                                                {{badge.badge_type.description}}
+                                                            </td>
+                                                            <td>
+                                                                Level <b class="text-warning">{{badge.badge_type.level}}</b>
+                                                            </td>
+                                                            <td>
+                                                                {{badge.badge_type.action_required}}
+                                                            </td>
+                                                            <td>
+                                                                {{momentDate(badge.finished)}}
+                                                            </td>
+
                                                         </tr>
-                                                        <tr v-else v-for="badge in user.badges">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="tab-pane" id="tab-4">
+                                                    <table class="table table-striped">
+
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Status</th>
+                                                            <th>Badge Name</th>
+                                                            <th>Description</th>
+                                                            <th>Badge Level</th>
+                                                            <th>Action Required</th>
+                                                            <th>Action Completed</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        <tr v-for="badge in user.badges" v-if="!badge.finished">
                                                             <td>
-                                                                <span class="label label-primary"><i
-                                                                        class="fa fa-check"></i> Completed</span>
+                                                                <span class="label label-primary">
+                                                                    <i class="fa fa-clock"></i>  In Progress
+                                                                </span>
+                                                            </td>
+
+                                                            <td>
+                                                                <b class="text-warning">{{badge.badge_type.name}}</b>
                                                             </td>
                                                             <td>
-                                                                Create project in webapp
+                                                                {{badge.badge_type.description}}
                                                             </td>
                                                             <td>
-                                                                12.07.2014 10:10:1
+                                                                Level <b class="text-warning">{{badge.badge_type.level}}</b>
                                                             </td>
                                                             <td>
-                                                                14.07.2014 10:16:36
+                                                                {{badge.badge_type.action_required}}
                                                             </td>
                                                             <td>
-                                                                <p class="small">
-                                                                    Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here',
-                                                                    making it look like readable.
-                                                                </p>
+                                                                {{badge.counter}}
                                                             </td>
+
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -343,10 +394,14 @@
         /* global moment:true */
         return moment(time).format('h:mm a - MM.D.YYYY')
       },
+      momentDate (time) {
+        /* global moment:true */
+        return moment(time).format('MM.D.YYYY')
+      },
       postChange () {
         this.$store.dispatch('updateSelf', this.user)
           .then(() => {
-            this.$store.dispatch('loadSelf')
+            this.$store.dispatch('getSelf')
             this.$root.$children[0].$refs.toastr.s('Your Info is updated.', 'Success')
           })
       },

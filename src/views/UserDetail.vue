@@ -73,7 +73,7 @@
                                                     </li>
 
                                                     <li class=""><a href="#tab-3"
-                                                                    data-toggle="tab">Badges Process</a>
+                                                                    data-toggle="tab">Badges</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -201,34 +201,36 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Status</th>
-                                                            <th>Title</th>
-                                                            <th>Start Time</th>
-                                                            <th>End Time</th>
-                                                            <th>Comments</th>
+                                                            <th>Badge Name</th>
+                                                            <th>Description</th>
+                                                            <th>Badge Level</th>
+                                                            <th>Action Required</th>
+                                                            <th>Achieved Time</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <tr>
+                                                        <tr v-for="badge in user.badges" v-if="badge.finished">
                                                             <td>
-                                                                <span class="label label-primary"><i
-                                                                        class="fa fa-check"></i> Completed</span>
+                                                                <span class="label label-primary">
+                                                                    <i class="fa fa-check"></i>  Achieved
+                                                                </span>
                                                             </td>
                                                             <td>
+                                                                <b class="text-warning">{{badge.badge_type.name}}</b>
+                                                            </td>
+                                                            <td>
+                                                                {{badge.badge_type.description}}
+                                                            </td>
+                                                            <td>
+                                                                Level <b class="text-warning">{{badge.badge_type.level}}</b>
+                                                            </td>
+                                                            <td>
+                                                                {{badge.badge_type.action_required}}
+                                                            </td>
+                                                            <td>
+                                                                {{momentDate(badge.finished)}}
+                                                            </td>
 
-                                                                Create project in webapp
-                                                            </td>
-                                                            <td>
-                                                                12.07.2014 10:10:1
-                                                            </td>
-                                                            <td>
-                                                                14.07.2014 10:16:36
-                                                            </td>
-                                                            <td>
-                                                                <p class="small">
-                                                                    Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here',
-                                                                    making it look like readable.
-                                                                </p>
-                                                            </td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -290,6 +292,10 @@
       momentFormat (time) {
         /* global moment:true */
         return moment(time).format('h:mm a - MM.D.YYYY')
+      },
+      momentDate (time) {
+        /* global moment:true */
+        return moment(time).format('MM.D.YYYY')
       },
       addFriend () {
         this.$store.dispatch('addFriend', this.$route.params.user_id)
