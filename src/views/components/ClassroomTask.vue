@@ -191,7 +191,8 @@
                         <p v-show="task_errMsg">{{task_errMsg}}</p>
                     </div>
                     <div class="modal-footer">
-                        <a @click="deleteTask()" class="btn btn-sm btn-danger">Delete</a>
+                        <a v-show="!task_delete_confirmation" @click="task_delete_confirmation=!task_delete_confirmation" class="btn btn-sm btn-danger">Delete</a>
+                        <a @click="deleteTask();task_delete_confirmation=!task_delete_confirmation" v-show="task_delete_confirmation" class="btn btn-sm btn-danger">Are you sure? (This is irreversible)</a>
                         <a @click="changeTask()" class="btn btn-sm btn-primary">Update</a>
                     </div>
                 </div>
@@ -220,6 +221,7 @@
         task_end: null,
         task_errMsg: '',
 
+        task_delete_confirmation: false,
         chosen_task: {
           repeat: ''
         }

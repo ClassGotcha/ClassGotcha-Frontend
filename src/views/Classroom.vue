@@ -164,7 +164,7 @@
                 </div>
                 <div class="ibox hidden-md">
                     <div class="ibox-content">
-                        <h3>Create a Study Group</h3>
+                        <h3>Create a Study Group Meeting</h3>
                         <h5>Topic</h5>
                         <input placeholder="Review Exam1" class="form-control">
                         <h5>Location</h5>
