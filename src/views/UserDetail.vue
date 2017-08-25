@@ -107,7 +107,7 @@
                                                             </td>
                                                             <td>
                                                                 <span class="label label-primary"><router-link :to="{name:'classroom', params:{classroom_id:classroom.id}}"
-                                                                                                               class="client-link">Detail</router-link>
+                                                                                                                class="client-link">Detail</router-link>
                                                                 </span>
                                                             </td>
                                                         </tr>
@@ -136,6 +136,9 @@
                                                                 <div class="well">
                                                                     <b>{{moment.content}}</b>
                                                                 </div>
+                                                                <button class="btn btn-white btn-xs" @click="addLike(moment)"><i
+                                                                        class="fa fa-thumbs-up"></i> {{moment.likes}} Like this!
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -304,7 +307,9 @@
       addFriend () {
         this.$store.dispatch('addFriend', this.$route.params.user_id)
           .then(() => {
-            this.$root.$children[0].$refs.toastr.s('Your Invitation is sent.', 'Success')
+            this.$root.$children[0].$refs.toastr.s('Your Request is sent.', 'Success')
+            this.$root.$children[0].$refs.toastr.i('Send Friend Request', 'EXP +5')
+
           })
           .catch((error) => {
             this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Error')
@@ -324,6 +329,10 @@
             return true
         }
         return false
+      },
+      addLike (moment) {
+        this.$store.dispatch('addMomentLike', moment.id)
+        moment.likes += 1
       },
       loadData () {
         this.$store.dispatch('getUser', this.$route.params.user_id)

@@ -66,7 +66,8 @@
                                 <td>
                                     <router-link :to="{name:'professor', params:{professor_id:current_classroom.professors[0].id}}">
                                         {{current_classroom.professors[0].full_name}}
-                                    </router-link> <span v-if="current_classroom.professors[1]">,</span>
+                                    </router-link>
+                                    <span v-if="current_classroom.professors[1]">,</span>
                                     <router-link v-if="current_classroom.professors[1]" :to="{name:'professor', params:{professor_id:current_classroom.professors[1].id}}">
                                         {{current_classroom.professors[1].full_name}}
                                     </router-link>
@@ -265,7 +266,7 @@
                             </a>
                             <div class="media-body">
                                 <textarea class="form-control" v-model="comment_content"
-                                          @keyup.enter="postComment($event)" placeholder="Write comment..."></textarea>
+                                          @keyup.enter="postComment($event, moment.question)" placeholder="Write comment..."></textarea>
                             </div>
                         </div>
                     </div>
@@ -314,7 +315,9 @@
       addClassroom () {
         this.$store.dispatch('addClassroom', this.$route.params.classroom_id)
           .then(() => {
-            this.$root.$children[0].$refs.toastr.s('You added the classroom to your schedule, refresh to see the change', 'Success')
+            this.$root.$children[0].$refs.toastr.s('The classroom is added to your schedule, refresh to see the change', 'Success')
+            this.$root.$children[0].$refs.toastr.i('Add Classroom', 'EXP +10')
+
           })
       },
       remClassroom () {
@@ -343,7 +346,10 @@
         this.$store.dispatch('postMoment', formData).then(() => {
           this.content = ''
           this.dropzone = false
-          this.$root.$children[0].$refs.toastr.s('You posted a new moment', 'Success')
+          if (this.question)
+            this.$root.$children[0].$refs.toastr.i('New Classroom Question', 'EXP +5')
+          else
+            this.$root.$children[0].$refs.toastr.i('New Classroom Post', 'EXP +1')
         })
       },
       loadMomentByPage () {
@@ -353,13 +359,19 @@
       delMoment (pk) {
         this.$store.dispatch('delMoment', pk)
       },
-      postComment (e) {
+      postComment (e, question) {
         e.preventDefault()
         const data = {
           formData: {content: this.comment_content},
           id: this.comment_id,
         }
         this.$store.dispatch('postMomentComment', data)
+
+        if (question)
+          this.$root.$children[0].$refs.toastr.i('New Question Answer', 'EXP +5')
+        else
+          this.$root.$children[0].$refs.toastr.i('New Classroom Comment', 'EXP +1')
+
         this.comment_content = ''
         this.comment_id = -1
       },

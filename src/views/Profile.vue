@@ -90,7 +90,7 @@
                                                                     <b>{{moment.content}}</b>
                                                                 </div>
                                                                 <button class="btn btn-white btn-xs" @click="addLike(moment)"><i
-                                                                        class="fa fa-thumbs-up"></i> {{moment.likes}} Liked this!
+                                                                        class="fa fa-thumbs-up"></i> {{moment.likes}} Like this!
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -445,6 +445,8 @@
           .then(() => {
             this.user = this.$store.getters.me
             this.$root.$children[0].$refs.toastr.s('Your Avatar is updated.', 'Success')
+            // TODO: only +exp first time
+            this.$root.$children[0].$refs.toastr.i('First time change avatar', 'EXP +25')
           })
       }
     },

@@ -14,7 +14,7 @@
             <ul class="nav navbar-top-links navbar-right">
                 <li>
                     <div class="alert alert-success m-b-n" v-if="!user.is_verified">
-                        <i class="fa fa-info"></i> We have sent a verification link to your email, please verify your email to use ClassGotcha with full functionality.
+                        <i class="fa fa-info"></i> We have sent a verification link to your email address, please verify your email to use ClassGotcha with full functionality.
                     </div>
                 </li>
                 <li class="dropdown">
@@ -130,13 +130,16 @@
       acceptFriend (pk) {
         this.$store.dispatch('acceptFriend', pk).then(() => {
           this.$store.dispatch('getFriends')
-          this.$store.dispatch('getPendingFriends')
+          this.$root.$children[0].$refs.toastr.i('Accept Friend Request', 'EXP +5')
         })
       },
       denyFriend (pk) {
         this.$store.dispatch('remFriend', pk).then(() => {
           this.$store.dispatch('getPendingFriends')
         })
+      },
+      getPendingFriends () {
+        this.$store.dispatch('getPendingFriends')
       },
       momentTime (time) {
         /* global moment:true */
@@ -166,6 +169,7 @@
 
       this.interval = setInterval(function () {
         this.getNotifications()
+        this.getPendingFriends()
       }.bind(this), 30000)
     },
     beforeDestroy () {

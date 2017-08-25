@@ -1,10 +1,10 @@
 <template>
     <div id="vertical-timeline" class="vertical-container light-timeline no-margins">
         <div class="vertical-timeline-block">
-            <a  data-toggle="tooltip"
-                data-placement="top"
-                title=""
-                data-original-title="The task added to classroom will be shared to all your classmates!">
+            <a data-toggle="tooltip"
+               data-placement="top"
+               title=""
+               data-original-title="The task added to classroom will be shared to all your classmates!">
                 <div class="vertical-timeline-icon navy-bg" v-show="user_in_classroom">
                     <i class="fa fa-info"></i>
 
@@ -267,8 +267,10 @@
             console.log('repeat', data)
           }
 
-          this.$store.dispatch('postClassroomTask', data)
-          this.$store.dispatch('getTasks')
+          this.$store.dispatch('postClassroomTask', data).then(() => {
+            this.$root.$children[0].$refs.toastr.s('New task is added to classroom, refresh to see the change', 'Success')
+            this.$root.$children[0].$refs.toastr.i('New Classroom Task', 'EXP +5')
+          })
 
           this.clearTask()
 
@@ -284,7 +286,8 @@
         }
         this.$store.dispatch('updateTask', data)
           .then(() => {
-            this.$root.$children[0].$refs.toastr.s('Your change is updated', 'Success')
+            this.$root.$children[0].$refs.toastr.s('Task is updated, refresh to see the change', 'Success')
+            this.$root.$children[0].$refs.toastr.i('Update Classroom Task', 'EXP +5')
           })
       },
       removeTask (task_id) {

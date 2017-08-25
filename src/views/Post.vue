@@ -105,6 +105,8 @@
           formData: {content: this.comment_content}
         }
         this.$store.dispatch('postPostComment', data)
+        this.$root.$children[0].$refs.toastr.i('Reply in Forum', 'EXP +10')
+
       },
       formatTime (time) {
         /* global moment:true */

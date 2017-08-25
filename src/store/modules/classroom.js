@@ -193,14 +193,16 @@ const actions = {
       })
   },
   postClassroomTask ({commit, dispatch}, data) {
-    classApi.postTask(data.pk, data.formData)
+    return classApi.postTask(data.pk, data.formData)
       .then((response) => {
         commit(types.POST_CLASSROOM_TASK, response)
         dispatch('getClassroomTasks', data.pk)
         dispatch('getTasks')
+        return Promise.resolve()
       })
       .catch((error) => {
         commit(types.LOG_ERROR, error)
+        return Promise.reject(error)
       })
   },
   postClassroomNote ({commit, dispatch}, data) {

@@ -126,7 +126,7 @@
       //  上传地址
       url: {
         type: String,
-        'default': API_ROOT + 'account/avatar/'
+        'default': API_ROOT + 'account/avatar/change/'
       },
       //  其他要上传文件附带的数据，对象格式
       params: {

@@ -34,17 +34,16 @@
                         </router-link>
                         <div class="col-sm-8 col-xs-8">
                             <h3><strong>{{student.full_name}}</strong>
-
-                                <span class="label label-warning">Level {{student.level}}</span>
+                                <span class="label label-warning ">Level {{student.level}}</span>
                             </h3>
                             <address>
-                                <strong>Major:</strong> <br>
+                                <strong>Major:</strong> <span v-if="student.major">{{student.major.major_short}}</span><br>
                                 <strong>Class:</strong> {{student.school_year}}<br>
                                 <strong>About Me</strong><br>
                                 {{student.about_me}}
                             </address>
                             <div class="m-t-xs btn-group">
-                                <a @click="sendMessage()" class="btn btn-xs btn-primary"><i class="fa fa-envelope"></i> Message</a>
+                                <a @click="addFriend(student.id)" class="btn btn-xs btn-primary"><i class="fa fa-user-plus"></i> + Add Friend</a>
                                 <router-link :to="{name:'userDetail', params:{user_id:student.id}}" class="btn btn-xs btn-white"><i class="fa fa-user"></i> Profile </router-link>
                             </div>
                         </div>
@@ -68,7 +67,8 @@
       addFriend (pk) {
         this.$store.dispatch('addFriend', pk)
           .then(() => {
-            this.$root.$children[0].$refs.toastr.s('Your Invitation is sent.', 'Success')
+            this.$root.$children[0].$refs.toastr.s('Your Request is sent.', 'Success')
+            this.$root.$children[0].$refs.toastr.i('Send Friend Request', 'EXP +5')
           })
           .catch((error) => {
             this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Error')

@@ -7,7 +7,6 @@
                 <ol class="breadcrumb">
                     <li>
                         <router-link :to="{name:'home'}">Home</router-link>
-
                     </li>
                     <li class="active">
                         <strong>Forum</strong>
@@ -122,6 +121,7 @@
           content: this.post_content,
           tag: this.post_tag
         })
+        this.$root.$children[0].$refs.toastr.i('Post in Forum', 'EXP +10')
       },
       upVote (id) {
         const data = {
