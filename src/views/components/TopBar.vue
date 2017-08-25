@@ -65,7 +65,7 @@
                             <li class="divider" v-if="index!==0"></li>
                             <li>
                                 <div class="dropdown-messages-box">
-                                    <!--<router-link :to="{name:'userDetail', params:{user_id:friend.id}}">{{friend.full_name}}</router-link>-->
+                                    <router-link v-if="notification.sender" :to="{name:'userDetail', params:{user_id:notification.sender.id}}">{{notification.sender.full_name}}</router-link>
                                     {{notification.content}}
                                     <br>
                                     <small class="text-muted">{{momentTime(notification.created)}} | {{momentFormat(notification.created)}}   </small>

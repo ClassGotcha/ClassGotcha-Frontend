@@ -17,6 +17,7 @@
                 </div>
             </div>
             <div v-for="task in tasks" class="vertical-timeline-block">
+
                 <!-- 1) Homework 2) Quiz 3) Exam-->
                 <div class="vertical-timeline-icon" :class="{ 'blue-bg': task.category === 1, 'yellow-bg':task.category === 2, 'red-bg': task.category === 3}">
                     <i class="fa" :class="{ 'fa-file-text': task.category === 1, 'fa-pencil':task.category === 2, ' fa-warning': task.category === 3}"></i>
@@ -24,7 +25,11 @@
                 <div class="vertical-timeline-content">
                     <h2>{{task.task_name}}</h2>
                     <p>{{task.description}}</p>
-                    <a @click="changeTaskWindowTriggle(task.id)" v-if="user_in_classroom" class="btn btn-sm btn-white">Edit</a>
+                    <a @click="changeTaskWindowTriggle(task.id)" v-if="user_in_classroom" class="btn btn-sm btn-white m-l"><i class="fa fa-edit"></i> Edit</a>
+
+                    <a @click="addTask(task.id)" v-if="!taskInMyList(task.id)" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Add to my calendar</a>
+                    <a @click="removeTask(task.id)" class="btn btn-sm btn-info" v-if="taskInMyList(task.id)"><i class="fa fa-minus"></i> Remove from my calendar</a>
+
                     <span class="vertical-date">
                         {{taskTime(task, 1)}}
                         <br>
@@ -114,7 +119,7 @@
                         <p v-show="task_errMsg">{{task_errMsg}}</p>
                     </div>
                     <div class="modal-footer">
-                        <a @click="postTask($event)" :disabled="invaild_task" class="btn btn-sm btn-primary">Add To Classroom</a>
+                        <a @click="postTask($event)" :disabled="invalid_task" class="btn btn-sm btn-primary">Add To Classroom</a>
                     </div>
                 </div>
             </div>
@@ -144,15 +149,16 @@
                                 <span>Title</span>
                                 <input class="form-control m-b" v-model="chosen_task.task_name">
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <span>Time</span>
-                                    <div class="input-group date">
-                                        <input type="text" v-show="chosen_task.start" placeholder="Start at?" v-model="chosen_task.start" id="chosen-task-start" class="form-control"/>
-                                        <input type="text" v-show="chosen_task.end" placeholder="End at?" v-model="chosen_task.end" id="chosen-task-end" class="form-control"/>
-                                        <span class="input-group-addon"></span>
-                                        <span class="fa fa-calendar"></span>
-                                    </div>
+                                    <span>Start</span>
+                                    <input v-show="chosen_task.start" placeholder="Start at?" v-model="chosen_task.start" id="chosen-task-start" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <span>End</span>
+                                    <input v-show="chosen_task.end" placeholder="End at?" v-model="chosen_task.end" id="chosen-task-end" class="form-control"/>
                                 </div>
                             </div>
                             <div class="col-md-12" v-show="task_subcategory==3">
@@ -185,7 +191,8 @@
                         <p v-show="task_errMsg">{{task_errMsg}}</p>
                     </div>
                     <div class="modal-footer">
-                        <a @click="remTask()" class="btn btn-sm btn-danger">Delete</a>
+                        <a v-show="!task_delete_confirmation" @click="task_delete_confirmation=!task_delete_confirmation" class="btn btn-sm btn-danger">Delete</a>
+                        <a @click="deleteTask();task_delete_confirmation=!task_delete_confirmation" v-show="task_delete_confirmation" class="btn btn-sm btn-danger">Are you sure? (This is irreversible)</a>
                         <a @click="changeTask()" class="btn btn-sm btn-primary">Update</a>
                     </div>
                 </div>
@@ -214,6 +221,7 @@
         task_end: null,
         task_errMsg: '',
 
+        task_delete_confirmation: false,
         chosen_task: {
           repeat: ''
         }
@@ -222,7 +230,7 @@
     methods: {
       postTask () {
         /* global Date:true, moment:true */
-        if (!this.invaild_task) {
+        if (!this.invalid_task) {
           let start = ''
           let end = ''
           if (this.task_due_date) {
@@ -271,11 +279,32 @@
           formData: this.chosen_task
         }
         this.$store.dispatch('updateTask', data)
-        this.$store.dispatch('getTasks')
+          .then(() => {
+            this.$root.$children[0].$refs.toastr.s('Your change is updated', 'Success')
+          })
       },
-      remTask (task) {
+      removeTask (task_id) {
+        this.$store.dispatch('removeTask', task_id)
+          .then(() => {
+            this.$root.$children[0].$refs.toastr.s('Task is removed from your calendar', 'Success')
+          })
+      },
+      addTask (task_id) {
+        this.$store.dispatch('addTask', task_id)
+          .then(() => {
+            this.$root.$children[0].$refs.toastr.s('Task is added to your calendar', 'Success')
+          })
+      },
+      deleteTask () {
         this.$store.dispatch('deleteTask', this.chosen_task.id)
         this.$store.dispatch('getTasks')
+      },
+      taskInMyList (task_id) {
+        for (let task of this.user_tasks) {
+          if (task.id === task_id)
+            return true
+        }
+        return false
       },
       addTaskRepeat (day) {
         if (this.task_repeat.includes(day))
@@ -336,10 +365,13 @@
       user_in_classroom () {
         return this.$store.getters.userInClassroom
       },
+      user_tasks () {
+        return this.$store.getters.userTasks
+      },
       tasks () {
         return this.$store.getters.classroomTasks
       },
-      invaild_task () {
+      invalid_task () {
         if (this.task_title === '')
           return true
         else if (this.task_subcategory === '1' && !this.task_due_datetime)

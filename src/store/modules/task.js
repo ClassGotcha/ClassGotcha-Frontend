@@ -21,7 +21,20 @@ const actions = {
       .then((response) => {
         commit(types.DELETE_TASK, response)
         dispatch('getClassroomTasks')
-        // dispatch('getTasks')
+        dispatch('getTasks')
+        return Promise.resolve()
+      })
+      .catch((error) => {
+        console.log(error)
+        return Promise.reject(error)
+      })
+  },
+  removeTask ({commit, dispatch}, pk) {
+    return taskApi.removeTask(pk)
+      .then((response) => {
+        commit(types.REMOVE_TASK, response)
+        dispatch('getClassroomTasks')
+        dispatch('getTasks')
         return Promise.resolve()
       })
       .catch((error) => {
@@ -48,6 +61,7 @@ const mutations = {
 
   [types.UPDATE_TASK] (state, response) {},
   [types.DELETE_TASK] (state, response) {},
+  [types.REMOVE_TASK] (state, response) {},
 }
 
 export default {

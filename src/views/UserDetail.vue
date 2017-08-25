@@ -34,27 +34,21 @@
                             <b>Level</b>:    <span class="label label-warning">Level {{user.level}}</span>
                         </p>
                         <p>
-                            <b>Exp</b>:
+                            <b>Exp</b>: ({{user.exp}}/100)
                         <div class="progress progress-striped active m-b-sm">
-                            <div style="width: 60%;" class="progress-bar"></div>
+                            <div :style="'width: '+(user.exp+1)+'%'" class="progress-bar"></div>
                         </div>
-                        <button class="btn btn-sm btn-primary" @click="addFriend()"><i class="fa fa-user-plus"></i> Send Friend Request</button>
-                        <button class="btn btn-sm btn-default" ><i class="fa fa-info"></i> Report</button>
-
+                        <button class="btn btn-sm btn-primary" v-if="!isFriend()" @click="addFriend()"><i class="fa fa-user-plus"></i> Send Friend Request</button>
+                        <button class="btn btn-sm btn-primary" v-if="isPendingFriend()"><i class="fa fa-user-plus"></i> Waiting Response</button>
+                        <button class="btn btn-sm btn-primary" v-if="isFriend()" disabled><i class="fa fa-users"></i> Friend</button>
+                        <button class="btn btn-sm btn-default"><i class="fa fa-info"></i> Report</button>
                     </td>
                     <td>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <div class="row">
-                <div class="col-lg-12">
 
-                </div>
-                <div class="col-lg-7">
-
-                </div>
-            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox">
@@ -65,18 +59,62 @@
                                         <div class="panel-heading">
                                             <div class="panel-options">
                                                 <ul class="nav nav-tabs">
-                                                    <li class="active"><a href="#tab-1" data-toggle="tab">Rencent activity</a>
+
+                                                    <li class="active">
+                                                        <a href="#tab-0"
+                                                           data-toggle="tab">Class Schedule</a>
                                                     </li>
-                                                    <li class=""><a href="#tab-2"
-                                                                    data-toggle="tab">Personal Information</a></li>
-                                                    <li class=""><a href="#tab-3" data-toggle="tab">Badges Process</a>
+
+                                                    <li class="">
+                                                        <a href="#tab-1"
+                                                           data-toggle="tab">Rencent activity</a>
+                                                    </li>
+
+                                                    <li class="">
+                                                        <a href="#tab-2"
+                                                           data-toggle="tab">Personal Information</a>
+                                                    </li>
+
+                                                    <li class="">
+                                                        <a href="#tab-3"
+                                                           data-toggle="tab">Badges</a>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="panel-body">
                                             <div class="tab-content">
-                                                <div class="tab-pane active" id="tab-1">
+                                                <div class="tab-pane active" id="tab-0">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Class Title</th>
+                                                            <th>Section</th>
+                                                            <th>Unit</th>
+                                                            <th>Time</th>
+                                                            <th>Students</th>
+
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr v-for="classroom in user.classrooms">
+                                                            <td>{{classroom.class_short}}</td>
+                                                            <td>{{classroom.class_section}}</td>
+                                                            <td> {{classroom.class_credit}} Unit(s)</td>
+                                                            <td> {{classroom.class_time.repeat}} {{classroom.class_time.formatted_start_time}}-{{classroom.class_time.formatted_end_time}}</td>
+                                                            <td>
+                                                                <i class="fa fa-users"></i> {{classroom.students_count}}
+                                                            </td>
+                                                            <td>
+                                                                <span class="label label-primary"><router-link :to="{name:'classroom', params:{classroom_id:classroom.id}}"
+                                                                                                               class="client-link">Detail</router-link>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="tab-pane" id="tab-1">
                                                     <div class="feed-activity-list">
                                                         <div class="well" v-if="user_moments.length === 0">
 
@@ -87,11 +125,14 @@
                                                                 <img alt="image" class="img-circle"
                                                                      :src="moment.creator.avatar1x">
                                                             </a>
-                                                            <div class="media-body ">
+                                                            <div class="media-body">
                                                                 <strong>{{moment.creator.full_name}}</strong>
-                                                                post 1 moment on Classroom <strong>{{moment.classroom}}</strong>.
+                                                                post 1 moment in
+                                                                <router-link :to="{name:'classroom', params:{'classroom_id':moment.classroom.id}}">
+                                                                    <b>{{moment.classroom.class_short}} - {{moment.classroom.class_section}}</b>.
+                                                                </router-link>
                                                                 <br>
-                                                                <small class="text-muted">{{moment.created}}</small>
+                                                                <small class="text-muted">{{momentFormat(moment.created)}}</small>
                                                                 <div class="well">
                                                                     <b>{{moment.content}}</b>
                                                                 </div>
@@ -102,21 +143,15 @@
                                                 <div class="tab-pane" id="tab-2">
                                                     <div class="form-horizontal">
                                                         <div class="form-group m-t-md">
-                                                            <label class="col-lg-2 control-label">Email</label>
-                                                            <div class="col-lg-5"><input disabled
-                                                                                         :placeholder="user.email"
-                                                                                         class="form-control"></div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Username</label>
-                                                            <div class="col-lg-5"><input disabled
-                                                                                         :placeholder="user.username"
-                                                                                         class="form-control"></div>
+                                                            <label class="col-sm-2 control-label">Email</label>
+                                                            <div class="col-sm-8">
+                                                                <p>{{user.email}}</p>
+                                                            </div>
                                                         </div>
                                                         <div class="hr-line-dashed"></div>
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">Name</label>
-                                                            <div class="col-sm-4">
+                                                            <div class="col-sm-8">
                                                                 <p>{{user.full_name}}</p>
                                                             </div>
                                                         </div>
@@ -128,31 +163,30 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">Gender</label>
-                                                            <div class="col-sm-4">
+                                                            <div class="col-sm-8">
                                                                 <p v-if="user.gender==='Idw'">I don't want to tell</p>
                                                                 <p v-if="user.gender==='Man'">Male</p>
                                                                 <p v-if="user.gender==='Woman'">Female</p>
 
                                                             </div>
                                                         </div>
-                                                        <!--<div class="form-group">
-                                                        <label class="col-sm-2 control-label">Phone</label>
-                                                        <div class="col-sm-4"><input type="text" v-mask="'(###) ###-####'" placeholder="(###) ###-####" class="form-control"></div>
-                                                        </div>
                                                         <div class="form-group">
-                                                        <label class="col-sm-2 control-label">Birthday</label>
-                                                        <div class="col-sm-4"><input type="text" v-mask="'##-##-####'" placeholder="mm-dd-yyyy" class="form-control"></div>
-                                                        </div>-->
+                                                            <label class="col-sm-2 control-label">Phone</label>
+                                                            <div class="col-sm-8">
+                                                                <p>{{user.phone}}</p>
+                                                            </div>
+                                                        </div>
+
                                                         <div class="hr-line-dashed"></div>
                                                         <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Major</label>
-                                                            <div class="col-lg-5">
-                                                                {{majorByID(user.major)}}
+                                                            <label class="col-sm-2 control-label">Major</label>
+                                                            <div class="col-sm-8">
+                                                                <p v-if="user.major">{{user.major.major_short}}</p>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-lg-2 control-label">Class of</label>
-                                                            <div class="col-lg-5">
+                                                            <label class="col-sm-2 control-label">Class of</label>
+                                                            <div class="col-sm-8">
                                                                 {{user.school_year}}
                                                             </div>
                                                         </div>
@@ -171,33 +205,36 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Status</th>
-                                                            <th>Title</th>
-                                                            <th>Start Time</th>
-                                                            <th>End Time</th>
-                                                            <th>Comments</th>
+                                                            <th>Badge Name</th>
+                                                            <th>Description</th>
+                                                            <th>Badge Level</th>
+                                                            <th>Action Required</th>
+                                                            <th>Achieved Time</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <tr>
+                                                        <tr v-for="badge in user.badges" v-if="badge.finished">
                                                             <td>
-                                                                <span class="label label-primary"><i
-                                                                        class="fa fa-check"></i> Completed</span>
+                                                                <span class="label label-primary">
+                                                                    <i class="fa fa-check"></i>  Achieved
+                                                                </span>
                                                             </td>
                                                             <td>
-                                                                Create project in webapp
+                                                                <b class="text-warning">{{badge.badge_type.name}}</b>
                                                             </td>
                                                             <td>
-                                                                12.07.2014 10:10:1
+                                                                {{badge.badge_type.description}}
                                                             </td>
                                                             <td>
-                                                                14.07.2014 10:16:36
+                                                                Level <b class="text-warning">{{badge.badge_type.level}}</b>
                                                             </td>
                                                             <td>
-                                                                <p class="small">
-                                                                    Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here',
-                                                                    making it look like readable.
-                                                                </p>
+                                                                {{badge.badge_type.action_required}}
                                                             </td>
+                                                            <td>
+                                                                {{momentDate(badge.finished)}}
+                                                            </td>
+
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -256,6 +293,14 @@
       }
     },
     methods: {
+      momentFormat (time) {
+        /* global moment:true */
+        return moment(time).format('h:mm a - MM.D.YYYY')
+      },
+      momentDate (time) {
+        /* global moment:true */
+        return moment(time).format('MM.D.YYYY')
+      },
       addFriend () {
         this.$store.dispatch('addFriend', this.$route.params.user_id)
           .then(() => {
@@ -266,28 +311,34 @@
             console.log(error)
           })
       },
-
+      isFriend () {
+        for (let i in this.user.friends) {
+          if (this.user.friends[i] === this.me.id)
+            return true
+        }
+        return false
+      },
+      isPendingFriend () {
+        for (let id in this.user.pending_friends) {
+          if (id === this.me.id)
+            return true
+        }
+        return false
+      },
       loadData () {
         this.$store.dispatch('getUser', this.$route.params.user_id)
           .then((response) => {
             this.user = response
-            console.log(response)
-          })
-        this.$store.dispatch('getMajors')
-          .then(() => {
-            this.majors = this.$store.getters.majors
           })
         this.$store.dispatch('getUserMoment', this.$route.params.user_id)
           .then((response) => {
             this.user_moments = response
           })
       },
-      majorByID (id) {
-        for (let i in this.majors) {
-          if (this.majors[i].id === id)
-            return this.majors[i].major_short
-        }
-        return ''
+    },
+    computed: {
+      me () {
+        return this.$store.getters.me
       },
     },
     created () {

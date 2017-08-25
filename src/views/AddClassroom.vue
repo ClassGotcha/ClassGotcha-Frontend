@@ -46,8 +46,13 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr v-if="resultLength===0">
+                                                <tr v-if="resultLength===0 && search_result_returned">
                                                     <td class="text-center">No result</td>
+                                                </tr>
+                                                <tr v-if="search_start && !search_result_returned">
+                                                    <td class="text-center">
+                                                        <spinner></spinner>
+                                                    </td>
                                                 </tr>
                                                 <tr v-for="classroom in searchResult">
                                                     <td><a data-toggle="tab" v-on:click="select_classroom(classroom)" class="client-link">{{classroom.class_code}}</a></td>
@@ -84,9 +89,9 @@
                                         <div class="col-lg-8">
                                             <strong>Description</strong>
                                             <p>{{selected_classroom.description}}</p>
-                                            <a v-on:click="classroomURL(selected_classroom)" class="btn btn-primary btn-sm btn-block">
+                                            <router-link :to="{name:'classroom', params:{classroom_id: selected_classroom.id}}" class="btn btn-primary btn-sm btn-block">
                                                 <i class="fa fa-chevron-up"></i> Enter Classroom
-                                            </a>
+                                            </router-link>
                                         </div>
                                     </div>
                                     <div class="client-detail">
@@ -150,10 +155,15 @@
     </div>
 </template>
 <script>
+  import Spinner from 'components/Spinner'
+
   export default {
     name: 'AddClassroom',
     head: {
-      title: {inner: 'Add New Classroom'}
+      title: {inner: 'New Classroom'}
+    },
+    components: {
+      'spinner': Spinner
     },
     data: function () {
       return {
@@ -161,13 +171,24 @@
         selected_classroom: {
           id: 0,
           class_time: {location: 0}
-        }
+        },
+        search_start: false,
+        search_result_returned: false
       }
     },
     methods: {
       classroomSearch (e) {
         e.preventDefault()
+        this.search_start = true
+        this.search_result_returned = false
         this.$store.dispatch('classroomSearch', {search: this.search_token})
+          .then(() => {
+            this.search_result_returned = true
+          })
+          .catch(() => {
+            this.search_result_returned = true
+            this.$root.$children[0].$refs.toastr.e('Ops, something wrong, please try again later', 'Error')
+          })
       },
       select_classroom (classroom) {
         this.selected_classroom = classroom

@@ -17,6 +17,11 @@ export default {
       .then((response) => Promise.resolve(response.data))
       .catch((error) => Promise.reject(error))
   },
+  removeTask (pk) {
+    return Vue.http.delete(API_ROOT + 'task/' + pk + '/remove/', {headers: {Authorization: 'JWT ' + getCookie('token')}})
+      .then((response) => Promise.resolve(response.data))
+      .catch((error) => Promise.reject(error))
+  },
   addTask (pk) {
     return Vue.http.post(API_ROOT + 'task/' + pk + '/', {}, {headers: {Authorization: 'JWT ' + getCookie('token')}})
       .then((response) => Promise.resolve(response.data))

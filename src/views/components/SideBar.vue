@@ -10,17 +10,17 @@
                         CG
                     </div>
                 </li>
-                <li>
+                <li :class="{active: $route.name==='home'}">
                     <router-link :to="{name: 'home'}">
                         <i class="fa fa-th-large"></i>
                         <span class="nav-label">Home</span>
                     </router-link>
                 </li>
 
-                <li>
+                <li :class="{active: ($route.name==='addClassroom' || $route.name==='classroom')}">
                     <a>
                         <i class="fa fa-book"></i>
-                        <span class="nav-label">Classroom</span>
+                        <span class="nav-label">Classrooms</span>
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
@@ -40,25 +40,32 @@
                     <span class="nav-label">My Notes</span>
                 </router-link>
                 </li>-->
-                <li>
-                    <router-link :to="{name:'myFriends'}">
+                <li :class="{active: ($route.name==='myFriends' || $route.name==='addFriend')}">
+                    <a>
                         <i class="fa fa-users"></i>
-                        <span class="nav-label">My Friends</span>
-                    </router-link>
+                        <span class="nav-label">Friends</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                        <router-link :to="{name:'addFriend'}">
+                            <span class="nav-label">+ Add New</span>
+                        </router-link>
+                        </li>
+                        <li>
+                        <router-link :to="{name:'myFriends'}">
+                            <span class="nav-label">My Friends</span>
+                        </router-link>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <router-link :to="{name:'myNotes'}">
-                        <i class="fa fa-file"></i>
-                        <span class="nav-label">My Notes</span>
-                    </router-link>
-                </li>
-                <li>
+                <li :class="{active: ($route.name==='profile')}">
                     <router-link :to="{name:'profile'}">
                         <i class="fa fa-user"></i>
                         <span class="nav-label">Profile</span>
                     </router-link>
                 </li>
-                <li>
+                <li :class="{active: ($route.name==='forum')}">
                     <router-link :to="{name:'forum'}">
                         <i class="fa fa-question-circle"></i>
                         <span class="nav-label">Forum</span>

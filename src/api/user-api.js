@@ -100,6 +100,16 @@ export default {
       .then((response) => Promise.resolve(response.data))
       .catch((error) => Promise.reject(error))
   },
+  getUserRecommendations () {
+    return Vue.http.get(API_ROOT + 'account/recommend-friends/', {headers: {Authorization: 'JWT ' + getCookie('token')}})
+      .then((response) => Promise.resolve(response.data))
+      .catch((error) => Promise.reject(error))
+  },
+  searchUser (token) {
+    return Vue.http.post(API_ROOT + 'account/search/', {'token': token}, {headers: {Authorization: 'JWT ' + getCookie('token')}})
+      .then((response) => Promise.resolve(response.data))
+      .catch((error) => Promise.reject(error))
+  },
 
   // update changes
   updateSelf (formData) {

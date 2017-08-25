@@ -39,7 +39,6 @@ export const REMOVE_FRIEND = 'REMOVE_FRIEND'
 
 export const LOAD_TASKS = 'LOAD_TASKS'
 export const POST_TASK = 'ADD_TASK'
-export const REMOVE_TASK = 'REMOVE_TASK'
 
 export const LOAD_CHATROOMS = 'LOAD_CHATROOMS'
 export const ADD_CHATROOM = 'ADD_CHATROOM'
@@ -103,6 +102,7 @@ export const ADD_POST_VOTE = 'ADD_POST_VOTE'
 export const UPDATE_TASK = 'UPDATE_TASK'
 export const ADD_TASK = 'ADD_TASK'
 export const DELETE_TASK = 'DELETE_TASK'
+export const REMOVE_TASK = 'REMOVE_TASK'
 
 // ----- Professor ----
 export const LOAD_PROFESSOR = 'LOAD_PROFESSOR'
