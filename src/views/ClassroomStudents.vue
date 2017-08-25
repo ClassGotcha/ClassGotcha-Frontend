@@ -21,20 +21,18 @@
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-12" v-for="student in currentClassroom.students">
+                <div class="col-lg-4 col-md-6 col-sm-12" v-for="student in currentClassroom.students">
                     <div class="contact-box">
                         <router-link :to="{name:'userDetail', params:{user_id:student.id}}">
-
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 col-xs-4">
                                 <div class="text-center">
                                     <img class="img-circle m-t-xs img-responsive" :src="student.avatar2x">
-                                    <div class="m-t-xs font-bold hidden-xs">@{{student.username}}</div>
+                                    <div class="m-t-xs font-bold">@{{student.username}}</div>
 
                                 </div>
                             </div>
                         </router-link>
-
-                        <div class="col-sm-8 ">
+                        <div class="col-sm-8 col-xs-8">
                             <h3><strong>{{student.full_name}}</strong>
 
                                 <span class="label label-warning">Level {{student.level}}</span>
@@ -46,12 +44,10 @@
                                 {{student.about_me}}
                             </address>
                             <div class="m-t-xs btn-group">
-                                <a @click="addFriend(student.id)" class="btn btn-xs btn-primary"><i class="fa fa-user-plus"></i> + Add Friend</a>
+                                <a @click="sendMessage()" class="btn btn-xs btn-primary"><i class="fa fa-envelope"></i> Message</a>
                                 <router-link :to="{name:'userDetail', params:{user_id:student.id}}" class="btn btn-xs btn-white"><i class="fa fa-user"></i> Profile </router-link>
                             </div>
-
                         </div>
-
                         <div class="clearfix"></div>
                     </div>
                 </div>

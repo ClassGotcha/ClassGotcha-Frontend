@@ -31,12 +31,12 @@
 
                         </h3>
                         <p>
-                            <b>Level</b>:    <span class="label label-warning">Level {{user.level}}</span>
+                            <b>Level</b>: <span class="label label-warning">{{user.level}}</span>
                         </p>
                         <p>
-                            <b>Exp</b>:
+                            <b>Exp</b>: ({{user.exp}}/100)
                         <div class="progress progress-striped active m-b-sm">
-                            <div style="width: 60%;" class="progress-bar"></div>
+                            <div :style="'width: '+user.exp+'%'" class="progress-bar"></div>
                         </div>
                     </td>
                     <td>
@@ -58,7 +58,7 @@
                                                     </li>
                                                     <li class=""><a href="#tab-2"
                                                                     data-toggle="tab">Personal Information</a></li>
-                                                    <li class=""><a href="#tab-3" data-toggle="tab">Badges Process</a>
+                                                    <li class=""><a href="#tab-3" data-toggle="tab">Badges</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -79,18 +79,23 @@
                                                             </a>
                                                             <div class="media-body">
                                                                 <strong>{{moment.creator.full_name}}</strong>
-                                                                post 1 moment on Classroom <strong>{{moment.classroom}}</strong>.
+                                                                post 1 moment in
+                                                                <router-link :to="{name:'classroom', params:{'classroom_id':moment.classroom.id}}">
+                                                                    <b>{{moment.classroom.class_short}} - {{moment.classroom.class_section}}</b>.
+                                                                </router-link>
                                                                 <br>
-                                                                <small class="text-muted">{{moment.created}}</small>
+                                                                <small class="text-muted">{{momentFormat(moment.created)}}</small>
                                                                 <div class="well">
                                                                     <b>{{moment.content}}</b>
                                                                 </div>
+                                                                <button class="btn btn-white btn-xs" @click="addLike(moment)" ><i
+                                                                        class="fa fa-thumbs-up"></i> {{moment.likes}} Liked this!
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane" id="tab-2">
-
                                                     <div class="form-horizontal">
                                                         <div class="form-group m-t-md">
                                                             <label class="col-sm-2 control-label">Email</label>
@@ -111,7 +116,7 @@
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">Password</label>
                                                             <div class="col-sm-4">
-                                                                <button class="btn btn-white" type="submit">
+                                                                <button class="btn btn-white">
                                                                     <i class="fa fa-lock"></i> Change password
                                                                 </button>
                                                             </div>
@@ -190,7 +195,8 @@
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">Gender</label>
                                                             <div class="col-sm-4">
-                                                                <select class="form-control" v-model="user.gender"
+                                                                <select class="form-control"
+                                                                        v-model="user.gender"
                                                                         name="account">
                                                                     <option value="Idw">I don't want to tell</option>
                                                                     <option value="Man">Male</option>
@@ -202,12 +208,30 @@
                                                             <label class="col-sm-2 control-label">Phone</label>
                                                             <div class="col-sm-4"><input v-mask="'(###) ###-####'" placeholder="(###) ###-####" class="form-control"></div>
                                                         </div>
-                                                        <!--<div class="form-group">-->
-                                                        <!--<label class="col-sm-2 control-label">Birthday</label>-->
-                                                        <!--<div class="col-sm-4"><input v-mask="'##-##-####'" placeholder="mm-dd-yyyy" class="form-control"></div>-->
-                                                        <!--</div>-->
 
                                                         <div class="hr-line-dashed"></div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">Facebook</label>
+                                                            <div class="col-sm-4"><input  class="form-control"></div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">LinkedIn</label>
+                                                            <div class="col-sm-4"><input  class="form-control"></div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">Twitter</label>
+                                                            <div class="col-sm-4"><input  class="form-control"></div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">SnapChat</label>
+                                                            <div class="col-sm-4"><input  class="form-control"></div>
+                                                        </div>
+                                                        <div class="hr-line-dashed"></div>
+
                                                         <div class="form-group">
                                                             <div class="col-sm-4 col-sm-offset-2">
                                                                 <button class="btn btn-primary" @click="postChange()">
@@ -222,14 +246,19 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Status</th>
-                                                            <th>Title</th>
+                                                            <th>Badge Name</th>
                                                             <th>Start Time</th>
                                                             <th>End Time</th>
-                                                            <th>Comments</th>
+                                                            <th>Description</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <tr>
+                                                        <tr v-if="user.badges.length === 0">
+                                                            <td colspan="5">
+                                                                <p class="text-center"> Oops, nothing here～</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr v-else v-for="badge in user.badges">
                                                             <td>
                                                                 <span class="label label-primary"><i
                                                                         class="fa fa-check"></i> Completed</span>
@@ -310,12 +339,13 @@
       }
     },
     methods: {
-      editName () {
-        // TODO
+      momentFormat (time) {
+        /* global moment:true */
+        return moment(time).format('h:mm a - MM.D.YYYY')
       },
       postChange () {
         this.$store.dispatch('updateSelf', this.user)
-          .then((response) => {
+          .then(() => {
             this.$store.dispatch('loadSelf')
             this.$root.$children[0].$refs.toastr.s('Your Info is updated.', 'Success')
           })
@@ -332,11 +362,10 @@
           .then((response) => {
             this.user_moments = response
           })
-        // else {
-        //     // TODO: cannot load user immediatily after dispath getUser
-        //     this.$store.dispatch('getUser', this.$route.params.user_id)
-        //     this.user = this.$store.getters.loadedUser
-        // }
+      },
+      addLike (moment) {
+        this.$store.dispatch('addMomentLike', moment.id)
+        moment.likes += 1
       },
       // UI trigers
       toggleShow () {

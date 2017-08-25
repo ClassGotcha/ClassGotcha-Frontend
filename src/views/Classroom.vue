@@ -64,7 +64,12 @@
                                     Professor
                                 </td>
                                 <td>
-                                    <router-link :to="{name:'professor', params:{professor_id:current_classroom.professors[0].id}}"> {{current_classroom.professors[0].full_name}}</router-link>
+                                    <router-link :to="{name:'professor', params:{professor_id:current_classroom.professors[0].id}}">
+                                        {{current_classroom.professors[0].full_name}}
+                                    </router-link> <span v-if="current_classroom.professors[1]">,</span>
+                                    <router-link v-if="current_classroom.professors[1]" :to="{name:'professor', params:{professor_id:current_classroom.professors[1].id}}">
+                                        {{current_classroom.professors[1].full_name}}
+                                    </router-link>
                                 </td>
                             </tr>
                             <tr>
@@ -157,7 +162,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="ibox">
+                <div class="ibox hidden-md">
                     <div class="ibox-content">
                         <h3>Create a Study Group</h3>
                         <h5>Topic</h5>
