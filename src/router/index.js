@@ -9,7 +9,7 @@ import App from 'components/App'
 import Home from 'views/Home'
 import Register from 'views/auth/Register'
 import Login from 'views/auth/Login'
-import Forget from 'views/auth/Forget'
+import ForgetReset from 'views/auth/ForgetReset'
 import ForgetSendEmail from 'views/auth/ForgetSendEmail'
 import Confirm from 'views/auth/Confirm'
 
@@ -66,7 +66,7 @@ export default new Router({
                     name: 'register'
                 }, {
                     path: '/forget',
-                    component: Forget,
+                    component: ForgetReset,
                     name: 'forget',
                 },
                 {

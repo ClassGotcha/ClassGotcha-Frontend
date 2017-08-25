@@ -1,15 +1,20 @@
 <template>
     <div id="vertical-timeline" class="vertical-container light-timeline no-margins">
         <div class="vertical-timeline-block">
-            <a data-toggle="modal" data-target="#add-task">
+            <a data-toggle="tooltip"
+               data-placement="top"
+               title=""
+               data-original-title="The task added to classroom will be shared to all your classmates!">
                 <div class="vertical-timeline-icon navy-bg" v-show="user_in_classroom">
-                    <i class="fa fa-star"></i>
+                    <i class="fa fa-info"></i>
+
                 </div>
             </a>
             <div class="vertical-timeline-content" v-show="user_in_classroom">
                 <div class="row">
                     <div class="col-md-10">
-                        <h2>Create a new task?</h2>
+                        <h2>Create a new task?
+                        </h2>
                     </div>
                     <div class="col-md-2">
                         <a data-toggle="modal" data-target="#add-task" class=" btn btn-primary"><i class="fa fa-plus"></i></a>
@@ -83,8 +88,6 @@
                                         <input type="text" v-show="task_subcategory==2" placeholder="Which day?" v-model="task_due_date" id="task-due-date" class="form-control"/>
                                         <input type="text" v-show="task_subcategory==3" placeholder="Start at?" v-model="task_start" id="task-start" class="form-control"/>
                                         <input type="text" v-show="task_subcategory==3" placeholder="End at?" v-model="task_end" id="task-end" class="form-control"/>
-                                        <span class="input-group-addon"></span>
-                                        <span class="fa fa-calendar"></span>
                                     </div>
                                 </div>
                             </div>
@@ -192,7 +195,8 @@
                     </div>
                     <div class="modal-footer">
                         <a v-show="!task_delete_confirmation" @click="task_delete_confirmation=!task_delete_confirmation" class="btn btn-sm btn-danger">Delete</a>
-                        <a @click="deleteTask();task_delete_confirmation=!task_delete_confirmation" v-show="task_delete_confirmation" class="btn btn-sm btn-danger">Are you sure? (This is irreversible)</a>
+                        <a @click="deleteTask();task_delete_confirmation=!task_delete_confirmation" v-show="task_delete_confirmation"
+                           class="btn btn-sm btn-danger">Are you sure? (This is irreversible)</a>
                         <a @click="changeTask()" class="btn btn-sm btn-primary">Update</a>
                     </div>
                 </div>
@@ -263,8 +267,10 @@
             console.log('repeat', data)
           }
 
-          this.$store.dispatch('postClassroomTask', data)
-          this.$store.dispatch('getTasks')
+          this.$store.dispatch('postClassroomTask', data).then(() => {
+            this.$root.$children[0].$refs.toastr.s('New task is added to classroom, refresh to see the change', 'Success')
+            this.$root.$children[0].$refs.toastr.i('New Classroom Task', 'EXP +5')
+          })
 
           this.clearTask()
 
@@ -280,7 +286,8 @@
         }
         this.$store.dispatch('updateTask', data)
           .then(() => {
-            this.$root.$children[0].$refs.toastr.s('Your change is updated', 'Success')
+            this.$root.$children[0].$refs.toastr.s('Task is updated, refresh to see the change', 'Success')
+            this.$root.$children[0].$refs.toastr.i('Update Classroom Task', 'EXP +5')
           })
       },
       removeTask (task_id) {
@@ -387,24 +394,25 @@
     mounted () {
       /* global $:true */
       // enable all datetime pickers
-      $('#task-due-datetime').datetimepicker().on(
-        'dp.change', () => { this.task_due_datetime = $('#task-due-datetime').val() }
-      )
-      $('#task-due-date').datetimepicker({format: 'L'}).on(
-        'dp.change', () => { this.task_due_date = $('#task-due-date').val() }
-      )
-      $('#task-start').datetimepicker().on(
-        'dp.change', () => { this.task_start = $('#task-start').val() }
-      )
-      $('#task-end').datetimepicker().on(
-        'dp.change', () => { this.task_end = $('#task-end').val() }
-      )
-      $('#chosen-task-start').datetimepicker().on(
-        'dp.change', () => { this.task_end = $('#chosen-task-start').val() }
-      )
-      $('#chosen-task-end').datetimepicker().on(
-        'dp.change', () => { this.task_end = $('#chosen-task-end').val() }
-      )
+      $('#task-due-datetime').datetimepicker()
+        .on('dp.change', () => { this.task_due_datetime = $('#task-due-datetime').val() })
+
+      $('#task-due-date').datetimepicker({format: 'L'})
+        .on('dp.change', () => { this.task_due_date = $('#task-due-date').val() })
+
+      $('#task-start').datetimepicker()
+        .on('dp.change', () => { this.task_start = $('#task-start').val() })
+
+      $('#task-end').datetimepicker()
+        .on('dp.change', () => { this.task_end = $('#task-end').val() })
+
+      $('#chosen-task-start').datetimepicker()
+        .on('dp.change', () => { this.task_end = $('#chosen-task-start').val() })
+
+      $('#chosen-task-end').datetimepicker()
+        .on('dp.change', () => { this.task_end = $('#chosen-task-end').val() })
+
+      $('[data-toggle="tooltip"]').tooltip()
     },
     watch: {
       task_subcategory: 'clearTime'

@@ -35,7 +35,7 @@
                                 <span class="label label-warning">Level {{student.level}}</span>
                             </h3>
                             <address>
-                                <strong>Major:</strong> <br>
+                                <strong>Major:</strong> <span v-if="student.major">{{student.major.major_short}}</span><br>
                                 <strong>Class:</strong> {{student.school_year}}<br>
                                 <strong>About Me</strong><br>
                                 {{student.about_me}}

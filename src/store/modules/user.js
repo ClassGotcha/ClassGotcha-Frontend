@@ -294,6 +294,17 @@ const actions = {
     userApi.getPendingFriends()
       .then((response) => {
         commit(types.LOAD_PENDING_FRIENDS, response)
+        return Promise.resolve(response)
+      })
+      .catch((error) => {
+        commit(types.LOG_ERROR, error)
+        return Promise.reject()
+      })
+  },
+  getPendingFriends ({commit}) {
+    return userApi.getPendingFriends()
+      .then((response) => {
+        commit(types.LOAD_PENDING_FRIENDS, response)
       })
       .catch((error) => {
         commit(types.LOG_ERROR, error)

@@ -7,7 +7,6 @@
                 <ol class="breadcrumb">
                     <li>
                         <router-link :to="{name:'home'}">Home</router-link>
-
                     </li>
                     <li class="active">
                         <strong>Forum</strong>
@@ -71,8 +70,12 @@
                         </div>
                         <div class="col-md-7">
                             <router-link :to="{name:'post', params:{post_id:post.id}}" class="faq-question">{{post.title}}</router-link>
-                            <small>Added by <strong>{{post.creator.full_name}}</strong> |
+                            <small>
                                 <i class="fa fa-clock-o"></i> {{momentTime(post.created)}}
+                                <br>
+                                Added by <strong>{{post.creator.full_name}}</strong>
+                                |
+                                <i class="fa fa-comments-o"></i> Comments {{post.comments_count}}
                             </small>
                         </div>
                         <div class="col-md-3">
@@ -118,6 +121,7 @@
           content: this.post_content,
           tag: this.post_tag
         })
+        this.$root.$children[0].$refs.toastr.i('Post in Forum', 'EXP +10')
       },
       upVote (id) {
         const data = {
