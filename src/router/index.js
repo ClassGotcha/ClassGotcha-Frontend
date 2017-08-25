@@ -25,10 +25,12 @@ import Professor from 'views/Professor'
 import UserDetail from 'views/UserDetail'
 import Forum from 'views/Forum'
 import MyFriends from 'views/MyFriends'
+import AddFriend from 'views/AddFriend'
 import MyNotes from 'views/MyNotes'
 import Post from 'views/Post'
 import Landing from 'views/Landing'
 import Jobs from 'views/Jobs'
+
 
 Vue.use(Router)
 Vue.use(Resource)
@@ -133,9 +135,13 @@ export default new Router({
               component: MyNotes,
               name: 'myNotes'
             }, {
-                path: '/myFriends',
-                component: MyFriends,
-                name: 'myFriends'
+              path: '/friends',
+              component: MyFriends,
+              name: 'myFriends'
+            }, {
+              path: '/friend/add',
+              component: AddFriend,
+              name: 'addFriend'
             }, {
                 path: '/forum/:post_id',
                 component: Post,

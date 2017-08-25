@@ -17,7 +17,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="wrapper wrapper-content animated fadeIn">
                     <div class="ibox-content m-b-sm border-bottom">
                         <div class="text-center p-lg">
                             <h2>Welcome to ClassGotcha Forum</h2>
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="faq-item" v-for="post in posts">
+                <div class="faq-item animated fadeIn" v-for="post in posts">
                     <div class="row">
                         <div class="vote-actions m-l">
                             <a @click="upVote(post.id)">

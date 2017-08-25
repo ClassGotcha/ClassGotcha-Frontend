@@ -84,9 +84,9 @@
                                         <div class="col-lg-8">
                                             <strong>Description</strong>
                                             <p>{{selected_classroom.description}}</p>
-                                            <a v-on:click="classroomURL(selected_classroom)" class="btn btn-primary btn-sm btn-block">
+                                            <router-link :to="{name:'classroom', params:{classroom_id: selected_classroom.id}}" class="btn btn-primary btn-sm btn-block">
                                                 <i class="fa fa-chevron-up"></i> Enter Classroom
-                                            </a>
+                                            </router-link>
                                         </div>
                                     </div>
                                     <div class="client-detail">
@@ -153,7 +153,7 @@
   export default {
     name: 'AddClassroom',
     head: {
-      title: {inner: 'Add New Classroom'}
+      title: {inner: 'New Classroom'}
     },
     data: function () {
       return {
