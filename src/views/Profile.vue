@@ -36,7 +36,7 @@
                         <p>
                             <b>Exp</b>: ({{user.exp}}/100)
                         <div class="progress progress-striped active m-b-sm">
-                            <div :style="'width: '+user.exp+'%'" class="progress-bar"></div>
+                            <div :style="'width: '+(user.exp+1)+'%'" class="progress-bar"></div>
                         </div>
                     </td>
                     <td>

@@ -34,9 +34,9 @@
                             <b>Level</b>:    <span class="label label-warning">Level {{user.level}}</span>
                         </p>
                         <p>
-                            <b>Exp</b>:
+                            <b>Exp</b>: ({{user.exp}}/100)
                         <div class="progress progress-striped active m-b-sm">
-                            <div style="width: 60%;" class="progress-bar"></div>
+                            <div :style="'width: '+(user.exp+1)+'%'" class="progress-bar"></div>
                         </div>
                         <button class="btn btn-sm btn-primary" v-if="!isFriend()" @click="addFriend()"><i class="fa fa-user-plus"></i> Send Friend Request</button>
                         <button class="btn btn-sm btn-primary" v-if="isPendingFriend()"><i class="fa fa-user-plus"></i> Waiting Response</button>
@@ -60,20 +60,24 @@
                                             <div class="panel-options">
                                                 <ul class="nav nav-tabs">
 
-                                                    <li class="active"><a href="#tab-0"
-                                                                          data-toggle="tab">Class Schedule</a>
+                                                    <li class="active">
+                                                        <a href="#tab-0"
+                                                           data-toggle="tab">Class Schedule</a>
                                                     </li>
 
-                                                    <li class=""><a href="#tab-1"
-                                                                    data-toggle="tab">Rencent activity</a>
+                                                    <li class="">
+                                                        <a href="#tab-1"
+                                                           data-toggle="tab">Rencent activity</a>
                                                     </li>
 
-                                                    <li class=""><a href="#tab-2"
-                                                                    data-toggle="tab">Personal Information</a>
+                                                    <li class="">
+                                                        <a href="#tab-2"
+                                                           data-toggle="tab">Personal Information</a>
                                                     </li>
 
-                                                    <li class=""><a href="#tab-3"
-                                                                    data-toggle="tab">Badges</a>
+                                                    <li class="">
+                                                        <a href="#tab-3"
+                                                           data-toggle="tab">Badges</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -88,7 +92,7 @@
                                                             <th>Section</th>
                                                             <th>Unit</th>
                                                             <th>Time</th>
-                                                            <th></th>
+                                                            <th>Students</th>
 
                                                         </tr>
                                                         </thead>
