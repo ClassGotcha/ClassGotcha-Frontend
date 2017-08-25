@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="ibox"  v-if="search_result_return && user_result">
+                <div class="ibox"  v-if="search_result_return && !user_result">
                         <h4 class="text-center"> No Result </h4>
                 </div>
                 <spinner v-if="search_begin && !search_result_return"></spinner>
