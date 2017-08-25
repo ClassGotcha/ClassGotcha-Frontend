@@ -104,7 +104,7 @@
                     <div class="form-group">
                         <button class="btn btn-primary btn-block" @click="updateTask()" v-if="event.category===6">Update</button>
                         <button class="btn btn-danger btn-block" @click="deleteTask()" v-if="event.category===6">Delete</button>
-                        <button class="btn btn-primary btn-block" @click="deleteTask()" v-if="event.task_of_classroom">Remove From My Calendar</button>
+                        <button class="btn btn-info btn-block" @click="removeTask()" v-if="event.task_of_classroom">Remove From My Calendar</button>
                         <router-link class="btn btn-primary btn-block" v-if="event.category===0" :to="{name:'classroom', params:{classroom_id:event.classroom.id}}">Go to {{event.classroom.class_short}}</router-link>
                         <router-link class="btn btn-primary btn-block" v-if="event.task_of_classroom" :to="{name:'classroom', params:{classroom_id:event.task_of_classroom.id}}">
                             Go to {{event.task_of_classroom.class_short}}
@@ -383,6 +383,27 @@
 
       deleteTask () {
         this.$store.dispatch('deleteTask', this.event.id)
+          .then(() => {
+            this.$store.dispatch('getTasks')
+              .then(() => {
+                this.createEvents()
+                  .then((e) => {
+                    console.log(e)
+                    $(this.$el).fullCalendar('removeEvents')
+                    $(this.$el).fullCalendar('addEventSource', this.events)
+                    $(this.$el).fullCalendar('rerenderEvents')
+                    this.$root.$children[0].$refs.toastr.s('Event is removed from your schedule, refresh to see the change', 'Success')
+                  })
+              })
+          })
+          .catch((error) => {
+            this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Error')
+
+          })
+      },
+
+      removeTask () {
+        this.$store.dispatch('removeTask', this.event.id)
           .then(() => {
             this.$store.dispatch('getTasks')
               .then(() => {
