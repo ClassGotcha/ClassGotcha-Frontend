@@ -18,7 +18,7 @@
                             <p v-if="loaded && !confirmed" class="text-danger">We couldn't find any accounts with this email address</p>
                         </div>
                         <div v-else-if="loaded && confirmed">                
-                            <h3><i class="fa fa-check text-info"></i> We have sent a message that containing a link to reset your password. </h3>
+                            <h3><i class="fa fa-check text-info"></i> We have sent a email that containing a link to reset your password. </h3>
                         </div>
                     </div>
                 </div>

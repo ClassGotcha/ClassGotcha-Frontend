@@ -71,8 +71,12 @@
                         </div>
                         <div class="col-md-7">
                             <router-link :to="{name:'post', params:{post_id:post.id}}" class="faq-question">{{post.title}}</router-link>
-                            <small>Added by <strong>{{post.creator.full_name}}</strong> |
+                            <small>
                                 <i class="fa fa-clock-o"></i> {{momentTime(post.created)}}
+                                <br>
+                                Added by <strong>{{post.creator.full_name}}</strong>
+                                |
+                                <i class="fa fa-comments-o"></i> Comments {{post.comments_count}}
                             </small>
                         </div>
                         <div class="col-md-3">

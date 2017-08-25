@@ -7,14 +7,15 @@
                 </a>
                 <div role="search" class="navbar-form-custom">
                     <!--<div class="form-group">-->
-                        <!--<input type="text" placeholder="" class="form-control" name="top-search" id="top-search">-->
+                    <!--<input type="text" placeholder="" class="form-control" name="top-search" id="top-search">-->
                     <!--</div>-->
                 </div>
             </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <span class="m-r-sm text-muted welcome-message">
-                    </span>
+                    <div class="alert alert-success m-b-n" v-if="!user.is_verified">
+                        <i class="fa fa-info"></i> We have sent a verification link to your email, please verify your email to use ClassGotcha with full functionality.
+                    </div>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown">
@@ -84,7 +85,7 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown">
                         <img :src="user.avatar1x" alt="image" style="width: 30px; height: 30px;" class="img-circle m-t-n-xs m-r-sm">
-                         {{ username }}
+                        {{ username }}
                     </a>
                     <ul class="dropdown-menu ">
                         <li class="m-l-md">
@@ -95,7 +96,7 @@
 
                         <li class="divider"></li>
                         <li class="m-l-md">
-                            <router-link :to="{name:'profile'}">
+                            <router-link :to="{name:'addFriend'}">
                                 <i class="fa fa-user-plus"></i> Add Friends
                             </router-link>
                         </li>
