@@ -138,7 +138,10 @@ const getters = {
   },
   loadedUserMoments: state => {
     return state.loaded_user_moments
-  }
+  },
+  recommended_friends: state => {
+    return state.recommended_friends
+  },
 
 }
 
@@ -271,15 +274,6 @@ const actions = {
         commit(types.LOG_ERROR, error)
       })
   },
-  // getClassrooms({ commit }) {
-  //     userApi.getClassrooms()
-  //         .then((response) => {
-  //             commit(types.LOAD_CLASSROOMS, response)
-  //         })
-  //         .catch((error) => {
-  //             commit(types.LOG_ERROR, error)
-  //         })
-  // },
   // getChatrooms({ commit }) {
   //     userApi.getChatrooms()
   //         .then((response) => {
@@ -345,6 +339,25 @@ const actions = {
       })
       .catch((error) => {
         commit(types.LOG_ERROR, error)
+      })
+  },
+  getUserRecommendations ({commit}) {
+    return userApi.getUserRecommendations()
+      .then((response) => {
+        return Promise.resolve(response)
+      })
+      .catch((error) => {
+        commit(types.LOG_ERROR, error)
+      })
+  },
+  searchUser ({commit}, token) {
+    return userApi.searchUser(token)
+      .then((response) => {
+        return Promise.resolve(response)
+      })
+      .catch((error) => {
+        commit(types.LOG_ERROR, error)
+        return Promise.reject()
       })
   },
   addClassroom ({commit, dispatch}, pk) {
@@ -540,7 +553,6 @@ const mutations = {
   [types.LOAD_USER_MOMENTS] (state, response) {
     state.loaded_user_moments = response
   },
-
   // post change
   [types.ADD_CLASSROOM] (state) {},
   [types.REMOVE_CLASSROOM] (state) {},
