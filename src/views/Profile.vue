@@ -389,6 +389,7 @@
         new_password: '',
         change_password: false,
         password_msg: '',
+        logout_countdown: 3,
 
         // avatar
         change_avatar_button_message: 'Change avatar',
@@ -420,8 +421,13 @@
         }
         this.$store.dispatch('passwordChange', formData)
           .then(() => {
-            this.password_msg = 'Your Password is updated. Please login use your new password.'
-            setTimeout(this.$store.dispatch('logout'), 3000)
+            this.password_msg = 'Your Password is updated. Please re-login with your new password in ' + this.logout_countdown + 'sec.'
+            setInterval(() => {
+              this.logout_countdown -= 1
+              this.password_msg = 'Your Password is updated. Please re-login with your new password in ' + this.logout_countdown + 'sec.'
+              if (this.logout_countdown === 0)
+                this.$store.dispatch('logout')
+            }, 1000)
           })
           .catch((error) => {
             this.password_msg = error.data.detail
