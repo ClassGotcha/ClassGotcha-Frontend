@@ -26,7 +26,6 @@
                                 <div class="text-center">
                                     <img class="img-circle m-t-xs img-responsive" :src="student.avatar2x">
                                     <!--<div class="m-t-xs font-bold">@{{student.username}}</div>-->
-
                                 </div>
                             </div>
                         </router-link>
@@ -36,7 +35,7 @@
                             </h3>
                             <address>
                                 <strong>Major:</strong> <span v-if="student.major">{{student.major.major_short}}</span><br>
-                                <strong>Class:</strong> {{student.school_year}}<br>
+                                <strong>Class of:</strong> {{student.school_year}}<br>
 
                             </address>
                             <div class="m-t-xs btn-group">

@@ -71,7 +71,7 @@
                             </h3>
                             <address>
                                 <strong>Major:</strong> <span v-if="student.major">{{student.major.major_short}}</span><br>
-                                <strong>Class:</strong> {{student.school_year}}<br>
+                                <strong>Class of:</strong> {{student.school_year}}<br>
                             </address>
                             <div class="m-t-xs btn-group">
                                 <a @click="addFriend(student.id)" class="btn btn-xs btn-primary"><i class="fa fa-user-plus"></i> + Add Friend</a>
