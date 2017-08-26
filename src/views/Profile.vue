@@ -115,7 +115,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group" v-show="change_password">
-                                                            <div class="col-sm-8  col-lg-4 col-sm-offset-2 col-lg-offset-1">
+                                                            <div class="col-sm-8 col-lg-4 col-sm-offset-2 col-lg-offset-1">
                                                                 <input placeholder="Current Password" v-model="old_password" class="form-control m-b">
                                                                 <input placeholder="New Password" v-model="new_password" class="form-control m-b">
                                                                 <p class="text-danger">{{password_msg}}</p>
@@ -219,32 +219,76 @@
                                                         <div class="form-group">
                                                             <label class="col-sm-2 col-lg-1 control-label">Facebook</label>
                                                             <div class="col-sm-8 col-md-8 col-lg-4">
-                                                                <input class="form-control">
+                                                                <input class="form-control" v-model="user.facebook">
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label class="col-sm-2 col-lg-1 control-label">LinkedIn</label>
                                                             <div class="col-sm-8 col-md-8 col-lg-4">
-                                                                <input class="form-control">
+                                                                <input class="form-control" v-model="user.linkedin">
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label class="col-sm-2 col-lg-1 control-label">Twitter</label>
                                                             <div class="col-sm-8 col-md-8 col-lg-4">
-                                                                <input class="form-control">
+                                                                <input class="form-control" v-model="user.twitter">
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label class="col-sm-2 col-lg-1 control-label">SnapChat</label>
                                                             <div class="col-sm-8 col-md-8 col-lg-4">
-                                                                <input class="form-control">
+                                                                <input class="form-control" v-model="user.snapchat">
                                                             </div>
                                                         </div>
                                                         <div class="hr-line-dashed"></div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 col-lg-1 control-label">Privacy</label>
+                                                            <div class="col-sm-4">
+                                                                <button @click="change_privacy = !change_privacy" class="btn btn-white">
+                                                                    <i class="fa fa-lock"></i> Change privacy settings
+                                                                </button>
+                                                            </div>
+                                                        </div>
 
+                                                        <div class="form-group" v-show="change_privacy">
+                                                            <div class="col-sm-10 col-lg-11 col-sm-offset-2 col-lg-offset-1">
+                                                                <input type="checkbox" id="check1" name="check" @click="changePrivacy(0)" :checked="user.privacy_setting[0]==='1'">
+                                                                <label for="check1"></label><i class="m-r"></i> Show my course schedule
+                                                            </div>
+                                                            <div class="col-sm-10 m-t col-lg-11 col-sm-offset-2 col-lg-offset-1">
+                                                                <input type="checkbox" id="check2" name="check" @click="changePrivacy(1)" :checked="user.privacy_setting[1]==='1'">
+                                                                <label for="check2"></label><i class="m-r"></i> Show my email address
+                                                            </div>
+                                                            <div class="col-sm-10 m-t col-lg-11 col-sm-offset-2 col-lg-offset-1">
+                                                                <input type="checkbox" id="check3" name="check" @click="changePrivacy(2)" :checked="user.privacy_setting[2]==='1'">
+                                                                <label for="check3"></label><i class="m-r"></i> Show my gender
+                                                            </div>
+                                                            <div class="col-sm-10 m-t col-lg-11 col-sm-offset-2 col-lg-offset-1">
+                                                                <input type="checkbox" id="check4" name="check" @click="changePrivacy(3)" :checked="user.privacy_setting[3]==='1'">
+                                                                <label for="check4"></label><i class="m-r"></i> Show my phone number
+                                                            </div>
+                                                            <div class="col-sm-10 m-t col-lg-11 col-sm-offset-2 col-lg-offset-1">
+                                                                <input type="checkbox" id="check5" name="check" @click="changePrivacy(4)" :checked="user.privacy_setting[4]==='1'">
+                                                                <label for="check5"></label><i class="m-r"></i> Show my Facebook
+                                                            </div>
+                                                            <div class="col-sm-10 m-t col-lg-11 col-sm-offset-2 col-lg-offset-1">
+                                                                <input type="checkbox" id="check6" name="check" @click="changePrivacy(5)" :checked="user.privacy_setting[5]==='1'">
+                                                                <label for="check6"></label><i class="m-r"></i> Show my Twitter
+                                                            </div>
+                                                            <div class="col-sm-10 m-t col-lg-11 col-sm-offset-2 col-lg-offset-1">
+                                                                <input type="checkbox" id="check7" name="check" @click="changePrivacy(6)" :checked="user.privacy_setting[6]==='1'">
+                                                                <label for="check7"></label><i class="m-r"></i> Show my LinkedIn
+                                                            </div>
+                                                            <div class="col-sm-10 m-t col-lg-11 col-sm-offset-2 col-lg-offset-1">
+                                                                <input type="checkbox" id="check8" name="check" @click="changePrivacy(7)" :checked="user.privacy_setting[7]==='1'">
+                                                                <label for="check8"></label><i class="m-r"></i> Show my SnapChat
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="hr-line-dashed"></div>
                                                         <div class="form-group">
                                                             <div class="col-sm-4 col-sm-offset-2">
                                                                 <button class="btn btn-primary" @click="postChange()">
@@ -379,7 +423,8 @@
           professor: '',
           school_year: '',
           tasks: '',
-          username: ''
+          username: '',
+          privacy_setting: '11111111'
         },
         majors: [],
         user_moments: [],
@@ -390,6 +435,9 @@
         change_password: false,
         password_msg: '',
         logout_countdown: 3,
+
+        // privacy
+        change_privacy: false,
 
         // avatar
         change_avatar_button_message: 'Change avatar',
@@ -483,6 +531,13 @@
             // TODO: only +exp first time
             this.$root.$children[0].$refs.toastr.i('First time change avatar', 'EXP +25')
           })
+      },
+      changePrivacy (index) {
+        let chr = 1
+        if (this.user.privacy_setting[index] === '1')
+          chr = 0
+
+        this.user.privacy_setting = this.user.privacy_setting.substr(0, index) + chr + this.user.privacy_setting.substr(index + 1)
       }
     },
     created () {
