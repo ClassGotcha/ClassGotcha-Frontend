@@ -212,6 +212,16 @@ const actions = {
         return Promise.reject(error)
       })
   },
+  passwordChange ({dispatch}, formData) {
+    return userApi.passwordChange(formData)
+      .then(() => {
+        return Promise.resolve()
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+
   tokenVerify ({rootState, commit, dispatch}, formData) {
     userApi.tokenVerify(formData)
       .then((response) => {

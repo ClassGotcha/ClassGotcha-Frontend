@@ -107,21 +107,23 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 col-lg-1 control-label">Username</label>
-                                                            <div class="col-sm-4">
-                                                                <input disabled
-                                                                       :placeholder="user.username"
-                                                                       class="form-control">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
                                                             <label class="col-sm-2 col-lg-1 control-label">Password</label>
                                                             <div class="col-sm-4">
-                                                                <button class="btn btn-white">
+                                                                <button @click="change_password = !change_password" class="btn btn-white">
                                                                     <i class="fa fa-lock"></i> Change password
                                                                 </button>
                                                             </div>
                                                         </div>
+                                                        <div class="form-group" v-show="change_password">
+                                                            <div class="col-sm-8  col-lg-4 col-sm-offset-2 col-lg-offset-1">
+                                                                <input placeholder="Current Password" v-model="old_password" class="form-control m-b">
+                                                                <input placeholder="New Password" v-model="new_password" class="form-control m-b">
+                                                                <p class="text-danger">{{password_msg}}</p>
+                                                                <button @click="change_password = !change_password" class="btn btn-white m-r">Cancel</button>
+                                                                <button @click="passwordChange()" class="btn btn-primary">Submit</button>
+                                                            </div>
+                                                        </div>
+
                                                         <div class="hr-line-dashed"></div>
                                                         <div class="form-group">
                                                             <label class="col-sm-2 col-lg-1 control-label">Avatar</label>
@@ -381,12 +383,21 @@
         },
         majors: [],
         user_moments: [],
+
+        // password reset
+        old_password: '',
+        new_password: '',
+        change_password: false,
+        password_msg: '',
+
+        // avatar
         change_avatar_button_message: 'Change avatar',
         img_data: '',
         headers: {
           'Authorization': 'JWT ' + cookie.getCookie('token'),
           'X-CSRFToken': cookie.getCookie('csrftoken')
         }
+
       }
     },
     methods: {
@@ -397,6 +408,24 @@
       momentDate (time) {
         /* global moment:true */
         return moment(time).format('MM.D.YYYY')
+      },
+      passwordChange () {
+        if (!(this.old_password && this.new_password)) {
+          this.password_msg = 'Both field is required'
+          return
+        }
+        const formData = {
+          'old_password': this.old_password,
+          'new_password': this.new_password
+        }
+        this.$store.dispatch('passwordChange', formData)
+          .then(() => {
+            this.password_msg = 'Your Password is updated. Please login use your new password.'
+            setTimeout(this.$store.dispatch('logout'), 3000)
+          })
+          .catch((error) => {
+            this.password_msg = error.data.detail
+          })
       },
       postChange () {
         this.$store.dispatch('updateSelf', this.user)
