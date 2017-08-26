@@ -56,7 +56,6 @@
                                         <div class="panel-heading">
                                             <div class="panel-options">
                                                 <ul class="nav nav-tabs">
-
                                                     <li class="active">
                                                         <a href="#tab-0"
                                                            data-toggle="tab">Class Schedule</a>
@@ -69,7 +68,7 @@
 
                                                     <li class="">
                                                         <a href="#tab-2"
-                                                           data-toggle="tab">Personal Information</a>
+                                                           data-toggle="tab">User Detail</a>
                                                     </li>
 
                                                     <li class="">
@@ -82,7 +81,10 @@
                                         <div class="panel-body">
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="tab-0">
-                                                    <table class="table table-striped">
+                                                    <div class="well" v-if="user.privacy_setting[0]==='0'">
+                                                        <p class="text-center"> Hided based on user's privacy setting</p>
+                                                    </div>
+                                                    <table class="table table-striped" v-if="user.privacy_setting[0]==='1'">
                                                         <thead>
                                                         <tr>
                                                             <th>Class Title</th>
@@ -90,21 +92,20 @@
                                                             <th>Unit</th>
                                                             <th>Time</th>
                                                             <th>Students</th>
-
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         <tr v-for="classroom in user.classrooms">
-                                                            <td>{{classroom.class_short}}</td>
-                                                            <td>{{classroom.class_section}}</td>
-                                                            <td> {{classroom.class_credit}} Unit(s)</td>
-                                                            <td> {{classroom.class_time.repeat}} {{classroom.class_time.formatted_start_time}}-{{classroom.class_time.formatted_end_time}}</td>
+                                                            <td> {{classroom.class_short}} </td>
+                                                            <td> {{classroom.class_section}} </td>
+                                                            <td> {{classroom.class_credit}} Unit(s) </td>
+                                                            <td> {{classroom.class_time.repeat}} {{classroom.class_time.formatted_start_time}}-{{classroom.class_time.formatted_end_time}} </td>
                                                             <td>
                                                                 <i class="fa fa-users"></i> {{classroom.students_count}}
                                                             </td>
                                                             <td>
-                                                                <span class="label label-primary"><router-link :to="{name:'classroom', params:{classroom_id:classroom.id}}"
-                                                                                                                class="client-link">Detail</router-link>
+                                                                <span class="label label-primary">
+                                                                    <router-link :to="{name:'classroom', params:{classroom_id:classroom.id}}" class="client-link">Detail</router-link>
                                                                 </span>
                                                             </td>
                                                         </tr>
@@ -114,13 +115,11 @@
                                                 <div class="tab-pane" id="tab-1">
                                                     <div class="feed-activity-list">
                                                         <div class="well" v-if="user_moments.length === 0">
-
                                                             <p class="text-center"> Oops, nothing here～</p>
                                                         </div>
                                                         <div class="feed-element" v-for="moment in user_moments">
                                                             <a href="#" class="pull-left">
-                                                                <img alt="image" class="img-circle"
-                                                                     :src="moment.creator.avatar1x">
+                                                                <img alt="image" class="img-circle" :src="moment.creator.avatar1x">
                                                             </a>
                                                             <div class="media-body">
                                                                 <strong>{{moment.creator.full_name}}</strong>
@@ -141,63 +140,51 @@
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane" id="tab-2">
-                                                    <div class="form-horizontal">
-                                                        <div class="form-group m-t-md">
-                                                            <label class="col-sm-2 control-label">Email</label>
-                                                            <div class="col-sm-8">
-                                                                <p>{{user.email}}</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="hr-line-dashed"></div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Name</label>
-                                                            <div class="col-sm-8">
-                                                                <p>{{user.full_name}}</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">About me</label>
-                                                            <div class="col-sm-8">
-                                                                {{user.about_me}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Gender</label>
-                                                            <div class="col-sm-8">
-                                                                <p v-if="user.gender==='Idw'">I don't want to tell</p>
-                                                                <p v-if="user.gender==='Man'">Male</p>
-                                                                <p v-if="user.gender==='Woman'">Female</p>
+                                                    <div class="form-group m-t-md" v-if="user.privacy_setting[1]==='1'">
+                                                        <b class="col-sm-2 control-label">Email</b>
+                                                        <p>{{user.email}}</p>
+                                                    </div>
+                                                    <div class="form-group" v-if="user.privacy_setting[2]==='1'">
+                                                        <b class="col-sm-2 control-label">Gender</b>
+                                                        <p v-if="user.gender==='Man'">Male</p>
+                                                        <p v-else-if="user.gender==='Woman'">Female</p>
+                                                        <p v-else>I don't want to tell</p>
+                                                    </div>
 
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Phone</label>
-                                                            <div class="col-sm-8">
-                                                                <p>{{user.phone}}</p>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="hr-line-dashed"></div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Major</label>
-                                                            <div class="col-sm-8">
-                                                                <p v-if="user.major">{{user.major.major_short}}</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Class of</label>
-                                                            <div class="col-sm-8">
-                                                                {{user.school_year}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="hr-line-dashed"></div>
-                                                        <div class="form-group">
-                                                            <div class="col-sm-4 col-sm-offset-2">
-                                                                <button class="btn btn-primary" @click="postChange()">
-                                                                    Save changes
-                                                                </button>
-                                                            </div>
-                                                        </div>
+                                                    <div class="form-group" v-if="user.privacy_setting[3]==='1'">
+                                                        <b class="col-sm-2 control-label">Phone</b>
+                                                        <p v-if="user.phone">{{user.phone}}</p>
+                                                        <br v-else>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <b class="col-sm-2 control-label">Major</b>
+                                                        <p v-if="user.major">{{user.major.major_short}}</p>
+                                                        <br v-else>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <b class="col-sm-2 control-label">Class of</b>
+                                                        <p>{{user.school_year}}</p>
+                                                    </div>
+                                                    <div class="hr-line-dashed"></div>
+                                                    <div class="form-group" v-if="user.privacy_setting[4]==='1'">
+                                                        <b class="col-sm-2 control-label">Facebook</b>
+                                                        <p v-if="user.facebook">{{user.facebook}}</p>
+                                                        <br v-else>
+                                                    </div>
+                                                    <div class="form-group" v-if="user.privacy_setting[5]==='1'">
+                                                        <b class="col-sm-2 control-label">LinkedIn</b>
+                                                        <p v-if="user.linkedin">{{user.linkedin}}</p>
+                                                        <br v-else>
+                                                    </div>
+                                                    <div class="form-group" v-if="user.privacy_setting[6]==='1'">
+                                                        <label class="col-sm-2 control-label">Twitter</label>
+                                                        <p v-if="user.twitter">{{user.twitter}}</p>
+                                                        <br v-else>
+                                                    </div>
+                                                    <div class="form-group" v-if="user.privacy_setting[7]==='1'">
+                                                        <label class="col-sm-2 control-label">SnapChat</label>
+                                                        <p v-if="user.snapchat">{{user.snapchat}}</p>
+                                                        <br v-else>
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane" id="tab-3">
