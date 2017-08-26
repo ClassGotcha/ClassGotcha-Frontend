@@ -24,24 +24,21 @@
                     </td>
 
                     <td class="desc">
-                        <h3>
-                            <p class="text-navy">
-                                {{user.full_name}}
-                                <span><small> @{{user.username}} </small></span>
-                            </p>
+                        <h3 class="text-navy">
+                            {{user.full_name}} <span class="label label-warning">Level {{user.level}}</span>
                         </h3>
-                        <p>
-                            <b>Level</b>:    <span class="label label-warning">Level {{user.level}}</span>
-                        </p>
-                        <p>
-                            <b>Exp</b>: ({{user.exp}}/100)
+
+
+                        <b>Exp</b>: ({{user.exp}}/100)
                         <div class="progress progress-striped active m-b-sm">
                             <div :style="'width: '+(user.exp+1)+'%'" class="progress-bar"></div>
                         </div>
-                        <button class="btn btn-sm btn-primary" v-if="!isFriend()" @click="addFriend()"><i class="fa fa-user-plus"></i> Send Friend Request</button>
-                        <button class="btn btn-sm btn-primary" v-if="isPendingFriend()"><i class="fa fa-user-plus"></i> Waiting Response</button>
-                        <button class="btn btn-sm btn-primary" v-if="isFriend()" disabled><i class="fa fa-users"></i> Friend</button>
-                        <button class="btn btn-sm btn-default"><i class="fa fa-info"></i> Report</button>
+
+
+                        <b>About me</b>:
+                        <br>
+                        {{user.about_me}}
+
                     </td>
                     <td>
                     </td>

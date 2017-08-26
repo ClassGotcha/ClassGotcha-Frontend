@@ -60,7 +60,7 @@
                             <div class="col-sm-4 col-xs-4">
                                 <div class="text-center">
                                     <img class="img-circle m-t-xs img-responsive" :src="student.avatar2x">
-                                    <div class="m-t-xs font-bold">@{{student.username}}</div>
+                                    <!--<div class="m-t-xs font-bold">@{{student.username}}</div>-->
 
                                 </div>
                             </div>
@@ -72,8 +72,6 @@
                             <address>
                                 <strong>Major:</strong> <span v-if="student.major">{{student.major.major_short}}</span><br>
                                 <strong>Class:</strong> {{student.school_year}}<br>
-                                <strong>About Me</strong><br>
-                                {{student.about_me}}
                             </address>
                             <div class="m-t-xs btn-group">
                                 <a @click="addFriend(student.id)" class="btn btn-xs btn-primary"><i class="fa fa-user-plus"></i> + Add Friend</a>
