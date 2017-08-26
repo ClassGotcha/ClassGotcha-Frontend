@@ -150,10 +150,10 @@
                     <div class="ibox-content">
                         <h3>Classmates</h3>
                         <div class="user-friends row">
-                            <a v-if="index!==18" class="col-sm-2" v-for="(student, index) in current_classroom.students">
+                            <router-link v-if="index!==18" class="col-sm-2" v-for="(student, index) in current_classroom.students" :to="{name:'userDetail', params:{user_id:student.id}}">
                                 <img alt="image" class="img-circle"
                                      :src="student.avatar1x">
-                            </a>
+                            </router-link>
                         </div>
                         <p>
                             <router-link
@@ -167,14 +167,28 @@
                     <div class="ibox-content">
                         <h3>Create a Study Group Meeting</h3>
                         <h5>Topic</h5>
-                        <input placeholder="Review Exam1" class="form-control">
+                        <input placeholder="Review Exam1" v-model="meeting_topic" class="form-control">
                         <h5>Location</h5>
-                        <input placeholder="IST 231" class="form-control">
+                        <input placeholder="IST 231" v-model="meeting_location" class="form-control">
                         <h5>Time</h5>
-                        <input placeholder="4/12 5:00pm-6:00pm" class="form-control">
-
+                        <input placeholder="4/12/2017 5:00pm" id="meeting-time" name="meeting-time" v-model="meeting_time" class="form-control">
                         <br>
-                        <a href="#" class="btn btn-sm btn-primary"> Create!</a>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <input type="radio" id="check1" value="1" name="check" v-model="meeting_last">
+                                <label for="check1"></label> 1 Hour
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="radio" id="check2" value="2" name="check" v-model="meeting_last">
+                                <label for="check2"></label> 2 Hours
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="radio" id="check3" value="3" name="check" v-model="meeting_last">
+                                <label for="check3"></label> 3 Hours
+                            </div>
+                        </div>
+                        <br>
+                        <button @click="postTask()" class="btn btn-sm btn-primary"> Create!</button>
                     </div>
                 </div>
             </div>
@@ -232,11 +246,11 @@
                         </p>
                         <img v-if="moment.images" :src="moment.images" class="img-responsive">
                         <div class="btn-group">
-                            <button @click="addLike(moment)" class="btn btn-white btn-xs"><i
-                                    class="fa fa-thumbs-up"></i> {{moment.likes}} Like this!
+                            <button @click="addLike(moment)" class="btn btn-white btn-xs">
+                                <i class="fa fa-thumbs-up"></i> {{moment.likes}} Like this!
                             </button>
-                            <button @click="showCommentBox(moment)" class="btn btn-white btn-xs"><i
-                                    class="fa fa-comments"></i> Comment
+                            <button @click="showCommentBox(moment)" class="btn btn-white btn-xs">
+                                <i class="fa fa-comments"></i> Comment
                             </button>
                         </div>
                     </div>
@@ -304,6 +318,11 @@
         // comment
         comment_content: '',
         comment_id: -1,
+        // meeting
+        meeting_topic: '',
+        meeting_location: '',
+        meeting_time: '',
+        meeting_last: 1,
       }
     },
     methods: {
@@ -317,7 +336,6 @@
           .then(() => {
             this.$root.$children[0].$refs.toastr.s('The classroom is added to your schedule, refresh to see the change', 'Success')
             this.$root.$children[0].$refs.toastr.i('Add Classroom', 'EXP +10')
-
           })
       },
       remClassroom () {
@@ -401,6 +419,43 @@
       },
       showDropzone () {
         this.dropzone = !this.dropzone
+      },
+      // Group Meeting
+      postTask () {
+        /* global Date:true, moment:true */
+        if (this.meeting_topic && this.meeting_time && this.meeting_location) {
+          let start = moment(this.meeting_time, 'MM/DD/YYYY hh:mm A').format('YYYY-MM-DDTHH:mm:ss')
+          let end = moment(this.meeting_time, 'MM/DD/YYYY hh:mm A').add(this.meeting_last, 'hours').format('YYYY-MM-DDTHH:mm:ss')
+
+          const data = {
+            formData: {
+              task_name: this.meeting_topic,
+              description: 'Study group meeting by' + this.user_full_name,
+              start: start,
+              end: end,
+              location: this.meeting_location,
+              category: 5,
+              task_of_classroom: parseInt(this.$route.params.classroom_id),
+            },
+            pk: this.$route.params.classroom_id
+          }
+
+          this.$store.dispatch('postClassroomTask', data).then(() => {
+            this.$root.$children[0].$refs.toastr.s('New task is added to classroom, refresh to see the change', 'Success')
+            this.$root.$children[0].$refs.toastr.i('New Classroom Task', 'EXP +5')
+          })
+
+          this.clearTask()
+
+        } else {
+          this.task_errMsg = 'Did you miss something?'
+        }
+      },
+      clearTask () {
+        this.meeting_topic = ''
+        this.meeting_location = ''
+        this.meeting_time = ''
+        this.meeting_last = 1
       }
     },
     computed: {
@@ -438,6 +493,11 @@
       // 'task_category': 'clearTask',
       // 'task_subcategory': 'clearTask'
     },
+    mounted () {
+      /* global $:true */
+      $('#meeting-time').datetimepicker()
+        .on('dp.change', () => { this.meeting_time = $('#meeting-time').val() })
+    }
   }
 
 </script>

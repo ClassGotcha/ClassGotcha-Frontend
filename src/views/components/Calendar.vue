@@ -297,6 +297,18 @@
             })
           }
 
+          // group meetings
+          else if (task.category === 5) {
+            let other = {
+              id: task.id,
+              title: (task.location ? task.task_name + '\n' + task.location : task.task_name),
+              editable: false,
+              color: event_color6,
+              start: task.start,
+              end: task.end,
+            }
+            this.events.push(other)
+          }
           // others
           else if (task.category === 6) {
 
@@ -377,8 +389,8 @@
               })
           })
           .catch((error) => {
-          this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Success')
-        })
+            this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Success')
+          })
       },
 
       deleteTask () {

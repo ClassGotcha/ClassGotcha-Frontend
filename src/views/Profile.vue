@@ -287,7 +287,6 @@
                                                                 <label for="check8"></label><i class="m-r"></i> Show my SnapChat
                                                             </div>
                                                         </div>
-
                                                         <div class="hr-line-dashed"></div>
                                                         <div class="form-group">
                                                             <div class="col-sm-offset-2">
@@ -298,8 +297,6 @@
                                                                    Show Public Profile Page
                                                                 </router-link>
                                                             </div>
-
-
                                                         </div>
                                                     </div>
                                                 </div>
