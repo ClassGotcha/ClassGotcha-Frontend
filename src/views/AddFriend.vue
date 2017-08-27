@@ -50,8 +50,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="ibox"  v-if="search_result_return && !user_result">
-                        <h4 class="text-center"> No Result </h4>
+                <div class="ibox" v-if="search_result_return && !user_result">
+                    <h4 class="text-center"> No Result </h4>
                 </div>
                 <spinner v-if="search_begin && !search_result_return"></spinner>
                 <div class="col-lg-3 col-md-6 col-sm-12" v-for="student in user_result">
@@ -110,16 +110,18 @@
         this.search_begin = true
         this.search_result_return = false
 
-        this.$store.dispatch('searchUser', {search: this.search_token})
-          .then((response) => {
-            this.user_result = response
-            this.search_result_return = true
-          })
-          .catch(() => {
-            console.log('asdf')
-            this.search_result_return = true
-            this.$root.$children[0].$refs.toastr.e('Ops, something wrong, please try again later', 'Error')
-          })
+        if (this.search_token) {
+          this.$store.dispatch('searchUser', {token: this.search_token})
+            .then((response) => {
+              this.user_result = response
+              this.search_result_return = true
+            })
+            .catch(() => {
+              console.log('asdf')
+              this.search_result_return = true
+              this.$root.$children[0].$refs.toastr.w('Ops, we can\'t find anyone, maybe try something else?', 'No result')
+            })
+        }
       },
       userRecommendation () {
         this.search_begin = true

@@ -111,7 +111,7 @@ export default {
       .catch((error) => Promise.reject(error))
   },
   searchUser (token) {
-    return Vue.http.post(API_ROOT + 'account/search/', {'token': token}, {headers: {Authorization: 'JWT ' + getCookie('token')}})
+    return Vue.http.post(API_ROOT + 'account/search/', token, {headers: {Authorization: 'JWT ' + getCookie('token')}})
       .then((response) => Promise.resolve(response.data))
       .catch((error) => Promise.reject(error))
   },
