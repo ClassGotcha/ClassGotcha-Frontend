@@ -36,10 +36,8 @@
                                             Office
                                         </td>
                                         <td class="no-borders">
-                                            <strong  v-if="!edit"> {{professor.office}} </strong>
-                                            <div class="col-sm-8 col-md-8 col-lg-4">
-                                                <input class="form-control" v-if="edit" v-model="office">
-                                            </div>
+                                            <strong v-if="!edit"> {{professor.office}} </strong>
+                                            <input class="form-control" v-if="edit" v-model="office">
                                         </td>
                                     </tr>
                                     <!--<tr>-->
@@ -59,9 +57,7 @@
                                         </td>
                                         <td>
                                             <strong v-if="!edit">{{professor.email}}</strong>
-                                            <div class="col-sm-8 col-md-8 col-lg-4">
-                                                <input class="form-control" v-if="edit" v-model="email">
-                                            </div>
+                                            <input class="form-control" v-if="edit" v-model="email">
                                         </td>
                                     </tr>
                                     <tr>
@@ -69,10 +65,8 @@
                                             Personal Page
                                         </td>
                                         <td>
-                                            <strong  v-if="!edit">{{professor.personal_page}}</strong>
-                                            <div class="col-sm-8 col-md-8 col-lg-4">
-                                                <input class="form-control" v-if="edit" v-model="personal_page">
-                                            </div>
+                                            <strong v-if="!edit">{{professor.personal_page}}</strong>
+                                            <input class="form-control" v-if="edit" v-model="personal_page">
                                         </td>
                                     </tr>
                                     <!--<tr>-->
@@ -92,6 +86,11 @@
                                         <div class="col-md-6">
                                             <button type="button" @click="editProfessor()" class="btn btn-default btn-sm btn-block"><i class="fa fa-edit"></i>
                                                 Edit
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="button" v-if="edit" @click="updateProfessor()" class="btn btn-primary btn-sm btn-block">
+                                                Submit
                                             </button>
                                         </div>
                                     </div>
@@ -136,7 +135,8 @@
                                                                 <i class="fa fa-users"></i> {{classroom.students_count}}
                                                             </td>
                                                             <td>
-                                                                <span class="label label-primary"><router-link :to="{name:'classroom', params:{classroom_id:classroom.id}}"
+                                                                <span class="label label-primary">
+                                                                    <router-link :to="{name:'classroom', params:{classroom_id:classroom.id}}"
                                                                                                                class="client-link">Detail</router-link>
                                                                 </span>
                                                             </td>
@@ -227,29 +227,30 @@
         this.$store.dispatch('getProfessorComments', this.$route.params.professor_id)
       },
       updateProfessor () {
-        if (this.user.level < 5) {
-          this.$root.$children[0].$refs.toastr.w('User must reach at least Level 5', 'Level Requirement')
-        }
-        else {
-          const formData = {
-            id: this.$route.params.professor_id,
-            email: this.email,
-            office: this.office,
+        const formData = {
+          id: this.$route.params.professor_id,
+          email: this.email,
+          office: this.office,
 
-            personal_page: this.personal_page,
-          }
-          this.$store.dispatch('updateProfessor', formData)
-          this.$root.$children[0].$refs.toastr.s('Professor info is updated', 'Success')
-          this.$root.$children[0].$refs.toastr.i('Improve professor info.', 'EXP +5')
+          personal_page: this.personal_page,
         }
+        this.$store.dispatch('updateProfessor', formData)
+        this.$root.$children[0].$refs.toastr.s('Professor info is updated', 'Success')
+        this.$root.$children[0].$refs.toastr.i('Improve professor info.', 'EXP +5')
+        this.editProfessor()
       },
       editProfessor () {
-        this.first_name = this.professor.first_name
-        this.last_name = this.professor.last_name
-        this.email = this.professor.email
-        this.office = this.professor.office
-        this.personal_page = this.professor.personal_page
-        this.edit = true
+        if (this.user.level < 5) {
+          this.$root.$children[0].$refs.toastr.w('User must be at least Level 5', 'Level Requirement')
+        }
+        else {
+          this.first_name = this.professor.first_name
+          this.last_name = this.professor.last_name
+          this.email = this.professor.email
+          this.office = this.professor.office
+          this.personal_page = this.professor.personal_page
+          this.edit = !this.edit
+        }
       },
 
       postProfessorComment () {

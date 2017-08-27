@@ -5,18 +5,18 @@
                data-placement="top"
                title=""
                data-original-title="The task added to classroom will be shared to all your classmates!">
-                <div class="vertical-timeline-icon navy-bg" v-show="user_in_classroom">
+                <div class="vertical-timeline-icon navy-bg">
                     <i class="fa fa-info"></i>
 
                 </div>
             </a>
-            <div class="vertical-timeline-content" v-show="user_in_classroom">
+            <div class="vertical-timeline-content">
                 <div class="row">
                     <div class="col-md-10">
-                        <h2>Create a new task?
-                        </h2>
+                        <h2 v-if="user_in_classroom">Create new class task here!</h2>
+                        <h2 v-else>Classroom is not on your schedule</h2>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2" v-show="user_in_classroom">
                         <a data-toggle="modal" data-target="#add-task" class=" btn btn-primary"><i class="fa fa-plus"></i></a>
                     </div>
                 </div>

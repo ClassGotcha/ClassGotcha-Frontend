@@ -189,8 +189,8 @@
                         </div>
                         <br>
                         <button @click="postTask()" class="btn btn-sm btn-primary"> Create!</button>
-                        
-                        <a href="http://psu.libcal.com/spaces"> Penn Sate Lib Reserve...</a>
+
+                        <a class="m-l" target="_blank" href="http://psu.libcal.com/spaces"> Penn Sate Lib Reserve Link</a>
                     </div>
                 </div>
             </div>
@@ -300,7 +300,6 @@
 <script>
   import ClassroomTask from 'components/ClassroomTask'
   import Upload from 'components/UploadImg'
-  // VUe doesn't provide a method that can run after component load
   export default {
     name: 'Classroom',
     head: {
@@ -358,6 +357,7 @@
         this.$store.dispatch('solveMoment', pk)
       },
       postMoment () {
+
         const formData = {
           content: this.content,
           classroom_id: this.$route.params.classroom_id,
