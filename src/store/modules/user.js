@@ -261,9 +261,11 @@ const actions = {
         commit(types.LOG_ERROR, error)
       })
   },
+
   logout ({commit}) {
     commit(types.LOGOUT)
   },
+
   getSelf ({commit}) {
     return userApi.getSelf()
       .then((response) => {
@@ -371,6 +373,18 @@ const actions = {
         commit(types.LOG_ERROR, error)
       })
   },
+
+  getUserPlan ({commit}) {
+    return userApi.getUserPlan()
+      .then((response) => {
+        return Promise.resolve(response)
+      })
+      .catch((error) => {
+        commit(types.LOG_ERROR, error)
+        return Promise.reject()
+      })
+  },
+
   searchUser ({commit}, token) {
     return userApi.searchUser(token)
       .then((response) => {
@@ -518,7 +532,7 @@ const mutations = {
     cookie.setCookie('token', response.token)
     state.token = response.token
     state.login_status = true
-    router.push({name: 'home'})
+    router.push({name: 'addClassroom'})
   },
   [types.LOGIN_FAILED] (state, error) {
     state.login_status = false
