@@ -115,7 +115,7 @@
 
                 <div v-if="create_new_event">
                     <div class="form-group">
-                        <label>Event Name</label>
+                        <label>Event Name *</label>
                         <input class="form-control" placeholder="Title" v-model="new_event.task_name">
                     </div>
                     <div class="form-group">
@@ -157,6 +157,8 @@
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary btn-block" @click="postNewTask()">Create</button>
+                        <button class="btn btn-warning btn-block" @click="getPlan()">Study Plan Generator</button>
+
                     </div>
                 </div>
             </div>
@@ -309,6 +311,7 @@
             }
             this.events.push(other)
           }
+
           // others
           else if (task.category === 6) {
 
@@ -324,7 +327,6 @@
               other.dow = task.repeat_list
               other.start = (task.formatted_start_time ? task.formatted_start_time : task.formatted_end_time)
               other.end = (task.formatted_start_time ? task.formatted_end_time : moment.utc(task.formatted_end_time).add(0.5, 'hours').format())
-
             }
             this.events.push(other)
 
@@ -431,7 +433,26 @@
           })
           .catch((error) => {
             this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Error')
+          })
+      },
 
+      getPlan () {
+        this.$store.dispatch('getUserPlan', this.event.id)
+          .then(() => {
+            this.$store.dispatch('getTasks')
+              .then(() => {
+                this.createEvents()
+                  .then((e) => {
+                    console.log(e)
+                    $(this.$el).fullCalendar('removeEvents')
+                    $(this.$el).fullCalendar('addEventSource', this.events)
+                    $(this.$el).fullCalendar('rerenderEvents')
+                    this.$root.$children[0].$refs.toastr.s('Your latest study plan is generated!', 'Success')
+                  })
+              })
+          })
+          .catch((error) => {
+            this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Error')
           })
       },
       // data formatter

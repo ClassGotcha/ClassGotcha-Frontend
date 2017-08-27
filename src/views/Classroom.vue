@@ -337,12 +337,14 @@
           .then(() => {
             this.$root.$children[0].$refs.toastr.s('The classroom is added to your schedule, refresh to see the change', 'Success')
             this.$root.$children[0].$refs.toastr.i('Add Classroom', 'EXP +10')
+            this.$store.dispatch('getClassroom', this.$route.params.classroom_id)
           })
       },
       remClassroom () {
         this.$store.dispatch('remClassroom', this.$route.params.classroom_id)
           .then(() => {
             this.$root.$children[0].$refs.toastr.s('The classroom is removed from your schedule, refresh to see the change', 'Success')
+            this.$store.dispatch('getClassroom', this.$route.params.classroom_id)
           })
       },
       // Moments

@@ -121,6 +121,7 @@
     data () {
       return {
         files: [],
+        tags: []
       }
     },
     components: {
@@ -159,6 +160,31 @@
           else {
             this.files = this.$store.getters.currentClassroomNotes
           }
+
+          // for every tag in every notes
+          for (let i in this.$store.getters.currentClassroomNotes) {
+            for (let j in this.$store.getters.currentClassroomNotes[i].tags) {
+              // check if current tag is a folder
+              let is_folder = false
+              // for current classroom folders
+              for (let k in this.current_classroom.folders) {
+                // if current tag is in classroom folders
+                if ((this.current_classroom.folders[k].name === this.$store.getters.currentClassroomNotes[i].tags[j].name)) {
+                  // is not a tag
+                  is_folder = true
+                }
+              }
+              // if current tag is not folder
+              if (!is_folder) {
+                // if tag list not duplicate
+                if (!this.tags.includes(this.$store.getters.currentClassroomNotes[i].tags[j].name))
+                // push tag in
+                  this.tags.push(this.$store.getters.currentClassroomNotes[i].tags[j].name)
+              }
+
+            }
+          }
+
         })
         // if classroom not loaded or id doesn't match
         if (!this.$store.getters.currentClassroom.id || this.$route.params.classroom_id !== this.$store.getters.currentClassroom.id)
@@ -181,33 +207,7 @@
       current_classroom () {
         return this.$store.getters.currentClassroom
       },
-      tags () {
-        let tags = []
-        // for every tag in every notes
-        for (let i in this.$store.getters.currentClassroomNotes) {
-          for (let j in this.$store.getters.currentClassroomNotes[i].tags) {
-            // check if current tag is a folder
-            let is_folder = false
-            // for current classroom folders
-            for (let k in this.current_classroom.folders) {
-              // if current tag is in classroom folders
-              if ((this.current_classroom.folders[k].name === this.$store.getters.currentClassroomNotes[i].tags[j].name)) {
-                // is not a tag
-                is_folder = true
-              }
-            }
-            // if current tag is not folder
-            if (!is_folder) {
-              // if tag list not duplicate
-              if (!tags.includes(this.$store.getters.currentClassroomNotes[i].tags[j].name))
-              // push tag in
-                tags.push(this.$store.getters.currentClassroomNotes[i].tags[j].name)
-            }
 
-          }
-        }
-        return tags
-      }
     },
     created () {
       this.loadData()
