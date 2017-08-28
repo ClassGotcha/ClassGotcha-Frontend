@@ -181,10 +181,8 @@
                 // push tag in
                   this.tags.push(this.$store.getters.currentClassroomNotes[i].tags[j].name)
               }
-
             }
           }
-
         })
         // if classroom not loaded or id doesn't match
         if (!this.$store.getters.currentClassroom.id || this.$route.params.classroom_id !== this.$store.getters.currentClassroom.id)

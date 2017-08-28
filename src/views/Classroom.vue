@@ -1,7 +1,7 @@
 <template>
     <div class="page animated fadeInRight">
         <div>
-            <div class="row m-b-lg m-t-lg">
+            <div class="row m-t-lg">
                 <div class="col-md-8">
                     <div class="profile-image">
                         <img src="~img/major/math.jpg" class="img-circle circle-border m-b-md" alt="profile">
@@ -64,7 +64,7 @@
                                     Professor
                                 </td>
                                 <td>
-                                    <router-link :to="{name:'professor', params:{professor_id:current_classroom.professors[0].id}}">
+                                    <router-link v-if="current_classroom.professors[0]" :to="{name:'professor', params:{professor_id:current_classroom.professors[0].id}}">
                                         {{current_classroom.professors[0].full_name}}
                                     </router-link>
                                     <span v-if="current_classroom.professors[1]">,</span>
@@ -73,17 +73,17 @@
                                     </router-link>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    Office Hour
-                                </td>
-                                <td>
+                            <!--<tr>-->
+                                <!--<td>-->
+                                    <!--Office Hour-->
+                                <!--</td>-->
+                                <!--<td>-->
 
-                                </td>
-                            </tr>
+                                <!--</td>-->
+                            <!--</tr>-->
                             <tr>
                                 <td>
-                                    <a>Edit..</a>
+                                    <!--<a>Edit..</a>-->
                                 </td>
                                 <td></td>
                             </tr>
@@ -300,6 +300,7 @@
 <script>
   import ClassroomTask from 'components/ClassroomTask'
   import Upload from 'components/UploadImg'
+
   export default {
     name: 'Classroom',
     head: {
@@ -359,29 +360,44 @@
         this.$store.dispatch('solveMoment', pk)
       },
       postMoment () {
-
-        const formData = {
-          content: this.content,
-          classroom_id: this.$route.params.classroom_id,
-          question: this.question
+        if (this.user.is_verified) {
+          const formData = {
+            content: this.content,
+            classroom_id: this.$route.params.classroom_id,
+            question: this.question
+          }
+          this.$store.dispatch('postMoment', formData).then(() => {
+            this.content = ''
+            this.dropzone = false
+            if (this.question)
+              this.$root.$children[0].$refs.toastr.i('New Classroom Question', 'EXP +5')
+            else
+              this.$root.$children[0].$refs.toastr.i('New Classroom Post', 'EXP +1')
+          })
         }
-        this.$store.dispatch('postMoment', formData).then(() => {
-          this.content = ''
-          this.dropzone = false
-          if (this.question)
-            this.$root.$children[0].$refs.toastr.i('New Classroom Question', 'EXP +5')
-          else
-            this.$root.$children[0].$refs.toastr.i('New Classroom Post', 'EXP +1')
-        })
+        else {
+          this.$root.$children[0].$refs.toastr.w('You need to verify your email to post in classroom.', 'Email Unverified')
+        }
       },
       loadMomentByPage () {
         this.moment_page = this.moment_page + 1
         this.$store.dispatch('getClassroomMomentsByPage', this.moment_page)
       },
       delMoment (pk) {
+        if (this.userLevel < 3) {
+          this.$root.$children[0].$refs.toastr.w('You must be at least Level 3 to delete moment.', 'Level Requirement')
+          return
+        }
         this.$store.dispatch('delMoment', pk)
       },
       postComment (e, question) {
+        if (!this.user.is_verified) {
+          this.$root.$children[0].$refs.toastr.w('You need to verify your email to comment in classroom.', 'Email Unverified')
+          this.comment_content = ''
+          this.comment_id = -1
+          return
+        }
+
         e.preventDefault()
         const data = {
           formData: {content: this.comment_content},
@@ -483,6 +499,9 @@
       },
       user_id () {
         return this.$store.getters.userID
+      },
+      user () {
+        return this.$store.getters.me
       }
 
     },
