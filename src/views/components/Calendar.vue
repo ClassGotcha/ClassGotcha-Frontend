@@ -3,8 +3,29 @@
         <div class="row  border-bottom white-bg dashboard-header">
             <div class="col-sm-3">
                 <!--<h2 v-show="!show_event_detail && !create_new_event">Recommended Tasks</h2>-->
-                <h2 v-show="show_event_detail">Event Detail</h2>
-                <h2 v-show="create_new_event">Create New Event</h2>
+                <h2 v-show="show_event_detail">Event Detail
+                    <a @click="getPlan()" class="btn btn-sm  btn-warning pull-right"> Plan Generator (Beta)
+                    </a>
+                    <a type="button"
+                       data-toggle="tooltip"
+                       class="btn btn-sm btn-warning pull-right"
+                       data-placement="bottom"
+                       title=""
+                       data-original-title="We will generate a personalized study plan for you based on your class schedule, homework, quiz and exams.">
+                        <i class="fa fa-info"></i>
+                    </a>
+                </h2>
+                <h2 v-show="create_new_event">New Event
+                    <a @click="getPlan()" class="btn btn-sm  btn-warning pull-right"> Plan Generator (Beta)
+                    </a>
+                    <a type="button"
+                       data-toggle="tooltip"
+                       class="btn btn-warning btn-sm  pull-right"
+                       data-placement="bottom"
+                       title=""
+                       data-original-title="We will generate a personalized study plan for you based on your class schedule, homework, quiz and exams.">
+                        <i class="fa fa-info"></i>
+                    </a></h2>
 
                 <!--<div class="ibox-content" v-show="!show_event_detail && !create_new_event">-->
                 <!--<div id="external-events">-->
@@ -157,8 +178,6 @@
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary btn-block" @click="postNewTask()">Create</button>
-                        <button class="btn btn-warning btn-block" @click="getPlan()">Study Plan Generator</button>
-
                     </div>
                 </div>
             </div>
@@ -589,6 +608,10 @@
 
       })
       // this.createExternalEvents()
+
+      /* global $:true */
+      $('[data-toggle="tooltip"]').tooltip()
+
     },
     watch: {
       events: {

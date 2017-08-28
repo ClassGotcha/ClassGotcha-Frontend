@@ -37,13 +37,13 @@
                                 </span>
                             </div>
                             <div class="m-t-xs">
-                                Or <a @click="userRecommendation()">Try Recommendations Beta</a>
+                                Or <a @click="userRecommendation()">Try Recommendations Beta   </a>
                                 <a type="button"
-                                   class="btn btn-link"
+
                                    data-toggle="tooltip"
                                    data-placement="top"
                                    title=""
-                                   data-original-title="We will recommend users with similar schedules and in same major."><i class="fa fa-info"></i></a>
+                                   data-original-title="We will recommend users with similar schedules and in same major.">  <i class="fa fa-info"></i></a>
                             </div>
                         </div>
                     </div>

@@ -163,9 +163,10 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <b class="col-sm-2 control-label">Class of</b>
-                                                        <p>{{user.school_year}}</p>
+                                                        <p v-if="user.school_year">{{user.school_year}}</p>
+                                                        <br v-else>
                                                     </div>
-                                                    <div class="hr-line-dashed"></div>
+                                                    <hr>
                                                     <div class="form-group" v-if="user.privacy_setting[4]==='1'">
                                                         <b class="col-sm-2 control-label">Facebook</b>
                                                         <p v-if="user.facebook">{{user.facebook}}</p>
