@@ -74,12 +74,12 @@
                                 </td>
                             </tr>
                             <!--<tr>-->
-                                <!--<td>-->
-                                    <!--Office Hour-->
-                                <!--</td>-->
-                                <!--<td>-->
+                            <!--<td>-->
+                            <!--Office Hour-->
+                            <!--</td>-->
+                            <!--<td>-->
 
-                                <!--</td>-->
+                            <!--</td>-->
                             <!--</tr>-->
                             <tr>
                                 <td>
@@ -426,10 +426,13 @@
         return moment(time).fromNow()
       },
       semesterProcess () {
-        let s = Date.parse(this.current_classroom.semester.formatted_start_date)
-        let e = Date.parse(this.current_classroom.semester.formatted_end_date)
-        let t = new Date()
-        let percent = Math.round(100 - ((e - s) * 100) / t) + '%'
+        /* global moment:true */
+        let s = moment(this.current_classroom.semester.formatted_start_date)
+        let e = moment(this.current_classroom.semester.formatted_end_date)
+        let t = moment()
+        const total = e.diff(s, 'days')
+        const passed = t.diff(s, 'days')
+        let percent = Math.round((passed / total) * 100) + '%'
         return 'width:' + percent
       },
       // UI Switches
