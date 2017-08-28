@@ -36,7 +36,7 @@
                         <p class="text-danger font-bold">{{passwordMsg}}</p>
                     </div>
                     <div class="form-group">
-                        <span class="help-block m-b-none">Referrer</span>
+                        <span class="help-block m-b-none">Referrer (Optional)</span>
                         <input v-model="referrer" type="text" class="form-control" name="Referrer" placeholder="ex: abcd1234@psu.edu" required>
                         <p class="text-danger font-bold">{{passwordMsg}}</p>
                     </div>
