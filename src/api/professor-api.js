@@ -20,7 +20,7 @@ export default {
 
   // updateProfessor
   updateProfessor (formData) {
-    return Vue.http.post(API_ROOT + 'account/professor/' + formData.id + '/', formData, {headers: {Authorization: 'JWT ' + getCookie('token')}})
+    return Vue.http.put(API_ROOT + 'account/professor/' + formData.id + '/', formData, {headers: {Authorization: 'JWT ' + getCookie('token')}})
       .then((response) => Promise.resolve(response.data))
       .catch((error) => Promise.reject(error))
   },

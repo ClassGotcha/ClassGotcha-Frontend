@@ -71,6 +71,20 @@ const getters = {
       return []
     }
   },
+  userLevel: state => {
+    if (state.user && state.login_status) {
+      return state.user.level
+    } else {
+      return []
+    }
+  },
+  userIsVerified: state => {
+    if (state.user && state.login_status) {
+      return state.user.is_verified
+    } else {
+      return []
+    }
+  },
   userChatrooms: state => {
     if (state.user && state.login_status) {
       return state.user.chatrooms
@@ -136,9 +150,11 @@ const getters = {
   loadedUser: state => {
     return state.loaded_user
   },
+
   loadedUserMoments: state => {
     return state.loaded_user_moments
   },
+
   recommended_friends: state => {
     return state.recommended_friends
   },
@@ -185,6 +201,16 @@ const actions = {
         return Promise.reject(error)
       })
   },
+  resend ({dispatch}) {
+    return userApi.resend()
+      .then(() => {
+        dispatch('getSelf')
+        return Promise.resolve()
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
   forgetSendEmail ({dispatch}, formData) {
     return userApi.forgetSendEmail(formData)
       .then(() => {
@@ -212,6 +238,16 @@ const actions = {
         return Promise.reject(error)
       })
   },
+  passwordChange ({dispatch}, formData) {
+    return userApi.passwordChange(formData)
+      .then(() => {
+        return Promise.resolve()
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+
   tokenVerify ({rootState, commit, dispatch}, formData) {
     userApi.tokenVerify(formData)
       .then((response) => {
@@ -251,9 +287,11 @@ const actions = {
         commit(types.LOG_ERROR, error)
       })
   },
+
   logout ({commit}) {
     commit(types.LOGOUT)
   },
+
   getSelf ({commit}) {
     return userApi.getSelf()
       .then((response) => {
@@ -361,6 +399,18 @@ const actions = {
         commit(types.LOG_ERROR, error)
       })
   },
+
+  getUserPlan ({commit}) {
+    return userApi.getUserPlan()
+      .then((response) => {
+        return Promise.resolve(response)
+      })
+      .catch((error) => {
+        commit(types.LOG_ERROR, error)
+        return Promise.reject()
+      })
+  },
+
   searchUser ({commit}, token) {
     return userApi.searchUser(token)
       .then((response) => {
@@ -508,7 +558,7 @@ const mutations = {
     cookie.setCookie('token', response.token)
     state.token = response.token
     state.login_status = true
-    router.push({name: 'home'})
+    router.push({name: 'addClassroom'})
   },
   [types.LOGIN_FAILED] (state, error) {
     state.login_status = false

@@ -37,21 +37,21 @@
                                 </span>
                             </div>
                             <div class="m-t-xs">
-                                Or <a @click="userRecommendation()">Try Recommendations Beta</a>
+                                Or <a @click="userRecommendation()">Try Recommendations Beta   </a>
                                 <a type="button"
-                                   class="btn btn-link"
+
                                    data-toggle="tooltip"
                                    data-placement="top"
                                    title=""
-                                   data-original-title="We will recommend users with similar schedules and in same major."><i class="fa fa-info"></i></a>
+                                   data-original-title="We will recommend users with similar schedules and in same major.">  <i class="fa fa-info"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="ibox"  v-if="search_result_return && !user_result">
-                        <h4 class="text-center"> No Result </h4>
+                <div class="ibox" v-if="search_result_return && !user_result">
+                    <h4 class="text-center"> No Result </h4>
                 </div>
                 <spinner v-if="search_begin && !search_result_return"></spinner>
                 <div class="col-lg-3 col-md-6 col-sm-12" v-for="student in user_result">
@@ -60,7 +60,7 @@
                             <div class="col-sm-4 col-xs-4">
                                 <div class="text-center">
                                     <img class="img-circle m-t-xs img-responsive" :src="student.avatar2x">
-                                    <div class="m-t-xs font-bold">@{{student.username}}</div>
+                                    <!--<div class="m-t-xs font-bold">@{{student.username}}</div>-->
 
                                 </div>
                             </div>
@@ -71,9 +71,7 @@
                             </h3>
                             <address>
                                 <strong>Major:</strong> <span v-if="student.major">{{student.major.major_short}}</span><br>
-                                <strong>Class:</strong> {{student.school_year}}<br>
-                                <strong>About Me</strong><br>
-                                {{student.about_me}}
+                                <strong>Class of:</strong> {{student.school_year}}<br>
                             </address>
                             <div class="m-t-xs btn-group">
                                 <a @click="addFriend(student.id)" class="btn btn-xs btn-primary"><i class="fa fa-user-plus"></i> + Add Friend</a>
@@ -112,16 +110,18 @@
         this.search_begin = true
         this.search_result_return = false
 
-        this.$store.dispatch('searchUser', {search: this.search_token})
-          .then((response) => {
-            this.user_result = response
-            this.search_result_return = true
-          })
-          .catch(() => {
-            console.log('asdf')
-            this.search_result_return = true
-            this.$root.$children[0].$refs.toastr.e('Ops, something wrong, please try again later', 'Error')
-          })
+        if (this.search_token) {
+          this.$store.dispatch('searchUser', {token: this.search_token})
+            .then((response) => {
+              this.user_result = response
+              this.search_result_return = true
+            })
+            .catch(() => {
+              console.log('asdf')
+              this.search_result_return = true
+              this.$root.$children[0].$refs.toastr.w('Ops, we can\'t find anyone, maybe try something else?', 'No result')
+            })
+        }
       },
       userRecommendation () {
         this.search_begin = true

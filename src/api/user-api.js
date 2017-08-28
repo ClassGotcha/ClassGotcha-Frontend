@@ -23,6 +23,11 @@ export default {
       .then((response) => Promise.resolve(response.data))
       .catch((error) => Promise.reject(error))
   },
+  resend () {
+    return Vue.http.get(API_ROOT + 'account/verify/', {headers: {Authorization: 'JWT ' + getCookie('token')}})
+      .then((response) => Promise.resolve(response.data))
+      .catch((error) => Promise.reject(error))
+  },
   forgetSendEmail (formData) {
     return Vue.http.post(API_ROOT + 'account/forget/', formData)
       .then((response) => Promise.resolve(response.data))
@@ -34,12 +39,12 @@ export default {
       .catch((error) => Promise.reject(error))
   },
   forgetUpdate (formData) {
-    return Vue.http.patch(API_ROOT + 'account/forget/' + formData.token + '/', formData)
+    return Vue.http.post(API_ROOT + 'account/forget/' + formData.token + '/', formData)
       .then((response) => Promise.resolve(response.data))
       .catch((error) => Promise.reject(error))
   },
-  passwordReset (formData) {
-    return Vue.http.post(API_ROOT + 'account/reset/', formData)
+  passwordChange (formData) {
+    return Vue.http.post(API_ROOT + 'account/passchange/', formData, {headers: {Authorization: 'JWT ' + getCookie('token')}})
       .then((response) => Promise.resolve(response.data))
       .catch((error) => Promise.reject(error))
   },
@@ -105,8 +110,13 @@ export default {
       .then((response) => Promise.resolve(response.data))
       .catch((error) => Promise.reject(error))
   },
+  getUserPlan () {
+    return Vue.http.get(API_ROOT + 'account/plan/', {headers: {Authorization: 'JWT ' + getCookie('token')}})
+      .then((response) => Promise.resolve(response.data))
+      .catch((error) => Promise.reject(error))
+  },
   searchUser (token) {
-    return Vue.http.post(API_ROOT + 'account/search/', {'token': token}, {headers: {Authorization: 'JWT ' + getCookie('token')}})
+    return Vue.http.post(API_ROOT + 'account/search/', token, {headers: {Authorization: 'JWT ' + getCookie('token')}})
       .then((response) => Promise.resolve(response.data))
       .catch((error) => Promise.reject(error))
   },

@@ -36,6 +36,11 @@
                         <p class="text-danger font-bold">{{passwordMsg}}</p>
                     </div>
                     <div class="form-group">
+                        <span class="help-block m-b-none">Referrer</span>
+                        <input v-model="referrer" type="text" class="form-control" name="Referrer" placeholder="ex: abcd1234@psu.edu" required>
+                        <p class="text-danger font-bold">{{passwordMsg}}</p>
+                    </div>
+                    <div class="form-group">
                         <input type="checkbox" v-model="checked" id="check" name="check" required>
                         <label for="check"></label>
                         <i class="m-r"></i>I want to contribute to<a data-toggle="modal" data-target="#terms"> COIL research project</a>
@@ -67,11 +72,14 @@
                         <p>Advisor: Dr. Kyle Peck</p>
                         <p>Advisor Telephone Number: 814-863-7380</p>
                         <p>You are being invited to volunteer to participate in a research study. This summary explains information about this research.	</p>
-                        <p>We are asking you to be in this research because we need your help to test the effectiveness of a personalized learning management system, ClassGotcha, as a user of it. This research is being done to find out whether the personalized learning profile is effective in improving the student retention. </p>
-                        <p>In this research, you just need to use this learning management system to facilitate your study as you usually did with any other learning management tools. No extra action is required.
+                        <p>
+                            We are asking you to be in this research because we need your help to test the effectiveness of a personalized learning management system, ClassGotcha, as a user of it. This research is being done to find out whether the personalized learning profile is effective in improving the student retention. </p>
+                        <p>
+                            In this research, you just need to use this learning management system to facilitate your study as you usually did with any other learning management tools. No extra action is required.
                             Your data created by using the tool will be assigned to a random ID and analyzed to investigate whether this tool is useful for improve student retention. There would be a pre-survey and a post-survey before and after you using the tool, you are free to skip any questions you prefer not to answer. Your homework records, and exam records will be used after removing any personal identifiers. No one other than the research team will access to your data, and they will analyze the data without personal identifiers most of the times. After the research finished, the data will be kept on server as long as you use the tool. It will be deleted as you required or five years after the research finishes if you don’t use the tool in the future.
                         </p>
-                        <p>If you have questions or concerns, you should contact Qiyuan Li at 814-441-5027.   If you have questions regarding your rights as a research subject or concerns regarding your privacy, you may contact the Office for Research Protections at 814-865-1775. </p>
+                        <p>
+                            If you have questions or concerns, you should contact Qiyuan Li at 814-441-5027.   If you have questions regarding your rights as a research subject or concerns regarding your privacy, you may contact the Office for Research Protections at 814-865-1775. </p>
                         <p>Your participation is voluntary and you may decide to stop at any time.  You do not have to answer any questions that you do not want to answer. </p>
                         <p>INFORMED CONSENT TO TAKE PART IN RESEARCH </p>
                         <p>Electronic Signature of Person Giving Informed Consent </p>
@@ -79,7 +87,8 @@
                         Discussed this research study with an investigator<br>
                         Read the information in this form, and<br>
                         Had the opportunity to ask any questions you may have. <br>
-                        <p>Typing your name below means that you have received this information, have asked the questions you currently have about the research and those questions have been answered. Please print a copy of this consent form to keep for future reference.</p>
+                        <p>
+                            Typing your name below means that you have received this information, have asked the questions you currently have about the research and those questions have been answered. Please print a copy of this consent form to keep for future reference.</p>
                         <p><strong>Electronic Signature of Subject</strong></p>
                         <p>By typing your name below, you indicate that you voluntarily choose to be in this research and agree to allow your information to be used and shared as described above. </p>
                         <div class="form-group"><label>Signature</label>
@@ -113,15 +122,21 @@
         password: '',
         last_name: '',
         first_name: '',
+        referrer: '',
         emailMsg: '',
         passwordMsg: '',
         lastMsg: '',
         firstMsg: '',
         policyMsg: '',
-
       }
     },
     methods: {
+      referrerCheck ()
+      {
+        if (this.$route.query.hasOwnProperty('referrer')) {
+          this.referrer = this.$route.query.referrer
+        }
+      },
       getToken (e) {
         e.preventDefault()
         this.emailMsg = ''
@@ -133,7 +148,8 @@
           password: this.password,
           first_name: this.first_name,
           last_name: this.last_name,
-          checked: this.checked
+          checked: this.checked,
+          referrer: this.referrer
         }
 
         if (!formData.first_name)
@@ -144,8 +160,6 @@
           this.emailMsg = 'This field is required'
         else if (!formData.password)
           this.passwordMsg = 'This field is required'
-//        else if (!formData.checked)
-//          this.policyMsg = 'This field is required'
         else
           this.$store.dispatch('register', formData)
             .catch((error) => {
@@ -163,6 +177,9 @@
         return moment().format('MMM D YYYY, h:mm:ss a')
       }
     },
+    created () {
+      this.referrerCheck()
+    }
   }
 
 </script>

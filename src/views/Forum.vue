@@ -22,7 +22,7 @@
                             <h2>Welcome to ClassGotcha Forum</h2>
                             <span>Here you can report bugs, give us suggestions or contribute new ideas</span>
                             <p></p>
-                            <span>Our active developers will response asap!</span>
+                            <span>We will response asap!</span>
                             <br>
                             <button type="button" data-toggle="modal" data-target="#newpost" class="btn btn-primary btn-sm m-t">
                                 <i class="fa fa-plus"></i> <span class="bold">Add Post</span>
@@ -30,7 +30,7 @@
                             <div class="modal inmodal" id="newpost" name="newpost" tabindex="-1" role="dialog">
                                 <div class="modal-dialog">
                                     <div class="modal-content animated fadeInDown">
-                                        <div class="modal-header ">
+                                        <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal"><span>×</span><span class="sr-only">Close</span></button>
                                             <h2 class="modal-title">New Post</h2>
                                         </div>
@@ -39,7 +39,8 @@
 
                                                 <input v-model="post_title" class="form-control m-b" placeholder="Title">
 
-                                                <textarea v-model="post_content" class="form-control m-b" placeholder="Content"></textarea>
+                                                <textarea v-model="post_content" class="form-control m-b" style="height: 200px" placeholder="Content"></textarea>
+
                                                 <select v-model="post_tag" class="form-control m-b">
                                                     <option value="0">Bug Report</option>
                                                     <option value="1">Suggestions</option>
@@ -116,6 +117,10 @@
         return moment(time).fromNow()
       },
       postNewPost () {
+        if (!this.userIsVerified) {
+          this.$root.$children[0].$refs.toastr.w('You need to verify your email to post in classroom.', 'Email Verification')
+          return
+        }
         this.$store.dispatch('postPost', {
           title: this.post_title,
           content: this.post_content,
@@ -145,7 +150,11 @@
     computed: {
       posts () {
         return this.$store.getters.posts
-      }
+      },
+      userLevel () {
+        return this.$store.getters.userLevel
+      },
+
     },
     created () {
       this.$store.dispatch('getPosts').then(() => {

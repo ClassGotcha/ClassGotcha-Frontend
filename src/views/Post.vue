@@ -6,7 +6,6 @@
                 <ol class="breadcrumb">
                     <li>
                         <router-link :to="{name:'home'}">Home</router-link>
-
                     </li>
                     <li>
                         <router-link :to="{name:'forum'}">Forum</router-link>
@@ -24,7 +23,7 @@
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <div class="ibox-content forum-post-container">
                         <div class="forum-post-info">
-                            <h4>{{currentPost.title}}</h4>
+                            <h3>{{currentPost.title}}</h3>
                         </div>
                         <div class="media">
                             <router-link class="forum-avatar" :to="{name:'userDetail', params:{user_id:currentPost.creator.id}}">
@@ -35,16 +34,19 @@
                                 </div>
                             </router-link>
                             <div class="media-body">
-                                {{currentPost.content}}
-                                <br><br>
-                                <i class="fa fa-clock-o"></i> <strong>{{formatTime(currentPost.created)}}</strong>
+                                <p>{{currentPost.content}}</p>
                                 <hr>
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-sm-2">
+                                        <i class="fa fa-clock-o"></i> <b>{{formatTime(currentPost.created)}}</b>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        Tag:
                                         <span v-if="currentPost.tag===0" class="label label-danger">Bug Report</span>
                                         <span v-if="currentPost.tag===1" class="label label-primary">Suggestion</span>
                                         <span v-if="currentPost.tag===2" class="label warning">Other</span>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -58,8 +60,8 @@
                             </router-link>
                             <div class="media-body">
                                 {{comment.content}}
-                                <br><br>
-                                {{formatTime(comment.created)}}
+                                <hr>
+                                <i class="fa fa-clock-o"></i> {{formatTime(comment.created)}}
                             </div>
                         </div>
                         <div class="media">

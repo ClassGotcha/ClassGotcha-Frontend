@@ -19,12 +19,17 @@ Vue.use(Vuex)
 const mutations = {
   [types.LOGOUT] (state) {
     cookie.delCookie('token')
+    state.notification.notifications = []
     state.user.classrooms = []
     state.user.chatrooms = []
     state.user.friends = []
     state.user.tasks = []
     state.user.login_status = false
     state.user.token = null
+    state.user.moments = []
+    state.user.pending_friends = []
+    state.user.loaded_user = []
+    state.user.loaded_user_moments = []
     // state.chat.chatrooms = {}
     // state.chat.valid = false
     // state.chat.current_chatroom_pk = null

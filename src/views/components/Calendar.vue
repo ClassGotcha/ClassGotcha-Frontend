@@ -3,8 +3,29 @@
         <div class="row  border-bottom white-bg dashboard-header">
             <div class="col-sm-3">
                 <!--<h2 v-show="!show_event_detail && !create_new_event">Recommended Tasks</h2>-->
-                <h2 v-show="show_event_detail">Event Detail</h2>
-                <h2 v-show="create_new_event">Create New Event</h2>
+                <h2 v-show="show_event_detail">Event Detail
+                    <a @click="getPlan()" class="btn btn-sm  btn-warning pull-right"> Plan Generator (Beta)
+                    </a>
+                    <a type="button"
+                       data-toggle="tooltip"
+                       class="btn btn-sm btn-warning pull-right"
+                       data-placement="bottom"
+                       title=""
+                       data-original-title="We will generate a personalized study plan for you based on your class schedule, homework, quiz and exams.">
+                        <i class="fa fa-info"></i>
+                    </a>
+                </h2>
+                <h2 v-show="create_new_event">New Event
+                    <a @click="getPlan()" class="btn btn-sm  btn-warning pull-right"> Plan Generator (Beta)
+                    </a>
+                    <a type="button"
+                       data-toggle="tooltip"
+                       class="btn btn-warning btn-sm  pull-right"
+                       data-placement="bottom"
+                       title=""
+                       data-original-title="We will generate a personalized study plan for you based on your class schedule, homework, quiz and exams.">
+                        <i class="fa fa-info"></i>
+                    </a></h2>
 
                 <!--<div class="ibox-content" v-show="!show_event_detail && !create_new_event">-->
                 <!--<div id="external-events">-->
@@ -115,7 +136,7 @@
 
                 <div v-if="create_new_event">
                     <div class="form-group">
-                        <label>Event Name</label>
+                        <label>Event Name *</label>
                         <input class="form-control" placeholder="Title" v-model="new_event.task_name">
                     </div>
                     <div class="form-group">
@@ -297,6 +318,19 @@
             })
           }
 
+          // group meetings
+          else if (task.category === 5) {
+            let other = {
+              id: task.id,
+              title: (task.location ? task.task_name + '\n' + task.location : task.task_name),
+              editable: false,
+              color: event_color6,
+              start: task.start,
+              end: task.end,
+            }
+            this.events.push(other)
+          }
+
           // others
           else if (task.category === 6) {
 
@@ -312,7 +346,6 @@
               other.dow = task.repeat_list
               other.start = (task.formatted_start_time ? task.formatted_start_time : task.formatted_end_time)
               other.end = (task.formatted_start_time ? task.formatted_end_time : moment.utc(task.formatted_end_time).add(0.5, 'hours').format())
-
             }
             this.events.push(other)
 
@@ -377,8 +410,8 @@
               })
           })
           .catch((error) => {
-          this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Success')
-        })
+            this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Success')
+          })
       },
 
       deleteTask () {
@@ -419,7 +452,26 @@
           })
           .catch((error) => {
             this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Error')
+          })
+      },
 
+      getPlan () {
+        this.$store.dispatch('getUserPlan', this.event.id)
+          .then(() => {
+            this.$store.dispatch('getTasks')
+              .then(() => {
+                this.createEvents()
+                  .then((e) => {
+                    console.log(e)
+                    $(this.$el).fullCalendar('removeEvents')
+                    $(this.$el).fullCalendar('addEventSource', this.events)
+                    $(this.$el).fullCalendar('rerenderEvents')
+                    this.$root.$children[0].$refs.toastr.s('Your latest study plan is generated!', 'Success')
+                  })
+              })
+          })
+          .catch((error) => {
+            this.$root.$children[0].$refs.toastr.e(error.body.detail, 'Error')
           })
       },
       // data formatter
@@ -556,6 +608,10 @@
 
       })
       // this.createExternalEvents()
+
+      /* global $:true */
+      $('[data-toggle="tooltip"]').tooltip()
+
     },
     watch: {
       events: {

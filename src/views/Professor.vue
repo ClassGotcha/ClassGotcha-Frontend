@@ -36,23 +36,28 @@
                                             Office
                                         </td>
                                         <td class="no-borders">
-                                            <strong> {{professor.office}} </strong>
+                                            <strong v-if="!edit"> {{professor.office}} </strong>
+                                            <input class="form-control" v-if="edit" v-model="office">
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            Department
-                                        </td>
-                                        <td>
-                                            <strong>{{professor.department}}</strong>
-                                        </td>
-                                    </tr>
+                                    <!--<tr>-->
+                                    <!--<td>-->
+                                    <!--Department-->
+                                    <!--</td>-->
+                                    <!--<td>-->
+                                    <!--<strong>{{professor.department}}</strong>-->
+                                    <!--<div class="col-sm-8 col-md-8 col-lg-4">-->
+                                    <!--<input class="form-control" v-if="edit" v-model="last_name">-->
+                                    <!--</div>-->
+                                    <!--</td>-->
+                                    <!--</tr>-->
                                     <tr>
                                         <td>
                                             Email
                                         </td>
                                         <td>
-                                            <strong>{{professor.email}}</strong>
+                                            <strong v-if="!edit">{{professor.email}}</strong>
+                                            <input class="form-control" v-if="edit" v-model="email">
                                         </td>
                                     </tr>
                                     <tr>
@@ -60,7 +65,8 @@
                                             Personal Page
                                         </td>
                                         <td>
-                                            <strong>{{professor.office}}</strong>
+                                            <strong v-if="!edit">{{professor.personal_page}}</strong>
+                                            <input class="form-control" v-if="edit" v-model="personal_page">
                                         </td>
                                     </tr>
                                     <!--<tr>-->
@@ -71,7 +77,6 @@
                                     <!--{{professor.avg_rate.num__avg}}-->
                                     <!--</td>-->
                                     <!--</tr>-->
-
                                     </tbody>
                                 </table>
 
@@ -79,8 +84,13 @@
                                 <div class="user-button">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <button type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-edit"></i>
+                                            <button type="button" @click="editProfessor()" class="btn btn-default btn-sm btn-block"><i class="fa fa-edit"></i>
                                                 Edit
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="button" v-if="edit" @click="updateProfessor()" class="btn btn-primary btn-sm btn-block">
+                                                Submit
                                             </button>
                                         </div>
                                     </div>
@@ -108,7 +118,6 @@
                                                 <div class="tab-pane active" id="tab-1">
                                                     <table class="table table-striped">
                                                         <tbody>
-
                                                         <tr v-for="classroom in professor.classrooms">
                                                             <td>
                                                                 <h5>{{classroom.class_short}}</h5>
@@ -126,12 +135,12 @@
                                                                 <i class="fa fa-users"></i> {{classroom.students_count}}
                                                             </td>
                                                             <td>
-                                                                <span class="label label-primary"><router-link :to="{name:'classroom', params:{classroom_id:classroom.id}}"
+                                                                <span class="label label-primary">
+                                                                    <router-link :to="{name:'classroom', params:{classroom_id:classroom.id}}"
                                                                                                                class="client-link">Detail</router-link>
                                                                 </span>
                                                             </td>
                                                         </tr>
-
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -149,7 +158,8 @@
                                                             </a>
                                                             <div class="media-body ">
                                                                 <small class="pull-right"></small>
-                                                                <strong v-if="comment.is_anonymous">Anonymous User</strong><strong v-else>{{comment.creator.full_name}}</strong> <span class="label label-sm label-warning">Level {{comment.creator.level}}</span>
+                                                                <strong v-if="comment.is_anonymous">Anonymous User</strong><strong v-else>{{comment.creator.full_name}}</strong> <span
+                                                                    class="label label-sm label-warning">Level {{comment.creator.level}}</span>
                                                                 <br>
                                                                 <small class="text-muted">{{momentTime(comment.created)}}</small>
                                                                 <div class="well">
@@ -174,8 +184,6 @@
                                                                         Post
                                                                     </button>
                                                                 </div>
-
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -201,7 +209,15 @@
     data: () => {
       return {
         comment_content: '',
-        is_anonymous: false
+        is_anonymous: false,
+        // Update Professor
+
+        email: '',
+        office: '',
+
+        personal_page: '',
+
+        edit: false
       }
     },
     methods: {
@@ -209,6 +225,32 @@
       getProfessorData () {
         this.$store.dispatch('getProfessor', this.$route.params.professor_id)
         this.$store.dispatch('getProfessorComments', this.$route.params.professor_id)
+      },
+      updateProfessor () {
+        const formData = {
+          id: this.$route.params.professor_id,
+          email: this.email,
+          office: this.office,
+
+          personal_page: this.personal_page,
+        }
+        this.$store.dispatch('updateProfessor', formData)
+        this.$root.$children[0].$refs.toastr.s('Professor info is updated', 'Success')
+        this.$root.$children[0].$refs.toastr.i('Improve professor info.', 'EXP +5')
+        this.editProfessor()
+      },
+      editProfessor () {
+        if (this.user.level < 5) {
+          this.$root.$children[0].$refs.toastr.w('User must be at least Level 5', 'Level Requirement')
+        }
+        else {
+          this.first_name = this.professor.first_name
+          this.last_name = this.professor.last_name
+          this.email = this.professor.email
+          this.office = this.professor.office
+          this.personal_page = this.professor.personal_page
+          this.edit = !this.edit
+        }
       },
 
       postProfessorComment () {
@@ -221,6 +263,7 @@
           this.$root.$children[0].$refs.toastr.s('Comment on professor!', 'Success')
         })
       },
+
       momentTime (time) {
         /* global moment:true */
         return moment(time).fromNow()
@@ -243,7 +286,7 @@
     },
     watch: {
       // execute getClassroomData if route changes
-      '$route': 'getProfessorData'
+      '$route': 'getProfessorData',
     }
   }
 
