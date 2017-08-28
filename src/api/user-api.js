@@ -23,6 +23,11 @@ export default {
       .then((response) => Promise.resolve(response.data))
       .catch((error) => Promise.reject(error))
   },
+  resend () {
+    return Vue.http.get(API_ROOT + 'account/verify/', {headers: {Authorization: 'JWT ' + getCookie('token')}})
+      .then((response) => Promise.resolve(response.data))
+      .catch((error) => Promise.reject(error))
+  },
   forgetSendEmail (formData) {
     return Vue.http.post(API_ROOT + 'account/forget/', formData)
       .then((response) => Promise.resolve(response.data))

@@ -14,7 +14,10 @@
             <ul class="nav navbar-top-links navbar-right">
                 <li>
                     <div class="alert alert-success m-b-n" v-if="!user.is_verified">
-                        <i class="fa fa-info"></i> We have sent a verification link to your email address, please verify your email to use ClassGotcha with full functionality.
+                        <i class="fa fa-info"></i> We have sent a verification link to your email, please verify your email before use ClassGotcha.
+                        <a v-if="!resendClicked" class="btn btn-link btn-xs text-success" style="font-size:12px;padding:0;min-height:0;" @click="resendEmail">Resend</a>
+                        <button  v-if="resendClicked"  class="btn btn-link btn-xs" disabled style="font-size:12px;padding:0;min-height:0;">Resent</button>
+
                     </div>
                 </li>
                 <li class="dropdown">
@@ -69,7 +72,7 @@
                                     <router-link v-if="notification.sender" :to="{name:'userDetail', params:{user_id:notification.sender.id}}">{{notification.sender.full_name}}</router-link>
                                     {{notification.content}}
                                     <br>
-                                    <small class="text-muted">{{momentTime(notification.created)}} | {{momentFormat(notification.created)}}   </small>
+                                    <small class="text-muted"> {{momentFormat(notification.created)}}   </small>
                                     <span class="pull-right text-muted small">
                                         <div class="btn-group">
                                             <button class="btn btn-xs btn-white" type="button" @click="readNotification(notification.id)">
@@ -117,7 +120,8 @@
     name: 'TopBar',
     data () {
       return {
-        interval: null
+        interval: null,
+        resendClicked: false
       }
     },
     methods: {
@@ -141,9 +145,11 @@
       getPendingFriends () {
         this.$store.dispatch('getPendingFriends')
       },
-      momentTime (time) {
-        /* global moment:true */
-        return moment(time).fromNow()
+      resendEmail () {
+        this.$store.dispatch('resend')
+        this.resendClicked = true
+        this.$root.$children[0].$refs.toastr.s('Please Check Your Email', 'Email Resent')
+
       },
       momentFormat (time) {
         /* global moment:true */

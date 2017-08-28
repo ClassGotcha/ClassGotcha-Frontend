@@ -71,6 +71,20 @@ const getters = {
       return []
     }
   },
+  userLevel: state => {
+    if (state.user && state.login_status) {
+      return state.user.level
+    } else {
+      return []
+    }
+  },
+  userIsVerified: state => {
+    if (state.user && state.login_status) {
+      return state.user.is_verified
+    } else {
+      return []
+    }
+  },
   userChatrooms: state => {
     if (state.user && state.login_status) {
       return state.user.chatrooms
@@ -136,9 +150,11 @@ const getters = {
   loadedUser: state => {
     return state.loaded_user
   },
+
   loadedUserMoments: state => {
     return state.loaded_user_moments
   },
+
   recommended_friends: state => {
     return state.recommended_friends
   },
@@ -177,6 +193,16 @@ const actions = {
   },
   confirm ({dispatch}, token) {
     return userApi.confirm(token)
+      .then(() => {
+        dispatch('getSelf')
+        return Promise.resolve()
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  },
+  resend ({dispatch}) {
+    return userApi.resend()
       .then(() => {
         dispatch('getSelf')
         return Promise.resolve()
