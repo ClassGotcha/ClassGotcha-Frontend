@@ -55,11 +55,11 @@
                                                     </td>
                                                 </tr>
                                                 <tr v-for="classroom in searchResult">
-                                                    <td><a data-toggle="tab" v-on:click="select_classroom(classroom)" class="client-link">{{classroom.class_code}}</a></td>
+                                                    <td><a data-toggle="tab" v-on:click="selectClassroom(classroom)" class="client-link">{{classroom.class_code}}</a></td>
                                                     <td>{{classroom.class_short}}</td>
                                                     <td> Sec {{classroom.class_section}}</td>
                                                     <td><i class="fa fa-group"></i> {{classroom.students_count}}</td>
-                                                    <td class="client-status"><span class="label label-primary"><a data-toggle="tab" v-on:click="select_classroom(classroom)" class="client-link">Show Detail</a></span>
+                                                    <td class="client-status"><span class="label label-primary"><a data-toggle="tab" v-on:click="selectClassroom(classroom)" class="client-link">Show Detail</a></span>
                                                     </td>
                                                 </tr>
                                                 </tbody>
@@ -89,12 +89,21 @@
                                         <div class="col-lg-8">
                                             <strong>Description</strong>
                                             <p>{{selected_classroom.description}}</p>
-                                            <router-link :to="{name:'classroom', params:{classroom_id: selected_classroom.id}}" class="btn btn-primary btn-sm btn-block">
-                                                <i class="fa fa-chevron-up"></i> Enter Classroom
-                                            </router-link>
                                         </div>
                                     </div>
                                     <div class="client-detail">
+                                        <div class="row m-b-lg">
+                                            <div class="col-sm-6">
+                                                <a @click="addClassroom(selected_classroom.id)" class="btn btn-primary btn-sm btn-block">
+                                                    <i class="fa fa-plus"></i> Add to Schedule
+                                                </a>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <router-link :to="{name:'classroom', params:{classroom_id: selected_classroom.id}}" class="btn btn-info btn-sm btn-block">
+                                                    <i class="fa fa-chevron-up"></i> Enter Classroom
+                                                </router-link>
+                                            </div>
+                                        </div>
                                         <strong>Detail</strong>
                                         <ul class="list-group clear-list">
                                             <li class="list-group-item fist-item" v-for="prof in selected_classroom.professors">
@@ -190,8 +199,19 @@
             this.$root.$children[0].$refs.toastr.e('Ops, something wrong, please try again later', 'Error')
           })
       },
-      select_classroom (classroom) {
+      selectClassroom (classroom) {
         this.selected_classroom = classroom
+      },
+      addClassroom (id) {
+        this.$store.dispatch('addClassroom', id)
+          .then(() => {
+            this.$root.$children[0].$refs.toastr.s('The classroom is added to your schedule', 'Success')
+            this.$root.$children[0].$refs.toastr.i('Add Classroom', 'EXP +10')
+          })
+          .catch((error) => {
+            this.$root.$children[0].$refs.toastr.w(error.body.detail, 'Ops')
+
+          })
       },
       classroomURL (classroom) {
         const url = '/classroom/id/' + classroom.id

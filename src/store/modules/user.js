@@ -432,7 +432,7 @@ const actions = {
       })
       .catch((error) => {
         commit(types.LOG_ERROR, error)
-        return Promise.reject()
+        return Promise.reject(error)
       })
   },
   remClassroom ({commit, dispatch}, pk) {
