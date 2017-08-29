@@ -229,8 +229,8 @@ const actions = {
         return Promise.reject(error)
       })
   },
-  forgetUpdate ({dispatch}, formData) {
-    return userApi.forgetUpdate(formData)
+  forgetPassReset ({dispatch}, formData) {
+    return userApi.forgetPassReset(formData)
       .then(() => {
         return Promise.resolve()
       })
@@ -432,7 +432,7 @@ const actions = {
       })
       .catch((error) => {
         commit(types.LOG_ERROR, error)
-        return Promise.reject()
+        return Promise.reject(error)
       })
   },
   remClassroom ({commit, dispatch}, pk) {

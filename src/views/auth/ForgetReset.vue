@@ -61,7 +61,6 @@
         if (!this.$route.query.hasOwnProperty('token')) {
           this.loaded = true
           this.err_msg = 'Token Not Found'
-          console.log('undefined')
         } else {
           this.$store.dispatch('forgetTokenVerify', this.$route.query.token)
             .then(() => {
@@ -86,7 +85,7 @@
           token: this.$route.query.token,
           password: this.password2
         }
-        this.$store.dispatch('forgetUpdate', formData)
+        this.$store.dispatch('forgetPassReset', formData)
           .then(() => {
             this.password_changed = true
           })
