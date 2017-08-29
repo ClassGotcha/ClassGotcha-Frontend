@@ -229,8 +229,8 @@ const actions = {
         return Promise.reject(error)
       })
   },
-  forgetUpdate ({dispatch}, formData) {
-    return userApi.forgetUpdate(formData)
+  forgetPassReset ({dispatch}, formData) {
+    return userApi.forgetPassReset(formData)
       .then(() => {
         return Promise.resolve()
       })

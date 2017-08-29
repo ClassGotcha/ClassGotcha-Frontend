@@ -38,8 +38,8 @@ export default {
       .then((response) => Promise.resolve(response.data))
       .catch((error) => Promise.reject(error))
   },
-  forgetUpdate (formData) {
-    return Vue.http.post(API_ROOT + 'account/forget/' + formData.token + '/', formData)
+  forgetPassReset (formData) {
+    return Vue.http.put(API_ROOT + 'account/forget/' + formData.token + '/', formData)
       .then((response) => Promise.resolve(response.data))
       .catch((error) => Promise.reject(error))
   },

@@ -117,8 +117,8 @@
         return moment(time).fromNow()
       },
       postNewPost () {
-        if (!this.userIsVerified) {
-          this.$root.$children[0].$refs.toastr.w('You need to verify your email to post in classroom.', 'Email Verification')
+        if (!this.user_is_verified) {
+          this.$root.$children[0].$refs.toastr.w('You need to verify your email first.', 'Email Verification')
           return
         }
         this.$store.dispatch('postPost', {
@@ -154,7 +154,9 @@
       userLevel () {
         return this.$store.getters.userLevel
       },
-
+      user_is_verified () {
+        return this.$store.getters.userIsVerified
+      },
     },
     created () {
       this.$store.dispatch('getPosts').then(() => {
