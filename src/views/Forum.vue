@@ -27,34 +27,7 @@
                             <button type="button" data-toggle="modal" data-target="#newpost" class="btn btn-primary btn-sm m-t">
                                 <i class="fa fa-plus"></i> <span class="bold">Add Post</span>
                             </button>
-                            <div class="modal inmodal" id="newpost" name="newpost" tabindex="-1" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content animated fadeInDown">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"><span>×</span><span class="sr-only">Close</span></button>
-                                            <h2 class="modal-title">New Post</h2>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
 
-                                                <input v-model="post_title" class="form-control m-b" placeholder="Title">
-
-                                                <textarea v-model="post_content" class="form-control m-b" style="height: 200px" placeholder="Content"></textarea>
-
-                                                <select v-model="post_tag" class="form-control m-b">
-                                                    <option value="0">Bug Report</option>
-                                                    <option value="1">Suggestions</option>
-                                                    <option value="2">Others</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                                            <button type="button" @click="postNewPost()" class="btn btn-primary">Post</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -90,6 +63,36 @@
                 </div>
             </div>
         </div>
+        <div class="modal inmodal" id="newpost" name="newpost" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content animated fadeInDown">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span><span class="sr-only">Close</span></button>
+                        <h2 class="modal-title">New Post</h2>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div :class="{'has-error': title_missing}">
+                                <input v-model="post_title" class="form-control m-b" placeholder="Title">
+                            </div>
+                            <div :class="{'has-error': content_missing}">
+
+                                <textarea v-model="post_content" class="form-control m-b" style="height: 200px" placeholder="Content"></textarea>
+                            </div>
+                            <select v-model="post_tag" class="form-control m-b">
+                                <option value="0">Bug Report</option>
+                                <option value="1">Suggestions</option>
+                                <option value="2">Others</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button type="button" @click="postNewPost()" class="btn btn-primary">Post</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -106,9 +109,13 @@
     data () {
       return {
         loaded: false,
+
         post_title: '',
         post_content: '',
-        post_tag: 0,
+        post_tag: '0',
+
+        title_missing: false,
+        content_missing: false,
       }
     },
     methods: {
@@ -121,12 +128,29 @@
           this.$root.$children[0].$refs.toastr.w('You need to verify your email first.', 'Email Verification')
           return
         }
+
+        if (!this.post_title) {
+          this.title_missing = true
+          return
+        }
+        else if (!this.post_content) {
+          this.content_missing = true
+          return
+        }
+
         this.$store.dispatch('postPost', {
           title: this.post_title,
           content: this.post_content,
           tag: this.post_tag
+        }).then(() => {
+          this.$root.$children[0].$refs.toastr.i('Post in Forum', 'EXP +10')
+          this.title_missing = false
+          this.content_missing = false
+          this.post_title = ''
+          this.post_content = ''
+          /* global $:true */
+          $('#newpost').modal('hide')
         })
-        this.$root.$children[0].$refs.toastr.i('Post in Forum', 'EXP +10')
       },
       upVote (id) {
         const data = {

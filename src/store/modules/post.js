@@ -85,13 +85,17 @@ const actions = {
     },
 
     postPost({ commit, dispatch }, formData) {
-        postApi.postPost(formData)
+       return postApi.postPost(formData)
             .then((response) => {
                 commit(types.POST_POST, response)
                 dispatch('getPosts')
+              return Promise.resolve()
+
             })
             .catch((error) => {
                 commit(types.LOG_ERROR, error)
+              return Promise.reject()
+
             })
     },
     postPostComment({ rootState, state, commit, dispatch }, data) {

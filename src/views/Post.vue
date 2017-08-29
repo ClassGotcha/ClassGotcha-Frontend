@@ -23,7 +23,12 @@
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <div class="ibox-content forum-post-container">
                         <div class="forum-post-info">
-                            <h3>{{currentPost.title}}</h3>
+                            <h2>{{currentPost.title}}
+                                <span v-if="currentPost.tag===0" class="label label-danger">Bug Report</span>
+                                <span v-if="currentPost.tag===1" class="label label-primary">Suggestion</span>
+                                <span v-if="currentPost.tag===2" class="label warning">Other</span>
+                            </h2>
+
                         </div>
                         <div class="media">
                             <router-link class="forum-avatar" :to="{name:'userDetail', params:{user_id:currentPost.creator.id}}">
@@ -33,21 +38,9 @@
                                     <span class="label label-warning">Level {{currentPost.creator.level}}</span>
                                 </div>
                             </router-link>
-                            <div class="media-body">
-                                <p>{{currentPost.content}}</p>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <i class="fa fa-clock-o"></i> <b>{{formatTime(currentPost.created)}}</b>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        Tag:
-                                        <span v-if="currentPost.tag===0" class="label label-danger">Bug Report</span>
-                                        <span v-if="currentPost.tag===1" class="label label-primary">Suggestion</span>
-                                        <span v-if="currentPost.tag===2" class="label warning">Other</span>
-                                    </div>
-
-                                </div>
+                            <div class="article">
+                                <pre><p>{{currentPost.content}}</p></pre>
+                                <div class="pull-right"><i class="fa fa-clock-o"></i> {{formatTime(currentPost.created)}}</div>
                             </div>
                         </div>
                         <div class="media" v-for="comment in currentPost.comments">
@@ -58,10 +51,12 @@
                                     <span class="label label-warning">Level {{comment.creator.level}}</span>
                                 </div>
                             </router-link>
-                            <div class="media-body">
-                                {{comment.content}}
-                                <hr>
-                                <i class="fa fa-clock-o"></i> {{formatTime(comment.created)}}
+                            <div class="article">
+                                <pre><p>{{comment.content}}</p></pre>
+
+                                <div class="pull-right"><i class="fa fa-clock-o"></i> {{formatTime(comment.created)}}</div>
+
+
                             </div>
                         </div>
                         <div class="media">
