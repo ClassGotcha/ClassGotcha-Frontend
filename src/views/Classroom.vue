@@ -453,7 +453,7 @@
           const data = {
             formData: {
               task_name: this.meeting_topic,
-              description: 'Study group meeting by' + this.user_full_name,
+              description: 'Study group meeting by ' + this.user_full_name,
               start: start,
               end: end,
               location: this.meeting_location,

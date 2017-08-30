@@ -9483,3 +9483,9 @@ pre {
     border: 0;
     background-color: transparent;
 }
+
+.fc-planGenerator-button {
+    background-color: #f8ac59 !important;
+    border-color: #f8ac59 !important;
+    color: #FFFFFF !important;
+}

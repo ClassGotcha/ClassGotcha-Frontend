@@ -49,12 +49,12 @@
                     <ul class="nav nav-second-level">
                         <li>
                         <router-link :to="{name:'addFriend'}">
-                            <span class="nav-label">+ Add New</span>
+                           + Add New
                         </router-link>
                         </li>
                         <li>
                         <router-link :to="{name:'myFriends'}">
-                            <span class="nav-label">My Friends</span>
+                            My Friends
                         </router-link>
                         </li>
                     </ul>

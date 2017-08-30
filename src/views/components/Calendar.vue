@@ -1,31 +1,31 @@
 <template>
     <div>
         <div class="row  border-bottom white-bg dashboard-header">
-            <div class="col-sm-3">
+            <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
+                <div ref="calendar" id="calendar"></div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-4 hidden-xs">
                 <!--<h2 v-show="!show_event_detail && !create_new_event">Recommended Tasks</h2>-->
                 <h2 v-show="show_event_detail">Event Detail
-                    <a @click="getPlan()" class="btn btn-sm  btn-warning pull-right"> Plan Generator (Beta)
-                    </a>
-                    <a type="button"
-                       data-toggle="tooltip"
-                       class="btn btn-sm btn-warning pull-right"
-                       data-placement="bottom"
-                       title=""
-                       data-original-title="We will generate a personalized study plan for you based on your class schedule, homework, quiz and exams.">
-                        <i class="fa fa-info"></i>
-                    </a>
+                    <button type="button"
+                            data-toggle="tooltip"
+                            class="btn btn-link pull-right m-l-lg"
+                            data-placement="bottom"
+                            title=""
+                            data-original-title="We will generate a personalized study plan for you based on your class schedule, homework, quiz and exams.">
+                        <i class="fa fa-info "></i> About Plan Generator
+                    </button>
                 </h2>
                 <h2 v-show="create_new_event">New Event
-                    <a @click="getPlan()" class="btn btn-sm  btn-warning pull-right"> Plan Generator (Beta)
-                    </a>
-                    <a type="button"
-                       data-toggle="tooltip"
-                       class="btn btn-warning btn-sm  pull-right"
-                       data-placement="bottom"
-                       title=""
-                       data-original-title="We will generate a personalized study plan for you based on your class schedule, homework, quiz and exams.">
-                        <i class="fa fa-info"></i>
-                    </a></h2>
+                    <button type="button"
+                            data-toggle="tooltip"
+                            class="btn btn-link pull-right m-l-lg"
+                            data-placement="bottom"
+                            title=""
+                            data-original-title="We will generate a personalized study plan for you based on your class schedule, homework, quiz and exams.">
+                        <i class="fa fa-info "></i> About Plan Generator
+                    </button>
+                </h2>
 
                 <!--<div class="ibox-content" v-show="!show_event_detail && !create_new_event">-->
                 <!--<div id="external-events">-->
@@ -180,9 +180,6 @@
                         <button class="btn btn-primary btn-block" @click="postNewTask()">Create</button>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-9">
-                <div ref="calendar" id="calendar"></div>
             </div>
         </div>
     </div>
@@ -501,6 +498,9 @@
         else
           this.new_event.repeat = this.new_event.repeat + day
       },
+      feedLink () {
+
+      }
     },
     computed: {
       user () {
@@ -553,9 +553,32 @@
         // droppable: true,
         // ignoreTimezone: false,
         header: {
-          left: 'prev,next today',
+          left: 'prev,next,today planGenerator',
           center: 'title',
-          right: 'month,agendaWeek,agendaDay,listWeek'
+          right: 'feed month,agendaWeek,agendaDay,listWeek'
+        },
+        customButtons: {
+          planGenerator: {
+            text: 'Plan Generator',
+            click: function () {
+              self.getPlan()
+            }
+          },
+//          feed: {
+//            text: 'Feed',
+//            click: function () {
+//              self.feedLink()
+//            }
+//          }
+        },
+        windowResize: function (view) {
+          if ($(window).width() < 900) {
+            $('#calendar').fullCalendar('changeView', 'agendaDay')
+            $('#calendar').fullCalendar('option', 'height', 800)
+          } else {
+            $('#calendar').fullCalendar('changeView', 'listWeek')
+            $('#calendar').fullCalendar('option', 'height', 800)
+          }
         },
         sync: false,
         defaultView: 'agendaWeek',
@@ -568,7 +591,7 @@
         eventSources: self.event_sources,
         nowIndicator: true,
         unselectAuto: false,
-
+        height: 800,
         eventClick (event) {
           // The following code did this:
           // When click a event, if the event id is found in self.user_tasks, show event
