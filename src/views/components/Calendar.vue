@@ -576,7 +576,7 @@
             $('#calendar').fullCalendar('changeView', 'agendaDay')
             $('#calendar').fullCalendar('option', 'height', 800)
           } else {
-            $('#calendar').fullCalendar('changeView', 'listWeek')
+            $('#calendar').fullCalendar('changeView', 'agendaWeek')
             $('#calendar').fullCalendar('option', 'height', 800)
           }
         },

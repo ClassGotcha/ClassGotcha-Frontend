@@ -3,7 +3,7 @@ import * as types from '../mutation-types'
 
 const actions = {
   updateTask ({commit, dispatch}, data) {
-    return taskApi.updateTask(data.id, data)
+    return taskApi.updateTask(data.pk, data)
       .then((response) => {
         commit(types.UPDATE_TASK, response)
         dispatch('getClassroomMoments')

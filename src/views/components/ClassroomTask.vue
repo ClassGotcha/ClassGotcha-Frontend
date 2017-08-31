@@ -27,14 +27,14 @@
                     <i class="fa" :class="{ 'fa-file-text': task.category === 1, 'fa-pencil':task.category === 2, 'fa-warning': task.category === 3, 'fa-users':task.category === 5}"></i>
                 </div>
                 <div class="vertical-timeline-content">
-                    <h2>{{task.task_name}}</h2>
+                    <h2>
+                        {{task.task_name}}
+                        <a @click="changeTaskWindowTriggle(task.id)" v-if="user_in_classroom" class="pull-right text-primary">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </h2>
                     <p>{{task.description}}</p>
                     <p v-if="task.location"><b>Location</b>: {{task.location}}</p>
-
-                    <a @click="changeTaskWindowTriggle(task.id)" v-if="user_in_classroom" class="btn btn-sm btn-white m-l"><i class="fa fa-edit"></i> Edit</a>
-
-                    <a @click="addTask(task.id)" v-if="!taskInMyList(task.id)" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Add to my calendar</a>
-                    <a @click="removeTask(task.id)" class="btn btn-sm btn-info" v-if="taskInMyList(task.id)"><i class="fa fa-minus"></i> Remove from my calendar</a>
 
                     <span class="vertical-date">
                         {{taskTime(task, 1)}}
@@ -43,6 +43,9 @@
                             {{taskTime(task, 2)}}
                         </small>
                     </span>
+                    <a @click="addTask(task.id)" v-if="!taskInMyList(task.id)" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Add to My Cal</a>
+                    <a @click="removeTask(task.id)" class="btn btn-sm btn-info" v-if="taskInMyList(task.id)"><i class="fa fa-minus"></i> Remove from My Cal</a>
+
                 </div>
             </div>
         </div>
@@ -282,6 +285,7 @@
           this.task_errMsg = 'Did you miss something?'
           this.clearTime()
         }
+        $('#add-task').modal('hide')
       },
       changeTask () {
         const data = {
@@ -293,6 +297,7 @@
             this.$root.$children[0].$refs.toastr.s('Task is updated, refresh to see the change', 'Success')
             this.$root.$children[0].$refs.toastr.i('Update Classroom Task', 'EXP +5')
           })
+        $('#change-task').modal('hide')
       },
       removeTask (task_id) {
         this.$store.dispatch('removeTask', task_id)
@@ -313,6 +318,7 @@
         }
         this.$store.dispatch('deleteTask', this.chosen_task.id)
         this.$store.dispatch('getTasks')
+        $('#change-task').modal('hide')
       },
       taskInMyList (task_id) {
         for (let task of this.user_tasks) {
@@ -365,9 +371,9 @@
 
       },
       changeTaskWindowTriggle (id) {
-        for (let i in this.tasks) {
-          if (this.tasks[i].id === id) {
-            this.chosen_task = this.tasks[i]
+        for (let task of this.tasks) {
+          if (task.id === id) {
+            this.chosen_task = task
             $('#change-task').modal('show')
           }
         }

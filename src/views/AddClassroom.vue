@@ -77,7 +77,7 @@
                             <h2 class="text-center"> No Classroom Selected </h2>
                         </div>
                     </div>
-                    <div class="ibox" v-show="selected_classroom.id !== 0">
+                    <div class="ibox" v-if="selected_classroom.id !== 0">
                         <div class="ibox-content">
                             <div class="tab-content">
                                 <div class="tab-pane active">
@@ -106,9 +106,15 @@
                                         </div>
                                         <strong>Detail</strong>
                                         <ul class="list-group clear-list">
-                                            <li class="list-group-item fist-item" v-for="prof in selected_classroom.professors">
+                                            <li class="list-group-item fist-item">
                                                 Professor
-                                                <router-link :to="{name:'professor', params:{professor_id: prof.id}}"><strong class="pull-right">{{prof.full_name}}</strong></router-link>
+                                                <router-link class="pull-right" v-if="selected_classroom.professors[0]" :to="{name:'professor', params:{professor_id:selected_classroom.professors[0].id}}">
+                                                    {{selected_classroom.professors[0].full_name}}
+                                                </router-link>
+                                                <span class="pull-right" v-if="selected_classroom.professors[1]">,&nbsp;</span>
+                                                <router-link class="pull-right" v-if="selected_classroom.professors[1]" :to="{name:'professor', params:{professor_id:selected_classroom.professors[1].id}}">
+                                                    {{selected_classroom.professors[1].full_name}}
+                                                </router-link>
                                             </li>
                                             <li class="list-group-item">
                                                 Class Time

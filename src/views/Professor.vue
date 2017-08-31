@@ -261,6 +261,7 @@
         }
         this.$store.dispatch('postProfessorComment', formData).then(() => {
           this.$root.$children[0].$refs.toastr.s('Comment on professor!', 'Success')
+          this.comment_content = ''
         })
       },
 

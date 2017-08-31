@@ -41,6 +41,8 @@
 
                     </td>
                     <td>
+                        <router-link v-if="is_self" :to="{name:'profile'}" class="btn btn-primary">Back To My Profile</router-link>
+
                     </td>
                 </tr>
                 </tbody>
@@ -334,6 +336,13 @@
       me () {
         return this.$store.getters.me
       },
+      is_self () {
+        if (this.$store.getters.me.id === this.user.id)
+          return true
+        else
+          return false
+      }
+
     },
     created () {
       this.loadData()

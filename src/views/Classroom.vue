@@ -2,36 +2,38 @@
     <div class="page animated fadeInRight">
         <div>
             <div class="row m-t-lg">
-                <div class="col-md-8">
+                <div class="col-md-11">
                     <div class="profile-image">
                         <img src="~img/major/math.jpg" class="img-circle circle-border m-b-md" alt="profile">
                     </div>
                     <div class="profile-info">
-                        <div>
-                            <h2 class="no-margins">
-                                {{current_classroom.class_short}}
-                                <button @click="addClassroom()" class="btn btn-primary" v-if="!user_in_classroom">
-                                    <i class="fa fa-plus"></i>
-                                    Add To My Classroom
-                                </button>
-                                <a v-else class="text-primary" title="Quit this classroom" @click="remClassroom()"><i
-                                        class="fa fa-sign-out"></i> </a>
-                            </h2>
-                            <h4>
-                                Section {{current_classroom.class_section}}
-                            </h4>
-                            <small>
-                                {{current_classroom.description}}
 
-                            </small>
-                        </div>
+                        <h2 class="no-margins">
+                            {{current_classroom.class_short}}
+
+                            <button @click="addClassroom()" class="btn btn-primary pull-right" v-if="!user_in_classroom">
+                                <i class="fa fa-plus"></i>
+                                Add Classroom
+                            </button>
+                            <button class="btn btn-white pull-right" @click="remClassroom()" v-else>
+                                <i class="fa fa-sign-out"></i> Leave Classroom
+                            </button>
+                        </h2>
+                        <h4>
+                            Section {{current_classroom.class_section}}
+                        </h4>
+                        <small>
+                            {{current_classroom.description}}
+                        </small>
+
                     </div>
                 </div>
+
             </div>
             <p>
-                {{current_classroom.semester.name}} Semester Process
+                {{current_classroom.semester.name}} Semester
             </p>
-            <div class="progress  m-b">
+            <div class="progress progress-mini m-b">
                 <div :style="semesterProcess()" class="progress-bar progress-bar-primary">
                 </div>
             </div>

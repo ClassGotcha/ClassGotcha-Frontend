@@ -53,10 +53,7 @@
                             </router-link>
                             <div class="article">
                                 <pre><p>{{comment.content}}</p></pre>
-
                                 <div class="pull-right"><i class="fa fa-clock-o"></i> {{formatTime(comment.created)}}</div>
-
-
                             </div>
                         </div>
                         <div class="media">
@@ -103,7 +100,7 @@
         }
         this.$store.dispatch('postPostComment', data)
         this.$root.$children[0].$refs.toastr.i('Reply in Forum', 'EXP +10')
-
+        this.comment_content = ''
       },
       formatTime (time) {
         /* global moment:true */
